@@ -1,0 +1,2993 @@
+{
+  "version": "1.0-draft",
+  "scale": "5점 Likert (1=전혀 그렇지 않다 ~ 5=매우 그렇다)",
+  "total_items": 240,
+  "stage_distribution": {
+    "1차_기본": 90,
+    "2차_심화": 50,
+    "상담_정밀형": 100
+  },
+  "branches": [
+    {
+      "code": "ALL",
+      "name": "공통"
+    },
+    {
+      "code": "IT",
+      "name": "IT(SW/AI/게임/보안/통신/시스템)"
+    },
+    {
+      "code": "HW",
+      "name": "HW·공간산업(전자/임베/기계/전기/토목/산업)"
+    },
+    {
+      "code": "BIZ",
+      "name": "경영·서비스·외국어"
+    },
+    {
+      "code": "HUM",
+      "name": "휴먼·교육·복지"
+    },
+    {
+      "code": "ART",
+      "name": "예술·디자인·콘텐츠·뷰티"
+    },
+    {
+      "code": "HEALTH",
+      "name": "체육·보건의료"
+    }
+  ],
+  "diagnostic_axes": [
+    {
+      "code": "INT",
+      "name_ko": "흥미"
+    },
+    {
+      "code": "ACT",
+      "name_ko": "활동 선호"
+    },
+    {
+      "code": "LRN",
+      "name_ko": "학습 방식"
+    },
+    {
+      "code": "COMP",
+      "name_ko": "역량 인식"
+    },
+    {
+      "code": "JOB",
+      "name_ko": "직무 선호"
+    },
+    {
+      "code": "VAL",
+      "name_ko": "진로 가치"
+    },
+    {
+      "code": "CONF",
+      "name_ko": "선택 확신도"
+    },
+    {
+      "code": "NEED",
+      "name_ko": "상담 필요도"
+    }
+  ],
+  "matching_axes": [
+    "SW",
+    "AI",
+    "GAME",
+    "SEC",
+    "NET",
+    "SYS",
+    "HW",
+    "EMB",
+    "MECH",
+    "ELEC",
+    "CIVIL",
+    "INDUST",
+    "BIZ",
+    "ACC",
+    "ADMIN",
+    "SERVICE",
+    "LANG",
+    "EDU",
+    "WELFARE",
+    "DESIGN",
+    "CONTENT",
+    "BEAUTY",
+    "HEALTH",
+    "MED"
+  ],
+  "items": [
+    {
+      "id": "Q001",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SW": 1.0
+      },
+      "text": "컴퓨터 프로그램이나 앱을 직접 만들어 보는 일이 재미있다."
+    },
+    {
+      "id": "Q002",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "AI": 1.0
+      },
+      "text": "인공지능·빅데이터 같은 최신 기술 분야에 호기심이 많다."
+    },
+    {
+      "id": "Q003",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "GAME": 1.0
+      },
+      "text": "게임이 어떻게 만들어지는지 그 원리가 궁금하다."
+    },
+    {
+      "id": "Q004",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SEC": 1.0
+      },
+      "text": "해킹 사례나 사이버 보안 관련 뉴스에 자주 관심이 간다."
+    },
+    {
+      "id": "Q005",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "NET": 1.0
+      },
+      "text": "인터넷·5G·무선통신이 어떻게 작동하는지 알고 싶다."
+    },
+    {
+      "id": "Q006",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SYS": 1.0
+      },
+      "text": "컴퓨터 서버나 데이터베이스 운영 방식에 관심이 있다."
+    },
+    {
+      "id": "Q007",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "HW": 1.0
+      },
+      "text": "전자제품 내부 회로나 반도체에 관심이 많다."
+    },
+    {
+      "id": "Q008",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "EMB": 1.0
+      },
+      "text": "드론·로봇·사물인터넷(IoT) 기기를 직접 다뤄보고 싶다."
+    },
+    {
+      "id": "Q009",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "MECH": 1.0
+      },
+      "text": "자동차·기계·로봇이 어떻게 설계되는지 궁금하다."
+    },
+    {
+      "id": "Q010",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "ELEC": 1.0
+      },
+      "text": "전기·전력 시스템이나 신재생 에너지 분야에 관심이 있다."
+    },
+    {
+      "id": "Q011",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "CIVIL": 1.0
+      },
+      "text": "건물·도로·교량 같은 토목·건설 분야에 흥미가 있다."
+    },
+    {
+      "id": "Q012",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "INDUST": 1.0
+      },
+      "text": "공장의 생산·품질·물류 관리 분야에 관심이 있다."
+    },
+    {
+      "id": "Q013",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 1.0
+      },
+      "text": "기업 경영·마케팅·창업 이야기에 관심이 많다."
+    },
+    {
+      "id": "Q014",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "ACC": 1.0
+      },
+      "text": "회계·세무·재무 관련 분야에 흥미가 있다."
+    },
+    {
+      "id": "Q015",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "ADMIN": 1.0
+      },
+      "text": "공무원·공기업 같은 행정 업무 분야에 관심이 있다."
+    },
+    {
+      "id": "Q016",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SERVICE": 1.0
+      },
+      "text": "항공·호텔·관광 같은 서비스 산업에 흥미가 있다."
+    },
+    {
+      "id": "Q017",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "LANG": 1.0
+      },
+      "text": "외국어를 사용해 해외 사람들과 일하는 것에 관심이 있다."
+    },
+    {
+      "id": "Q018",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "EDU": 1.0
+      },
+      "text": "어린이를 가르치거나 돌보는 일에 흥미가 있다."
+    },
+    {
+      "id": "Q019",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "WELFARE": 1.0
+      },
+      "text": "도움이 필요한 사람을 지원하는 사회복지·상담 분야에 관심이 있다."
+    },
+    {
+      "id": "Q020",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "DESIGN": 1.0
+      },
+      "text": "디자인·그래픽·공간 꾸미기에 흥미가 많다."
+    },
+    {
+      "id": "Q021",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "CONTENT": 1.0
+      },
+      "text": "글쓰기·영상·연극·음악 같은 창작 콘텐츠 분야에 관심이 있다."
+    },
+    {
+      "id": "Q022",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "BEAUTY": 1.0
+      },
+      "text": "헤어·메이크업·피부관리 같은 뷰티 분야에 흥미가 있다."
+    },
+    {
+      "id": "Q023",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "HEALTH": 1.0
+      },
+      "text": "운동·스포츠·체력 관리 분야에 관심이 많다."
+    },
+    {
+      "id": "Q024",
+      "axis": "INT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "MED": 1.0
+      },
+      "text": "병원·의료·건강관리 분야에 흥미가 있다."
+    },
+    {
+      "id": "Q025",
+      "axis": "INT",
+      "stage": 2,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "SW": 1.0,
+        "AI": 1.0
+      },
+      "text": "데이터를 분석해 의미 있는 결론을 끌어내는 일이 흥미롭다."
+    },
+    {
+      "id": "Q026",
+      "axis": "INT",
+      "stage": 2,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "GAME": 1.5,
+        "AI": 0.5
+      },
+      "text": "가상현실·증강현실(VR/AR) 콘텐츠를 만드는 일에 관심이 있다."
+    },
+    {
+      "id": "Q027",
+      "axis": "INT",
+      "stage": 2,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "EMB": 1.0,
+        "MECH": 0.5
+      },
+      "text": "직접 부품을 조립하고 회로를 연결해 무언가 작동시키는 일이 좋다."
+    },
+    {
+      "id": "Q028",
+      "axis": "INT",
+      "stage": 2,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "CIVIL": 1.0,
+        "INDUST": 0.5
+      },
+      "text": "현장에서 측량·시공·공정 관리하는 일에 흥미가 간다."
+    },
+    {
+      "id": "Q029",
+      "axis": "INT",
+      "stage": 2,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 1.0,
+        "SERVICE": 0.5
+      },
+      "text": "사람을 직접 응대하며 회사의 매출을 만드는 일이 흥미롭다."
+    },
+    {
+      "id": "Q030",
+      "axis": "INT",
+      "stage": 2,
+      "branch": "HUM",
+      "reverse": false,
+      "mapping": {
+        "WELFARE": 1.0,
+        "EDU": 0.5
+      },
+      "text": "사람의 어려움을 들어주고 해결책을 함께 찾는 일에 보람을 느낀다."
+    },
+    {
+      "id": "Q031",
+      "axis": "INT",
+      "stage": 2,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "DESIGN": 0.5,
+        "CONTENT": 1.0,
+        "BEAUTY": 0.5
+      },
+      "text": "내 손으로 무언가를 표현하거나 작품을 만드는 활동을 즐긴다."
+    },
+    {
+      "id": "Q032",
+      "axis": "INT",
+      "stage": 2,
+      "branch": "HEALTH",
+      "reverse": false,
+      "mapping": {
+        "HEALTH": 1.0,
+        "MED": 0.5
+      },
+      "text": "사람의 몸과 건강을 다루는 일에 자연스럽게 끌린다."
+    },
+    {
+      "id": "Q033",
+      "axis": "INT",
+      "stage": 3,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "SW": 1.5,
+        "GAME": 0.5
+      },
+      "text": "Unity나 Unreal 같은 게임 엔진으로 직접 게임을 만들어 보고 싶다."
+    },
+    {
+      "id": "Q034",
+      "axis": "INT",
+      "stage": 3,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "SEC": 1.5,
+        "SYS": 0.5
+      },
+      "text": "정보를 안전하게 지키고 보안 사고를 막는 일에 사명감이 든다."
+    },
+    {
+      "id": "Q035",
+      "axis": "INT",
+      "stage": 3,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "EMB": 1.5,
+        "ELEC": 0.5
+      },
+      "text": "드론을 조종하고 영상을 촬영·편집하는 일에 호기심이 있다."
+    },
+    {
+      "id": "Q036",
+      "axis": "INT",
+      "stage": 3,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "LANG": 1.5,
+        "SERVICE": 0.5
+      },
+      "text": "일본·중국 등 아시아 국가의 문화와 비즈니스에 흥미가 있다."
+    },
+    {
+      "id": "Q037",
+      "axis": "INT",
+      "stage": 3,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 1.0,
+        "ACC": 0.5
+      },
+      "text": "부동산 시장이나 자산 관리에 관심이 많다."
+    },
+    {
+      "id": "Q038",
+      "axis": "INT",
+      "stage": 3,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "BEAUTY": 1.5,
+        "DESIGN": 0.5
+      },
+      "text": "트렌드에 민감하고 패션·스타일링 변화를 관찰하는 것이 즐겁다."
+    },
+    {
+      "id": "Q039",
+      "axis": "INT",
+      "stage": 3,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "CONTENT": 1.5,
+        "DESIGN": 0.5
+      },
+      "text": "연기·연출·영상촬영 같은 무대·영상 작업에 흥미가 있다."
+    },
+    {
+      "id": "Q040",
+      "axis": "INT",
+      "stage": 3,
+      "branch": "HEALTH",
+      "reverse": false,
+      "mapping": {
+        "MED": 1.5,
+        "WELFARE": 0.5
+      },
+      "text": "의료 기록·환자 정보를 정확히 관리하는 일에 관심이 간다."
+    },
+    {
+      "id": "Q041",
+      "axis": "ACT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SW": 0.5,
+        "AI": 0.5,
+        "ACC": 0.5
+      },
+      "text": "혼자 집중해서 분석하거나 계산하는 활동이 좋다."
+    },
+    {
+      "id": "Q042",
+      "axis": "ACT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SERVICE": 1.0,
+        "EDU": 0.5,
+        "WELFARE": 0.5
+      },
+      "text": "여러 사람과 어울리며 협력하는 활동이 좋다."
+    },
+    {
+      "id": "Q043",
+      "axis": "ACT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SW": 1.0,
+        "DESIGN": 0.5,
+        "CONTENT": 0.5
+      },
+      "text": "이론을 배우는 것보다 직접 만들어 보는 실습 활동을 선호한다."
+    },
+    {
+      "id": "Q044",
+      "axis": "ACT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "MECH": 1.0,
+        "CIVIL": 1.0,
+        "HEALTH": 0.5
+      },
+      "text": "실내에서 책상 앞에 있는 것보다 현장·야외 활동이 잘 맞는다."
+    },
+    {
+      "id": "Q045",
+      "axis": "ACT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "ACC": 1.0,
+        "ADMIN": 1.0,
+        "MED": 0.5
+      },
+      "text": "정해진 절차와 규칙에 따라 정확히 처리하는 활동이 편하다."
+    },
+    {
+      "id": "Q046",
+      "axis": "ACT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "DESIGN": 1.0,
+        "CONTENT": 1.0,
+        "BEAUTY": 0.5
+      },
+      "text": "새롭고 창의적인 아이디어를 표현하는 활동이 즐겁다."
+    },
+    {
+      "id": "Q047",
+      "axis": "ACT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 1.0,
+        "SERVICE": 1.0,
+        "ADMIN": 0.5
+      },
+      "text": "회의에서 의견을 정리하고 발표하는 활동에 자신이 있다."
+    },
+    {
+      "id": "Q048",
+      "axis": "ACT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "BEAUTY": 1.0,
+        "DESIGN": 0.5,
+        "MECH": 0.5
+      },
+      "text": "손으로 정밀하게 만들거나 다듬는 작업이 잘 맞는다."
+    },
+    {
+      "id": "Q049",
+      "axis": "ACT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "HEALTH": 1.5,
+        "EDU": 0.5
+      },
+      "text": "몸을 움직이며 다른 사람을 가르치거나 이끄는 활동을 좋아한다."
+    },
+    {
+      "id": "Q050",
+      "axis": "ACT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "EDU": 1.0,
+        "WELFARE": 1.0
+      },
+      "text": "주변에 어려움이 있는 사람을 먼저 챙기는 편이다."
+    },
+    {
+      "id": "Q051",
+      "axis": "ACT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SW": 0.5,
+        "AI": 0.5,
+        "INDUST": 0.5,
+        "BIZ": 0.5
+      },
+      "text": "복잡한 문제를 단계별로 쪼개어 해결하는 활동을 즐긴다."
+    },
+    {
+      "id": "Q052",
+      "axis": "ACT",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "CONTENT": 1.0,
+        "LANG": 0.5
+      },
+      "text": "글이나 말로 내 생각을 표현하는 활동에 자신이 있다."
+    },
+    {
+      "id": "Q053",
+      "axis": "ACT",
+      "stage": 2,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "SW": 1.0,
+        "GAME": 0.5,
+        "AI": 0.5
+      },
+      "text": "코드 한 줄 한 줄을 디버깅하며 오류를 해결할 때 몰입한다."
+    },
+    {
+      "id": "Q054",
+      "axis": "ACT",
+      "stage": 2,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "MECH": 1.0,
+        "ELEC": 0.5,
+        "EMB": 0.5
+      },
+      "text": "도면·CAD로 정확하게 설계도를 그리는 작업이 잘 맞는다."
+    },
+    {
+      "id": "Q055",
+      "axis": "ACT",
+      "stage": 2,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 1.0,
+        "ACC": 1.0
+      },
+      "text": "엑셀·자료 정리로 숫자를 다루고 보고서를 만드는 일이 좋다."
+    },
+    {
+      "id": "Q056",
+      "axis": "ACT",
+      "stage": 2,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "SERVICE": 1.5,
+        "LANG": 0.5
+      },
+      "text": "낯선 사람을 친절하게 응대하고 도움을 주는 활동이 좋다."
+    },
+    {
+      "id": "Q057",
+      "axis": "ACT",
+      "stage": 2,
+      "branch": "HUM",
+      "reverse": false,
+      "mapping": {
+        "EDU": 1.5,
+        "WELFARE": 0.5
+      },
+      "text": "어린이의 눈높이에 맞춰 놀이·활동을 진행하는 일이 좋다."
+    },
+    {
+      "id": "Q058",
+      "axis": "ACT",
+      "stage": 2,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "DESIGN": 1.0,
+        "CONTENT": 0.5
+      },
+      "text": "스케치·일러스트·그래픽 작업처럼 시각적 표현을 좋아한다."
+    },
+    {
+      "id": "Q059",
+      "axis": "ACT",
+      "stage": 2,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "BEAUTY": 1.5,
+        "CONTENT": 0.5
+      },
+      "text": "사람을 직접 만져 외모를 바꾸거나 스타일링하는 활동이 즐겁다."
+    },
+    {
+      "id": "Q060",
+      "axis": "ACT",
+      "stage": 2,
+      "branch": "HEALTH",
+      "reverse": false,
+      "mapping": {
+        "HEALTH": 1.5,
+        "MED": 0.5
+      },
+      "text": "체육 시간이나 운동 모임이 일주일 중 가장 기다려진다."
+    },
+    {
+      "id": "Q061",
+      "axis": "ACT",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": true,
+      "mapping": {
+        "BIZ": 0.5,
+        "SERVICE": 0.5
+      },
+      "text": "잘 모르는 사람들 앞에서 발표하거나 말하는 것이 부담스럽다."
+    },
+    {
+      "id": "Q062",
+      "axis": "ACT",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "AI": 0.5,
+        "ACC": 1.0,
+        "INDUST": 0.5
+      },
+      "text": "엑셀의 수식·그래프 기능을 익히고 데이터 정리를 하는 것이 즐겁다."
+    },
+    {
+      "id": "Q063",
+      "axis": "ACT",
+      "stage": 3,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "SEC": 1.5,
+        "NET": 0.5,
+        "SYS": 0.5
+      },
+      "text": "시스템의 취약점을 찾아내고 보완하는 활동에 흥미가 있다."
+    },
+    {
+      "id": "Q064",
+      "axis": "ACT",
+      "stage": 3,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "NET": 1.5,
+        "SYS": 0.5
+      },
+      "text": "통신망·서버를 안정적으로 운영하는 활동이 잘 맞을 것 같다."
+    },
+    {
+      "id": "Q065",
+      "axis": "ACT",
+      "stage": 3,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "EMB": 1.5,
+        "SW": 0.5
+      },
+      "text": "센서·마이크로컨트롤러로 소형 장치를 만들어 본 적이 있거나 만들고 싶다."
+    },
+    {
+      "id": "Q066",
+      "axis": "ACT",
+      "stage": 3,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "CIVIL": 1.5,
+        "INDUST": 0.5,
+        "ADMIN": 0.5
+      },
+      "text": "측량 장비를 다루며 지도·공간 정보를 수집하는 일에 흥미가 있다."
+    },
+    {
+      "id": "Q067",
+      "axis": "ACT",
+      "stage": 3,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "ACC": 1.5,
+        "ADMIN": 0.5
+      },
+      "text": "장부·세금 계산처럼 숫자를 끝까지 맞춰내는 일에 집중력이 좋다."
+    },
+    {
+      "id": "Q068",
+      "axis": "ACT",
+      "stage": 3,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 1.0,
+        "ACC": 0.5,
+        "CIVIL": 0.5
+      },
+      "text": "건물·토지 가치를 비교·분석하는 활동이 흥미롭다."
+    },
+    {
+      "id": "Q069",
+      "axis": "ACT",
+      "stage": 3,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "LANG": 1.0,
+        "SERVICE": 1.0
+      },
+      "text": "원어민과 외국어로 대화하고 통역·번역하는 활동이 즐겁다."
+    },
+    {
+      "id": "Q070",
+      "axis": "ACT",
+      "stage": 3,
+      "branch": "HUM",
+      "reverse": false,
+      "mapping": {
+        "WELFARE": 1.5,
+        "EDU": 0.5,
+        "MED": 0.5
+      },
+      "text": "타인의 이야기를 끝까지 들어주는 데 인내심이 있는 편이다."
+    },
+    {
+      "id": "Q071",
+      "axis": "ACT",
+      "stage": 3,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "CONTENT": 1.5,
+        "LANG": 0.5
+      },
+      "text": "시나리오·소설·시 같은 글쓰기를 시간 가는 줄 모르고 한다."
+    },
+    {
+      "id": "Q072",
+      "axis": "ACT",
+      "stage": 3,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "CONTENT": 1.0,
+        "DESIGN": 0.5,
+        "SW": 0.5
+      },
+      "text": "영상 촬영·편집 도구(프리미어·파이널컷 등)를 다루는 활동을 즐긴다."
+    },
+    {
+      "id": "Q073",
+      "axis": "ACT",
+      "stage": 3,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "BEAUTY": 1.0,
+        "DESIGN": 1.0
+      },
+      "text": "옷·소품을 매치해 사람의 이미지를 바꾸는 작업에 흥미가 있다."
+    },
+    {
+      "id": "Q074",
+      "axis": "ACT",
+      "stage": 3,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "BEAUTY": 1.5,
+        "MED": 0.5
+      },
+      "text": "피부 관리·메디컬 코스메틱처럼 정밀한 피부 시술 활동에 관심이 간다."
+    },
+    {
+      "id": "Q075",
+      "axis": "ACT",
+      "stage": 3,
+      "branch": "HEALTH",
+      "reverse": false,
+      "mapping": {
+        "HEALTH": 1.5,
+        "EDU": 0.5
+      },
+      "text": "사람들의 운동을 지도하고 동기부여하는 활동이 잘 맞을 것 같다."
+    },
+    {
+      "id": "Q076",
+      "axis": "LRN",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SW": 0.5,
+        "MECH": 1.0,
+        "HEALTH": 0.5,
+        "BEAUTY": 0.5,
+        "EMB": 0.5
+      },
+      "text": "직접 해보면서 배울 때 가장 잘 익힌다."
+    },
+    {
+      "id": "Q077",
+      "axis": "LRN",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "ACC": 1.0,
+        "ADMIN": 0.5,
+        "MED": 0.5,
+        "LANG": 0.5
+      },
+      "text": "교과서·자료를 차근차근 읽으며 외울 때 잘 익힌다."
+    },
+    {
+      "id": "Q078",
+      "axis": "LRN",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 0.5,
+        "EDU": 0.5,
+        "WELFARE": 0.5,
+        "CONTENT": 0.5
+      },
+      "text": "친구들과 토론하며 배울 때 이해가 잘 된다."
+    },
+    {
+      "id": "Q079",
+      "axis": "LRN",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "AI": 1.0,
+        "SW": 0.5,
+        "INDUST": 0.5
+      },
+      "text": "원리와 구조를 깊이 이해해야 응용할 수 있다고 생각한다."
+    },
+    {
+      "id": "Q080",
+      "axis": "LRN",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "DESIGN": 1.0,
+        "CONTENT": 1.0,
+        "BEAUTY": 0.5
+      },
+      "text": "정답이 없는 문제에서 새로운 답을 만들어내는 학습을 즐긴다."
+    },
+    {
+      "id": "Q081",
+      "axis": "LRN",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "ACC": 1.0,
+        "ADMIN": 0.5,
+        "INDUST": 0.5,
+        "SEC": 0.5
+      },
+      "text": "한 가지 일을 끝까지 꼼꼼하게 마무리하는 편이다."
+    },
+    {
+      "id": "Q082",
+      "axis": "LRN",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SW": 1.0,
+        "AI": 0.5,
+        "GAME": 0.5
+      },
+      "text": "새로운 기술이나 도구를 익히는 데 두려움이 없다."
+    },
+    {
+      "id": "Q083",
+      "axis": "LRN",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "EDU": 1.0,
+        "WELFARE": 1.0,
+        "SERVICE": 0.5
+      },
+      "text": "내가 배운 것을 다른 사람에게 가르쳐줄 때 더 잘 이해된다."
+    },
+    {
+      "id": "Q084",
+      "axis": "LRN",
+      "stage": 2,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "SW": 1.5,
+        "GAME": 0.5
+      },
+      "text": "온라인 강의·튜토리얼을 보며 혼자 프로젝트를 끝낸 적이 있다."
+    },
+    {
+      "id": "Q085",
+      "axis": "LRN",
+      "stage": 2,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "MECH": 1.0,
+        "ELEC": 0.5,
+        "CIVIL": 0.5
+      },
+      "text": "수식·도면 같은 시각 자료를 통해 개념을 잡는 편이다."
+    },
+    {
+      "id": "Q086",
+      "axis": "LRN",
+      "stage": 2,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 1.0,
+        "ACC": 0.5
+      },
+      "text": "사례 연구·기업 분석으로 배울 때 흥미가 가장 높다."
+    },
+    {
+      "id": "Q087",
+      "axis": "LRN",
+      "stage": 2,
+      "branch": "HUM",
+      "reverse": false,
+      "mapping": {
+        "EDU": 1.0,
+        "WELFARE": 1.0
+      },
+      "text": "이론보다 사람들과 직접 만나며 배울 때 의미를 더 느낀다."
+    },
+    {
+      "id": "Q088",
+      "axis": "LRN",
+      "stage": 2,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "CONTENT": 1.0,
+        "DESIGN": 1.0,
+        "BEAUTY": 0.5
+      },
+      "text": "유명 작품·작가를 모방·분석하며 내 스타일을 찾아간다."
+    },
+    {
+      "id": "Q089",
+      "axis": "LRN",
+      "stage": 2,
+      "branch": "HEALTH",
+      "reverse": false,
+      "mapping": {
+        "HEALTH": 1.0,
+        "MED": 1.0
+      },
+      "text": "몸으로 반복 훈련하며 익히는 학습이 잘 맞는다."
+    },
+    {
+      "id": "Q090",
+      "axis": "LRN",
+      "stage": 3,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "SW": 1.0,
+        "SYS": 0.5,
+        "NET": 0.5
+      },
+      "text": "기술 자격증 학습처럼 체계적인 커리큘럼을 좋아한다."
+    },
+    {
+      "id": "Q091",
+      "axis": "LRN",
+      "stage": 3,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "SEC": 1.0,
+        "AI": 0.5
+      },
+      "text": "최신 기술 동향을 영어 문서로 직접 읽어볼 의향이 있다."
+    },
+    {
+      "id": "Q092",
+      "axis": "LRN",
+      "stage": 3,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "INDUST": 1.0,
+        "MECH": 0.5,
+        "ADMIN": 0.5
+      },
+      "text": "공정·계획표를 만들고 시간 안에 끝내는 훈련이 잘 맞는다."
+    },
+    {
+      "id": "Q093",
+      "axis": "LRN",
+      "stage": 3,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "ADMIN": 1.0,
+        "ACC": 0.5
+      },
+      "text": "공무원·자격증 시험처럼 명확한 목표가 있는 학습을 선호한다."
+    },
+    {
+      "id": "Q094",
+      "axis": "LRN",
+      "stage": 3,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "LANG": 1.5
+      },
+      "text": "외국어 회화는 부끄러워도 일단 말해보며 익히는 편이다."
+    },
+    {
+      "id": "Q095",
+      "axis": "LRN",
+      "stage": 3,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "SERVICE": 1.0,
+        "BIZ": 0.5
+      },
+      "text": "역할극·모의 상황을 통해 배울 때 자신감이 생긴다."
+    },
+    {
+      "id": "Q096",
+      "axis": "LRN",
+      "stage": 3,
+      "branch": "HUM",
+      "reverse": false,
+      "mapping": {
+        "EDU": 1.5
+      },
+      "text": "실제 어린이집·유치원 현장 실습을 통해 가장 많이 배우는 편이다."
+    },
+    {
+      "id": "Q097",
+      "axis": "LRN",
+      "stage": 3,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "CONTENT": 1.0,
+        "BEAUTY": 0.5,
+        "DESIGN": 0.5
+      },
+      "text": "포트폴리오를 만들어가는 과정 자체가 즐거운 학습이다."
+    },
+    {
+      "id": "Q098",
+      "axis": "LRN",
+      "stage": 3,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "BEAUTY": 1.5
+      },
+      "text": "선생님 시연을 보고 그대로 따라 해 보며 익히는 도제식 학습이 잘 맞는다."
+    },
+    {
+      "id": "Q099",
+      "axis": "LRN",
+      "stage": 3,
+      "branch": "HEALTH",
+      "reverse": false,
+      "mapping": {
+        "HEALTH": 1.0,
+        "MED": 0.5,
+        "WELFARE": 0.5
+      },
+      "text": "다른 사람의 몸 상태를 관찰하며 무엇이 필요한지 알아채는 편이다."
+    },
+    {
+      "id": "Q100",
+      "axis": "LRN",
+      "stage": 3,
+      "branch": "HEALTH",
+      "reverse": false,
+      "mapping": {
+        "MED": 1.5,
+        "ADMIN": 0.5
+      },
+      "text": "의학 용어나 보건 법규 같은 전문 용어 암기에 거부감이 없다."
+    },
+    {
+      "id": "Q101",
+      "axis": "COMP",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SW": 1.0,
+        "AI": 1.0,
+        "ACC": 0.5
+      },
+      "text": "수학·수리 문제를 푸는 데 어려움이 적다."
+    },
+    {
+      "id": "Q102",
+      "axis": "COMP",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "LANG": 1.0,
+        "CONTENT": 1.0
+      },
+      "text": "글을 읽고 핵심을 정리하거나 문장을 써내는 능력이 좋다."
+    },
+    {
+      "id": "Q103",
+      "axis": "COMP",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "MECH": 1.0,
+        "DESIGN": 0.5,
+        "BEAUTY": 0.5,
+        "EMB": 0.5
+      },
+      "text": "손재주가 좋아 정밀한 작업을 잘하는 편이다."
+    },
+    {
+      "id": "Q104",
+      "axis": "COMP",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SERVICE": 1.0,
+        "WELFARE": 1.0,
+        "EDU": 0.5
+      },
+      "text": "낯선 사람과도 어색함 없이 대화를 시작할 수 있다."
+    },
+    {
+      "id": "Q105",
+      "axis": "COMP",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "DESIGN": 1.0,
+        "CIVIL": 1.0,
+        "MECH": 0.5
+      },
+      "text": "사물의 형태와 공간 관계를 머릿속에서 그려낼 수 있다."
+    },
+    {
+      "id": "Q106",
+      "axis": "COMP",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "CONTENT": 1.0,
+        "BIZ": 0.5,
+        "EDU": 0.5
+      },
+      "text": "내 생각을 말이나 글로 명확하게 전달하는 편이다."
+    },
+    {
+      "id": "Q107",
+      "axis": "COMP",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "HEALTH": 1.5,
+        "BEAUTY": 0.5
+      },
+      "text": "체력이 좋고 몸을 쓰는 일에 자신이 있다."
+    },
+    {
+      "id": "Q108",
+      "axis": "COMP",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SW": 1.0,
+        "INDUST": 0.5,
+        "AI": 0.5
+      },
+      "text": "복잡한 문제를 단계별로 분석해 해결 방법을 찾아낸다."
+    },
+    {
+      "id": "Q109",
+      "axis": "COMP",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "EDU": 1.0,
+        "WELFARE": 1.0,
+        "SERVICE": 0.5
+      },
+      "text": "타인의 감정을 잘 알아채고 공감하는 편이다."
+    },
+    {
+      "id": "Q110",
+      "axis": "COMP",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 1.0,
+        "INDUST": 0.5,
+        "ADMIN": 0.5
+      },
+      "text": "여러 일을 동시에 조율하고 관리하는 능력이 있다."
+    },
+    {
+      "id": "Q111",
+      "axis": "COMP",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "ACC": 1.5,
+        "ADMIN": 0.5,
+        "SEC": 0.5,
+        "MED": 0.5
+      },
+      "text": "꼼꼼해서 작은 실수도 잘 찾아낸다."
+    },
+    {
+      "id": "Q112",
+      "axis": "COMP",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "DESIGN": 1.5,
+        "CONTENT": 1.0,
+        "BEAUTY": 0.5
+      },
+      "text": "시각적인 균형·색감·디테일을 잘 알아본다."
+    },
+    {
+      "id": "Q113",
+      "axis": "COMP",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "CONTENT": 1.0,
+        "BIZ": 0.5,
+        "DESIGN": 0.5
+      },
+      "text": "새로운 아이디어가 자주 떠오르는 편이다."
+    },
+    {
+      "id": "Q114",
+      "axis": "COMP",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "LANG": 1.5
+      },
+      "text": "외국어를 듣고 말하는 데 거부감이 적다."
+    },
+    {
+      "id": "Q115",
+      "axis": "COMP",
+      "stage": 2,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "SW": 1.5,
+        "AI": 0.5
+      },
+      "text": "프로그래밍 언어(파이썬·자바·C 등) 학습에 자신이 있다."
+    },
+    {
+      "id": "Q116",
+      "axis": "COMP",
+      "stage": 2,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "AI": 1.0,
+        "SW": 0.5,
+        "INDUST": 0.5
+      },
+      "text": "데이터에서 패턴이나 규칙을 찾아내는 능력이 있다."
+    },
+    {
+      "id": "Q117",
+      "axis": "COMP",
+      "stage": 2,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "MECH": 1.0,
+        "CIVIL": 0.5,
+        "ELEC": 0.5
+      },
+      "text": "물리·역학 같은 과학 과목을 비교적 잘하는 편이다."
+    },
+    {
+      "id": "Q118",
+      "axis": "COMP",
+      "stage": 2,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "EMB": 1.0,
+        "ELEC": 0.5,
+        "MECH": 0.5
+      },
+      "text": "장난감·기계를 분해해 보고 다시 조립한 경험이 많다."
+    },
+    {
+      "id": "Q119",
+      "axis": "COMP",
+      "stage": 2,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 1.0,
+        "ACC": 1.0,
+        "ADMIN": 0.5
+      },
+      "text": "예산·비용·이익을 계산해 보는 일이 어렵지 않다."
+    },
+    {
+      "id": "Q120",
+      "axis": "COMP",
+      "stage": 2,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "SERVICE": 1.5,
+        "LANG": 0.5
+      },
+      "text": "화가 난 사람도 차분히 응대해 진정시킬 수 있다."
+    },
+    {
+      "id": "Q121",
+      "axis": "COMP",
+      "stage": 2,
+      "branch": "HUM",
+      "reverse": false,
+      "mapping": {
+        "EDU": 1.0,
+        "WELFARE": 1.0
+      },
+      "text": "어린이나 도움이 필요한 사람을 자연스럽게 보살핀다."
+    },
+    {
+      "id": "Q122",
+      "axis": "COMP",
+      "stage": 2,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "DESIGN": 1.5,
+        "CONTENT": 0.5,
+        "BEAUTY": 0.5
+      },
+      "text": "그림이나 작품을 보면 어떻게 만들어졌는지 분석하게 된다."
+    },
+    {
+      "id": "Q123",
+      "axis": "COMP",
+      "stage": 2,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "CONTENT": 1.5,
+        "DESIGN": 0.5
+      },
+      "text": "이야기·캐릭터·세계관을 상상해서 만들어내는 능력이 있다."
+    },
+    {
+      "id": "Q124",
+      "axis": "COMP",
+      "stage": 2,
+      "branch": "HEALTH",
+      "reverse": false,
+      "mapping": {
+        "HEALTH": 1.5,
+        "MED": 0.5
+      },
+      "text": "운동 종목 중 한 가지 이상 잘하는 편이다."
+    },
+    {
+      "id": "Q125",
+      "axis": "COMP",
+      "stage": 3,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "SW": 1.5,
+        "SYS": 0.5
+      },
+      "text": "오류 메시지를 보고 검색·해결할 때까지 끈기를 발휘한다."
+    },
+    {
+      "id": "Q126",
+      "axis": "COMP",
+      "stage": 3,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "GAME": 1.5,
+        "DESIGN": 0.5,
+        "CONTENT": 0.5
+      },
+      "text": "게임 규칙이나 캐릭터 디자인 같은 게임 기획 능력에 자신이 있다."
+    },
+    {
+      "id": "Q127",
+      "axis": "COMP",
+      "stage": 3,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "SEC": 1.5,
+        "SYS": 0.5,
+        "NET": 0.5
+      },
+      "text": "한 가지 문제의 모든 가능성을 의심하며 점검하는 신중함이 있다."
+    },
+    {
+      "id": "Q128",
+      "axis": "COMP",
+      "stage": 3,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "NET": 1.0,
+        "SW": 0.5,
+        "AI": 0.5
+      },
+      "text": "기술 매뉴얼·설명서를 읽고 그대로 따라 해본 경험이 많다."
+    },
+    {
+      "id": "Q129",
+      "axis": "COMP",
+      "stage": 3,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "MECH": 1.5,
+        "INDUST": 0.5
+      },
+      "text": "기계·장치의 작동 원리를 보고 어디가 고장 났는지 추측해 낸다."
+    },
+    {
+      "id": "Q130",
+      "axis": "COMP",
+      "stage": 3,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "EMB": 1.5,
+        "GAME": 0.5
+      },
+      "text": "드론·로봇을 조종하는 데 손과 눈의 협응이 좋다."
+    },
+    {
+      "id": "Q131",
+      "axis": "COMP",
+      "stage": 3,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "CIVIL": 1.5,
+        "INDUST": 0.5,
+        "ADMIN": 0.5
+      },
+      "text": "공간·지도·도면을 보고 길과 위치를 잘 파악한다."
+    },
+    {
+      "id": "Q132",
+      "axis": "COMP",
+      "stage": 3,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "ACC": 1.5,
+        "ADMIN": 0.5
+      },
+      "text": "숫자를 다루는 일에서 오차 없이 끝까지 맞추는 책임감이 강하다."
+    },
+    {
+      "id": "Q133",
+      "axis": "COMP",
+      "stage": 3,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 1.5,
+        "ACC": 0.5,
+        "CIVIL": 0.5
+      },
+      "text": "시장 동향·가격 변화에 대한 감각이 빠른 편이다."
+    },
+    {
+      "id": "Q134",
+      "axis": "COMP",
+      "stage": 3,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "ADMIN": 1.5,
+        "WELFARE": 0.5
+      },
+      "text": "공정·중립적으로 판단하고 규정을 지키는 능력이 있다."
+    },
+    {
+      "id": "Q135",
+      "axis": "COMP",
+      "stage": 3,
+      "branch": "HUM",
+      "reverse": false,
+      "mapping": {
+        "WELFARE": 1.5,
+        "EDU": 0.5,
+        "MED": 0.5
+      },
+      "text": "사람의 말을 끝까지 듣고 비판 없이 받아들이는 데 능숙하다."
+    },
+    {
+      "id": "Q136",
+      "axis": "COMP",
+      "stage": 3,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "DESIGN": 1.5,
+        "BEAUTY": 0.5
+      },
+      "text": "색 조합·레이아웃·균형 감각이 또래보다 뛰어난 편이다."
+    },
+    {
+      "id": "Q137",
+      "axis": "COMP",
+      "stage": 3,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "CONTENT": 1.5,
+        "LANG": 0.5
+      },
+      "text": "노래·연기·연주 등 무대에서 표현하는 능력이 있다."
+    },
+    {
+      "id": "Q138",
+      "axis": "COMP",
+      "stage": 3,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "BEAUTY": 1.5,
+        "DESIGN": 0.5
+      },
+      "text": "사람 얼굴형·피부 톤·머리카락 결을 세심하게 관찰하는 능력이 있다."
+    },
+    {
+      "id": "Q139",
+      "axis": "COMP",
+      "stage": 3,
+      "branch": "HEALTH",
+      "reverse": false,
+      "mapping": {
+        "HEALTH": 1.5,
+        "EDU": 0.5
+      },
+      "text": "사람들의 운동 자세를 보고 잘못된 부분을 짚어낼 수 있다."
+    },
+    {
+      "id": "Q140",
+      "axis": "COMP",
+      "stage": 3,
+      "branch": "HEALTH",
+      "reverse": false,
+      "mapping": {
+        "MED": 1.5,
+        "ADMIN": 0.5,
+        "SEC": 0.5
+      },
+      "text": "개인 정보·비밀을 잘 지키고 책임감 있게 다룬다."
+    },
+    {
+      "id": "Q141",
+      "axis": "JOB",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SW": 1.5,
+        "AI": 0.5,
+        "GAME": 0.5
+      },
+      "text": "소프트웨어·앱 개발자로 일하고 싶다."
+    },
+    {
+      "id": "Q142",
+      "axis": "JOB",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "MECH": 1.0,
+        "ELEC": 1.0,
+        "CIVIL": 1.0,
+        "EMB": 0.5
+      },
+      "text": "기술 엔지니어로 현장에서 일하고 싶다."
+    },
+    {
+      "id": "Q143",
+      "axis": "JOB",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 1.5,
+        "INDUST": 0.5,
+        "ACC": 0.5
+      },
+      "text": "회사에서 기획·관리·경영 업무를 하고 싶다."
+    },
+    {
+      "id": "Q144",
+      "axis": "JOB",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "ADMIN": 1.5,
+        "ACC": 0.5
+      },
+      "text": "공무원이나 공기업에서 안정적으로 일하고 싶다."
+    },
+    {
+      "id": "Q145",
+      "axis": "JOB",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SERVICE": 1.5,
+        "BIZ": 0.5,
+        "LANG": 0.5
+      },
+      "text": "사람을 직접 응대하는 서비스직(승무원·호텔 등)이 매력적이다."
+    },
+    {
+      "id": "Q146",
+      "axis": "JOB",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "EDU": 1.5,
+        "WELFARE": 0.5
+      },
+      "text": "유치원·어린이집 교사로 일하고 싶다."
+    },
+    {
+      "id": "Q147",
+      "axis": "JOB",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "WELFARE": 1.5,
+        "EDU": 0.5
+      },
+      "text": "사회복지사·상담사로 일하고 싶다."
+    },
+    {
+      "id": "Q148",
+      "axis": "JOB",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "DESIGN": 1.5,
+        "CONTENT": 0.5
+      },
+      "text": "디자이너로 일하고 싶다."
+    },
+    {
+      "id": "Q149",
+      "axis": "JOB",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "CONTENT": 1.5,
+        "DESIGN": 0.5
+      },
+      "text": "작가·연기자·연출가·뮤지션 같은 창작자로 일하고 싶다."
+    },
+    {
+      "id": "Q150",
+      "axis": "JOB",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "BEAUTY": 1.5,
+        "DESIGN": 0.5
+      },
+      "text": "헤어디자이너·메이크업아티스트·피부관리사로 일하고 싶다."
+    },
+    {
+      "id": "Q151",
+      "axis": "JOB",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "HEALTH": 1.5,
+        "EDU": 0.5
+      },
+      "text": "스포츠 지도사·트레이너로 일하고 싶다."
+    },
+    {
+      "id": "Q152",
+      "axis": "JOB",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "MED": 1.5,
+        "ADMIN": 0.5,
+        "WELFARE": 0.5
+      },
+      "text": "병원·보건소에서 의료정보·보건 관련 업무를 하고 싶다."
+    },
+    {
+      "id": "Q153",
+      "axis": "JOB",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "ACC": 1.5,
+        "BIZ": 0.5,
+        "ADMIN": 0.5
+      },
+      "text": "회계·세무·재무 분야에서 전문가로 일하고 싶다."
+    },
+    {
+      "id": "Q154",
+      "axis": "JOB",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "LANG": 1.5,
+        "SERVICE": 0.5,
+        "BIZ": 0.5
+      },
+      "text": "외국어를 활용해 해외 무역·국제 업무를 하고 싶다."
+    },
+    {
+      "id": "Q155",
+      "axis": "JOB",
+      "stage": 2,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "AI": 1.5,
+        "SW": 0.5
+      },
+      "text": "AI 엔지니어·데이터 분석가로 일하고 싶다."
+    },
+    {
+      "id": "Q156",
+      "axis": "JOB",
+      "stage": 2,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "GAME": 1.5,
+        "SW": 0.5,
+        "DESIGN": 0.5
+      },
+      "text": "게임 개발자·게임 기획자로 일하고 싶다."
+    },
+    {
+      "id": "Q157",
+      "axis": "JOB",
+      "stage": 2,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "SEC": 1.5,
+        "SYS": 0.5,
+        "NET": 0.5
+      },
+      "text": "정보보안 전문가·보안솔루션 개발자로 일하고 싶다."
+    },
+    {
+      "id": "Q158",
+      "axis": "JOB",
+      "stage": 2,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "NET": 1.5,
+        "SYS": 1.0
+      },
+      "text": "통신·네트워크·시스템 운영자로 일하고 싶다."
+    },
+    {
+      "id": "Q159",
+      "axis": "JOB",
+      "stage": 2,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "EMB": 1.5,
+        "ELEC": 0.5,
+        "SW": 0.5
+      },
+      "text": "임베디드·IoT·드론 운용 전문가로 일하고 싶다."
+    },
+    {
+      "id": "Q160",
+      "axis": "JOB",
+      "stage": 2,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "MECH": 1.5,
+        "INDUST": 0.5
+      },
+      "text": "기계설계 엔지니어·제조 엔지니어로 일하고 싶다."
+    },
+    {
+      "id": "Q161",
+      "axis": "JOB",
+      "stage": 2,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "CIVIL": 1.5,
+        "ADMIN": 0.5,
+        "INDUST": 0.5
+      },
+      "text": "토목·건설·공간정보(GIS) 분야 전문가로 일하고 싶다."
+    },
+    {
+      "id": "Q162",
+      "axis": "JOB",
+      "stage": 2,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 1.5,
+        "ACC": 0.5,
+        "CIVIL": 0.5
+      },
+      "text": "공인중개사·감정평가사·주택관리사로 일하고 싶다."
+    },
+    {
+      "id": "Q163",
+      "axis": "JOB",
+      "stage": 2,
+      "branch": "HUM",
+      "reverse": false,
+      "mapping": {
+        "EDU": 1.5,
+        "WELFARE": 1.0
+      },
+      "text": "어린이·청소년을 돌보는 보육·교육 현장에서 일하고 싶다."
+    },
+    {
+      "id": "Q164",
+      "axis": "JOB",
+      "stage": 2,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "CONTENT": 1.5,
+        "DESIGN": 0.5,
+        "BEAUTY": 0.5
+      },
+      "text": "방송·영화·공연 분야의 기술 스태프나 출연자로 일하고 싶다."
+    },
+    {
+      "id": "Q165",
+      "axis": "JOB",
+      "stage": 3,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "SW": 1.5,
+        "SYS": 0.5
+      },
+      "text": "응용 소프트웨어 개발자·모바일 콘텐츠 개발자로 일하고 싶다."
+    },
+    {
+      "id": "Q166",
+      "axis": "JOB",
+      "stage": 3,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "SW": 1.0,
+        "AI": 0.5,
+        "BIZ": 0.5
+      },
+      "text": "IT 기획자·IT 컨설턴트로 일하고 싶다."
+    },
+    {
+      "id": "Q167",
+      "axis": "JOB",
+      "stage": 3,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "SYS": 1.5,
+        "NET": 0.5,
+        "SEC": 0.5
+      },
+      "text": "시스템 엔지니어·DB 엔지니어로 일하고 싶다."
+    },
+    {
+      "id": "Q168",
+      "axis": "JOB",
+      "stage": 3,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "HW": 1.5,
+        "EMB": 0.5,
+        "AI": 0.5
+      },
+      "text": "전자공학 기술자·임베디드 SW 엔지니어로 일하고 싶다."
+    },
+    {
+      "id": "Q169",
+      "axis": "JOB",
+      "stage": 3,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "ELEC": 1.5,
+        "INDUST": 0.5
+      },
+      "text": "전기공학 기술자·전기 설비 운용원으로 일하고 싶다."
+    },
+    {
+      "id": "Q170",
+      "axis": "JOB",
+      "stage": 3,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "EMB": 1.5,
+        "CONTENT": 0.5
+      },
+      "text": "드론 영상 촬영·편집 전문가로 일하고 싶다."
+    },
+    {
+      "id": "Q171",
+      "axis": "JOB",
+      "stage": 3,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "INDUST": 1.5,
+        "BIZ": 0.5,
+        "MECH": 0.5
+      },
+      "text": "생산·품질 관리자, 물류·구매 사무원으로 일하고 싶다."
+    },
+    {
+      "id": "Q172",
+      "axis": "JOB",
+      "stage": 3,
+      "branch": "HW",
+      "reverse": false,
+      "mapping": {
+        "CIVIL": 1.5,
+        "ADMIN": 1.0
+      },
+      "text": "토지행정직 공무원·국토정보공사 같은 공공기관에서 일하고 싶다."
+    },
+    {
+      "id": "Q173",
+      "axis": "JOB",
+      "stage": 3,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 1.5,
+        "ACC": 0.5,
+        "INDUST": 0.5
+      },
+      "text": "경영관리사·마케팅 전문가·경영컨설턴트로 일하고 싶다."
+    },
+    {
+      "id": "Q174",
+      "axis": "JOB",
+      "stage": 3,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "ACC": 1.5,
+        "ADMIN": 0.5
+      },
+      "text": "회계사·세무사·회계 사무원으로 일하고 싶다."
+    },
+    {
+      "id": "Q175",
+      "axis": "JOB",
+      "stage": 3,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "SERVICE": 1.5,
+        "LANG": 0.5
+      },
+      "text": "항공 객실 승무원·열차 승무원·호텔리어로 일하고 싶다."
+    },
+    {
+      "id": "Q176",
+      "axis": "JOB",
+      "stage": 3,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "LANG": 1.5,
+        "SERVICE": 0.5,
+        "BIZ": 0.5
+      },
+      "text": "면세점·여행사·해외영업처럼 외국어 실무 직무에서 일하고 싶다."
+    },
+    {
+      "id": "Q177",
+      "axis": "JOB",
+      "stage": 3,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "DESIGN": 1.5,
+        "BIZ": 0.5
+      },
+      "text": "산업디자이너·제품디자이너·실내디자이너로 일하고 싶다."
+    },
+    {
+      "id": "Q178",
+      "axis": "JOB",
+      "stage": 3,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "DESIGN": 1.5,
+        "CONTENT": 1.0
+      },
+      "text": "시각디자이너·미디어 콘텐츠 디자이너로 일하고 싶다."
+    },
+    {
+      "id": "Q179",
+      "axis": "JOB",
+      "stage": 3,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "BEAUTY": 1.5,
+        "DESIGN": 0.5,
+        "CONTENT": 0.5
+      },
+      "text": "패션 스타일리스트·비주얼 머천다이저로 일하고 싶다."
+    },
+    {
+      "id": "Q180",
+      "axis": "JOB",
+      "stage": 3,
+      "branch": "HEALTH",
+      "reverse": false,
+      "mapping": {
+        "HEALTH": 1.5,
+        "EDU": 0.5,
+        "BIZ": 0.5
+      },
+      "text": "생활스포츠지도사·건강운동관리사·스포츠경영관리사로 일하고 싶다."
+    },
+    {
+      "id": "Q181",
+      "axis": "VAL",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "ACC": 0.5,
+        "ADMIN": 0.7,
+        "MED": 0.5,
+        "EDU": 0.5,
+        "ELEC": 0.3
+      },
+      "text": "직장은 안정성이 가장 중요하다."
+    },
+    {
+      "id": "Q182",
+      "axis": "VAL",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "DESIGN": 0.7,
+        "CONTENT": 0.7,
+        "BEAUTY": 0.5,
+        "GAME": 0.5,
+        "AI": 0.3
+      },
+      "text": "남들과 다른 창의적인 일을 하고 싶다."
+    },
+    {
+      "id": "Q183",
+      "axis": "VAL",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 0.7,
+        "SW": 0.5,
+        "AI": 0.5,
+        "SEC": 0.3
+      },
+      "text": "전문성을 인정받고 높은 소득을 얻는 것이 중요하다."
+    },
+    {
+      "id": "Q184",
+      "axis": "VAL",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "WELFARE": 1.0,
+        "EDU": 0.5,
+        "MED": 0.5,
+        "ADMIN": 0.5,
+        "HEALTH": 0.3
+      },
+      "text": "내 일이 사회에 도움이 되는 것이 중요하다."
+    },
+    {
+      "id": "Q185",
+      "axis": "VAL",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 0.5,
+        "CONTENT": 0.7,
+        "DESIGN": 0.5,
+        "BEAUTY": 0.5
+      },
+      "text": "내 일을 스스로 결정하고 자율적으로 운영하고 싶다."
+    },
+    {
+      "id": "Q186",
+      "axis": "VAL",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "AI": 0.5,
+        "SEC": 0.5,
+        "SW": 0.3,
+        "MED": 0.5,
+        "ACC": 0.3
+      },
+      "text": "한 분야에서 깊은 전문가로 인정받고 싶다."
+    },
+    {
+      "id": "Q187",
+      "axis": "VAL",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SERVICE": 0.7,
+        "LANG": 0.5,
+        "BIZ": 0.3
+      },
+      "text": "다양한 사람을 만나고 새로운 경험을 할 수 있는 직업이 좋다."
+    },
+    {
+      "id": "Q188",
+      "axis": "VAL",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "CIVIL": 0.5,
+        "MECH": 0.5,
+        "BEAUTY": 0.5,
+        "DESIGN": 0.3,
+        "HEALTH": 0.3
+      },
+      "text": "내가 만든 결과물이 눈에 보이는 것이 중요하다."
+    },
+    {
+      "id": "Q189",
+      "axis": "VAL",
+      "stage": 2,
+      "branch": "IT",
+      "reverse": false,
+      "mapping": {
+        "AI": 0.5,
+        "GAME": 0.5,
+        "SW": 0.3
+      },
+      "text": "최신 기술을 빠르게 따라잡고 끊임없이 새로 배우는 환경이 좋다."
+    },
+    {
+      "id": "Q190",
+      "axis": "VAL",
+      "stage": 2,
+      "branch": "BIZ",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 0.5,
+        "INDUST": 0.5
+      },
+      "text": "팀을 이끌고 성과로 평가받는 환경이 좋다."
+    },
+    {
+      "id": "Q191",
+      "axis": "VAL",
+      "stage": 2,
+      "branch": "HUM",
+      "reverse": false,
+      "mapping": {
+        "WELFARE": 0.7,
+        "EDU": 0.5,
+        "MED": 0.3
+      },
+      "text": "정서적 보람을 느낄 수 있는 일이 소득보다 중요하다."
+    },
+    {
+      "id": "Q192",
+      "axis": "VAL",
+      "stage": 2,
+      "branch": "ART",
+      "reverse": false,
+      "mapping": {
+        "CONTENT": 0.7,
+        "DESIGN": 0.5,
+        "BEAUTY": 0.5
+      },
+      "text": "내 작품·결과물에 내 이름이 남는 일이 매력적이다."
+    },
+    {
+      "id": "Q193",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "ADMIN": 0.7,
+        "MED": 0.5,
+        "ACC": 0.5
+      },
+      "text": "정해진 시간 안에 퇴근하고 사생활이 보장되는 직장이 좋다."
+    },
+    {
+      "id": "Q194",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": true,
+      "mapping": {
+        "ADMIN": 0.7,
+        "ACC": 0.3,
+        "EDU": 0.3
+      },
+      "text": "매일 새로운 도전이 있는 환경보다 익숙한 환경이 편안하다."
+    },
+    {
+      "id": "Q195",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 0.5,
+        "SERVICE": 0.3,
+        "LANG": 0.5
+      },
+      "text": "해외 출장이나 외국에서 일하는 기회가 있다면 좋겠다."
+    },
+    {
+      "id": "Q196",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "INDUST": 0.5,
+        "MECH": 0.3,
+        "ADMIN": 0.3,
+        "ACC": 0.3
+      },
+      "text": "큰 회사에 소속되어 체계적으로 일하고 싶다."
+    },
+    {
+      "id": "Q197",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "BEAUTY": 0.5,
+        "CONTENT": 0.5,
+        "DESIGN": 0.3
+      },
+      "text": "작은 1인 기업이나 프리랜서 형태로 자유롭게 일하고 싶다."
+    },
+    {
+      "id": "Q198",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "WELFARE": 0.7,
+        "EDU": 0.5
+      },
+      "text": "직장 동료들과 가족 같은 분위기에서 일하는 것이 중요하다."
+    },
+    {
+      "id": "Q199",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SW": 0.5,
+        "AI": 0.5,
+        "DESIGN": 0.3
+      },
+      "text": "결과만 좋다면 출퇴근 시간이 자유로운 곳이 좋다."
+    },
+    {
+      "id": "Q200",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "ADMIN": 0.5,
+        "MED": 0.3,
+        "EDU": 0.3
+      },
+      "text": "정년이 보장되고 연금이 잘 나오는 직장이 가장 매력적이다."
+    },
+    {
+      "id": "Q201",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "BIZ": 0.7,
+        "ACC": 0.5,
+        "SW": 0.3
+      },
+      "text": "30대 안에 본인 사업을 시작해 보고 싶다."
+    },
+    {
+      "id": "Q202",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "CONTENT": 0.5,
+        "DESIGN": 0.5,
+        "BEAUTY": 0.5
+      },
+      "text": "남들이 '대단하다'고 말해주는 일이 보람의 큰 부분이다."
+    },
+    {
+      "id": "Q203",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "WELFARE": 0.7,
+        "MED": 0.5,
+        "EDU": 0.3,
+        "ADMIN": 0.3
+      },
+      "text": "사회적 약자를 돕는 일에 깊은 의미를 느낀다."
+    },
+    {
+      "id": "Q204",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "SW": 0.5,
+        "AI": 0.5,
+        "GAME": 0.5,
+        "SEC": 0.3
+      },
+      "text": "어떤 분야든 기술과 데이터가 미래에 더 중요해질 것이라 본다."
+    },
+    {
+      "id": "Q205",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "BEAUTY": 0.5,
+        "DESIGN": 0.5,
+        "CONTENT": 0.5
+      },
+      "text": "트렌드를 빠르게 읽고 따라가는 능력이 직업에 큰 무기라고 생각한다."
+    },
+    {
+      "id": "Q206",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "HEALTH": 0.5,
+        "MED": 0.5,
+        "WELFARE": 0.3
+      },
+      "text": "건강 관련 분야의 수요는 앞으로 계속 늘 것이라 생각한다."
+    },
+    {
+      "id": "Q207",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "CIVIL": 0.5,
+        "MECH": 0.3,
+        "INDUST": 0.3,
+        "ELEC": 0.3
+      },
+      "text": "전통적인 산업 분야도 지속적으로 사람이 필요하다고 본다."
+    },
+    {
+      "id": "Q208",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "LANG": 0.7,
+        "SERVICE": 0.3
+      },
+      "text": "한국을 넘어 아시아·세계 시장에서 일할 기회를 만들고 싶다."
+    },
+    {
+      "id": "Q209",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "GAME": 0.5,
+        "DESIGN": 0.3,
+        "CONTENT": 0.5
+      },
+      "text": "K-콘텐츠가 세계적으로 통하는 시대를 직접 경험하고 싶다."
+    },
+    {
+      "id": "Q210",
+      "axis": "VAL",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {
+        "EDU": 0.5,
+        "WELFARE": 0.5,
+        "HEALTH": 0.3,
+        "MED": 0.3
+      },
+      "text": "AI가 발달해도 사람과 사람이 만나야 하는 직업의 가치는 더 커진다고 본다."
+    },
+    {
+      "id": "Q211",
+      "axis": "CONF",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "나는 어떤 학과에 가야 할지에 대해 확신이 있다."
+    },
+    {
+      "id": "Q212",
+      "axis": "CONF",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "내가 어떤 일을 잘하는지 또래보다 잘 알고 있다."
+    },
+    {
+      "id": "Q213",
+      "axis": "CONF",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": true,
+      "mapping": {},
+      "text": "지금 학과를 정하라고 하면 막연한 느낌이 든다."
+    },
+    {
+      "id": "Q214",
+      "axis": "CONF",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "내 진로 방향에 대해 가족·친구와 충분히 이야기해 보았다."
+    },
+    {
+      "id": "Q215",
+      "axis": "CONF",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "1지망 학과가 마음에 들지 않아도 차선책이 있다."
+    },
+    {
+      "id": "Q216",
+      "axis": "CONF",
+      "stage": 2,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "내 적성과 학과 교육과정이 잘 맞을지에 대해 어느 정도 알아보았다."
+    },
+    {
+      "id": "Q217",
+      "axis": "CONF",
+      "stage": 2,
+      "branch": "ALL",
+      "reverse": true,
+      "mapping": {},
+      "text": "학과를 정하는 일이 부담스러워 자꾸 미루게 된다."
+    },
+    {
+      "id": "Q218",
+      "axis": "CONF",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "지원 가능한 학과의 졸업 후 진로를 구체적으로 알고 있다."
+    },
+    {
+      "id": "Q219",
+      "axis": "CONF",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "지원하려는 학과에서 어떤 자격증이 필요한지 알고 있다."
+    },
+    {
+      "id": "Q220",
+      "axis": "CONF",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": true,
+      "mapping": {},
+      "text": "결정해도 나중에 후회할 것 같다는 생각이 자주 든다."
+    },
+    {
+      "id": "Q221",
+      "axis": "CONF",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "내가 좋아하는 일과 잘하는 일이 일치하는 편이다."
+    },
+    {
+      "id": "Q222",
+      "axis": "CONF",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": true,
+      "mapping": {},
+      "text": "주변 친구들이 진로를 정해가는 것을 보면 조급해진다."
+    },
+    {
+      "id": "Q223",
+      "axis": "CONF",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "지원할 학과의 교수님이나 선배에게 직접 물어볼 의향이 있다."
+    },
+    {
+      "id": "Q224",
+      "axis": "CONF",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": true,
+      "mapping": {},
+      "text": "내 진로보다는 부모님의 의견을 따르게 될 것 같다."
+    },
+    {
+      "id": "Q225",
+      "axis": "CONF",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "한번 결정한 학과는 끝까지 책임지고 다닐 자신이 있다."
+    },
+    {
+      "id": "Q226",
+      "axis": "NEED",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "학과를 정하기 전에 진로 상담을 받고 싶다."
+    },
+    {
+      "id": "Q227",
+      "axis": "NEED",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "내 성향과 학과 적합도에 대해 전문가의 의견을 듣고 싶다."
+    },
+    {
+      "id": "Q228",
+      "axis": "NEED",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "각 학과의 실제 졸업 후 진로에 대한 자세한 정보가 더 필요하다."
+    },
+    {
+      "id": "Q229",
+      "axis": "NEED",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "학과 설명회나 학과 체험 프로그램에 참여하고 싶다."
+    },
+    {
+      "id": "Q230",
+      "axis": "NEED",
+      "stage": 1,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "선배들의 학과 생활·취업 후기를 직접 듣고 싶다."
+    },
+    {
+      "id": "Q231",
+      "axis": "NEED",
+      "stage": 2,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "내가 고민하는 2~3개 학과를 비교해 줄 사람이 필요하다."
+    },
+    {
+      "id": "Q232",
+      "axis": "NEED",
+      "stage": 2,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "졸업 후 취업·자격증 준비 방법에 대해 안내가 필요하다."
+    },
+    {
+      "id": "Q233",
+      "axis": "NEED",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "학과 결정 전에 1:1 진로 상담을 신청할 의사가 있다."
+    },
+    {
+      "id": "Q234",
+      "axis": "NEED",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "심리 검사·적성 검사 결과에 대한 해석 상담이 필요하다."
+    },
+    {
+      "id": "Q235",
+      "axis": "NEED",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "장학금·등록금·재정 지원에 대한 정보가 필요하다."
+    },
+    {
+      "id": "Q236",
+      "axis": "NEED",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "전공심화과정(학사학위)·편입학에 대한 정보가 필요하다."
+    },
+    {
+      "id": "Q237",
+      "axis": "NEED",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "내 가정·경제·심리적 사정도 고려한 상담이 필요하다."
+    },
+    {
+      "id": "Q238",
+      "axis": "NEED",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "학과 교육과정·시간표·수업방식에 대한 안내를 받고 싶다."
+    },
+    {
+      "id": "Q239",
+      "axis": "NEED",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "공무원·자격증 등 특정 진로를 위한 학과 추천을 듣고 싶다."
+    },
+    {
+      "id": "Q240",
+      "axis": "NEED",
+      "stage": 3,
+      "branch": "ALL",
+      "reverse": false,
+      "mapping": {},
+      "text": "결정 후에도 학과 적응을 위한 후속 상담이 필요할 것 같다."
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#0b3d91"/>
+  <g transform="translate(256,256)">
+    <text x="0" y="-30" text-anchor="middle" font-family="'Pretendard','Noto Sans KR',sans-serif" font-size="92" font-weight="800" fill="#ffffff">MJC</text>
+    <text x="0" y="48" text-anchor="middle" font-family="'Pretendard','Noto Sans KR',sans-serif" font-size="44" font-weight="600" fill="#f5a623">학과진단</text>
+  </g>
+</svg>

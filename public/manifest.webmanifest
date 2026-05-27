@@ -1,0 +1,34 @@
+{
+  "name": "명지전문대학 학과추천 진단",
+  "short_name": "MJC 학과진단",
+  "description": "명지전문대학 자유전공 학생을 위한 학과 탐색 진단 도구",
+  "lang": "ko-KR",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#0b3d91",
+  "background_color": "#f6f8fb",
+  "icons": [
+    {
+      "src": "./icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-maskable.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["education", "productivity"]
+}

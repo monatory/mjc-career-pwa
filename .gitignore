@@ -1,0 +1,42 @@
+# 빌드 산출물
+dist/
+build/
+dev-dist/
+.cache/
+*.tsbuildinfo
+vite.config.d.ts
+vite.config.js
+
+# 의존성
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 로그·임시
+*.log
+*.tmp
+.env
+.env.local
+
+# 학생 응답 데이터 (실수로 커밋되지 않도록 — 개인정보 보호)
+data/responses/
+data/students/
+data/exports/
+*.responses.json
+*.student_data.json
+
+# PWA 캐시
+sw.js.map
+manifest-cache/
