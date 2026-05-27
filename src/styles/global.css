@@ -1,0 +1,485 @@
+/* ─── 명지전문대학 학과추천 진단 PWA 전역 스타일 ─────────────────
+ * 모바일 우선. 가독성·터치 영역 최우선.
+ * 색상 토큰은 학교 공식 색이 확정되기 전까지 중립 네이비 계열로 둠.
+ * ──────────────────────────────────────────────────────────────── */
+
+:root {
+  --c-primary: #0b3d91;          /* MJC 네이비 (가안) */
+  --c-primary-soft: #e8eef9;
+  --c-accent: #f5a623;
+  --c-text: #1a1a1a;
+  --c-text-soft: #555;
+  --c-border: #d8dde6;
+  --c-bg: #ffffff;
+  --c-bg-soft: #f6f8fb;
+  --c-danger: #c0392b;
+  --c-success: #2e7d32;
+
+  --r-card: 12px;
+  --r-btn: 10px;
+
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  --tap-min: 48px; /* 터치 최소 영역 */
+  --font-base: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family:
+    "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--font-base);
+  color: var(--c-text);
+  background: var(--c-bg-soft);
+  -webkit-text-size-adjust: 100%;
+  word-break: keep-all;
+  line-height: 1.5;
+}
+
+#root {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: var(--r-btn);
+  padding: 12px 20px;
+  background: var(--c-primary);
+  color: #fff;
+  min-height: var(--tap-min);
+  transition: filter 0.15s ease, transform 0.05s ease;
+}
+
+button:hover { filter: brightness(1.05); }
+button:active { transform: scale(0.98); }
+button:disabled { opacity: 0.4; cursor: not-allowed; filter: none; transform: none; }
+
+button.ghost {
+  background: transparent;
+  color: var(--c-primary);
+  border-color: var(--c-border);
+}
+
+a { color: var(--c-primary); }
+
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+.card {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-card);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin: 0 0 16px;
+  color: var(--c-primary);
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin: 0 0 12px;
+}
+
+.muted { color: var(--c-text-soft); font-size: 0.92rem; }
+
+/* 5점 척도 버튼 그룹 */
+.scale-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.scale-row .scale-btn {
+  background: var(--c-bg);
+  color: var(--c-text);
+  border: 1.5px solid var(--c-border);
+  padding: 14px 4px;
+  font-size: 0.88rem;
+  line-height: 1.25;
+  border-radius: var(--r-btn);
+  text-align: center;
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.scale-row .scale-btn .num {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--c-primary);
+}
+
+.scale-row .scale-btn.selected {
+  background: var(--c-primary);
+  color: #fff;
+  border-color: var(--c-primary);
+}
+
+.scale-row .scale-btn.selected .num { color: #fff; }
+
+/* 진행률 바 */
+.progress-wrap {
+  margin: 8px 0 20px;
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--c-border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar > .progress-fill {
+  height: 100%;
+  background: var(--c-primary);
+  transition: width 0.25s ease;
+}
+
+.progress-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--c-text-soft);
+  margin-top: 6px;
+}
+
+.question-card .text {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  margin: 4px 0 0;
+}
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.btn-row > * { flex: 1; }
+
+/* 결과지: TOP5 카드 */
+.top-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-card);
+  background: var(--c-bg);
+  margin-bottom: 10px;
+}
+
+.top-card .rank {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--c-primary);
+  min-width: 36px;
+}
+
+.top-card .percent {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--c-accent);
+  min-width: 68px;
+  text-align: right;
+}
+
+.top-card .info {
+  flex: 1;
+  min-width: 0;
+}
+
+.top-card .info .school { font-size: 0.82rem; color: var(--c-text-soft); }
+.top-card .info .name { font-size: 1.02rem; font-weight: 600; }
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  background: var(--c-primary-soft);
+  color: var(--c-primary);
+  font-weight: 500;
+}
+
+.badge.warn { background: #fde9d8; color: #b45309; }
+.badge.danger { background: #fce4e0; color: var(--c-danger); }
+
+footer.legal {
+  margin-top: auto;
+  padding: 16px 20px 24px;
+  background: #ececec;
+  font-size: 0.78rem;
+  color: #555;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ─── 공통 앱 헤더 (STEP 1·2·3 상단 고정) ──────────────────── */
+.app-header {
+  background: var(--c-bg);
+  border-bottom: 1px solid var(--c-border);
+  padding: 10px 0;
+}
+
+.app-header__inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.app-header__logo {
+  font-weight: 700;
+  color: var(--c-primary);
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  /* 가안 텍스트 → 추후 실제 CI 이미지 배경으로 교체 가능 */
+}
+
+.app-header__org {
+  font-size: 0.82rem;
+  color: var(--c-text-soft);
+}
+
+/* ─── STEP 진행 표시 (헤더 아래) ──────────────────────────── */
+.step-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--c-primary-soft);
+  color: var(--c-primary);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.step-indicator__num { font-weight: 700; }
+.step-indicator__sep { opacity: 0.5; }
+
+/* ─── 검사명 헤더 (MJC-CAT + 부제) ────────────────────────── */
+.exam-title { margin: 0 0 14px; }
+
+.exam-title__main {
+  font-size: 2rem;
+  margin: 0;
+  color: var(--c-primary);
+  letter-spacing: -0.02em;
+  font-weight: 800;
+}
+
+.exam-title__sub {
+  margin: 4px 0 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--c-text);
+}
+
+.exam-title__abbr {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+}
+
+/* ─── STEP 2 · 응답자 정보 입력 ───────────────────────────── */
+.profile-section { padding: 18px 20px; }
+
+.profile-section__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--c-border);
+  margin-bottom: 14px;
+}
+
+.profile-section__letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--c-primary);
+  color: #fff;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.profile-section__title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.profile-section__sub {
+  margin: 2px 0 0;
+  font-size: 0.82rem;
+}
+
+.profile-section__body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profile-field__label {
+  font-weight: 600;
+  font-size: 0.96rem;
+}
+
+.profile-field__required { color: var(--c-danger); }
+
+.profile-field__help {
+  margin: 0;
+  font-size: 0.82rem;
+}
+
+.profile-field__input { margin-top: 2px; }
+
+.text-input {
+  width: 100%;
+  padding: 11px 13px;
+  font: inherit;
+  border: 1.5px solid var(--c-border);
+  border-radius: 10px;
+  background: var(--c-bg);
+  color: var(--c-text);
+}
+
+.text-input:focus,
+.dept-select:focus { outline: 2px solid var(--c-primary); outline-offset: 1px; }
+
+.dept-select {
+  width: 100%;
+  padding: 11px 13px;
+  font: inherit;
+  border: 1.5px solid var(--c-border);
+  border-radius: 10px;
+  background: var(--c-bg);
+  color: var(--c-text);
+  min-height: var(--tap-min);
+}
+
+/* 라디오 버튼 그룹 (모바일에서 wrap) */
+.radio-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.radio-btn {
+  background: var(--c-bg);
+  color: var(--c-text);
+  border: 1.5px solid var(--c-border);
+  padding: 10px 14px;
+  border-radius: var(--r-btn);
+  min-height: 42px;
+  font-size: 0.9rem;
+}
+
+.radio-btn.selected {
+  background: var(--c-primary);
+  color: #fff;
+  border-color: var(--c-primary);
+}
+
+.radio-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* 동의 박스 */
+.profile-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+/* 검증 에러 박스 */
+.profile-errors {
+  background: #fff5f4;
+  border-color: var(--c-danger);
+}
+
+.profile-errors ul {
+  margin: 8px 0 0;
+  padding-left: 1.2em;
+  color: var(--c-danger);
+  font-size: 0.9rem;
+}
+
+.mt8 { margin-top: 8px; }
+
+/* ─── 이어서 진행 모달 ───────────────────────────────────── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 30, 50, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+}
+
+.modal {
+  background: var(--c-bg);
+  border-radius: var(--r-card);
+  max-width: 420px;
+  width: 100%;
+  padding: 22px 22px 18px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+}
+
+.modal h2 {
+  font-size: 1.15rem;
+  color: var(--c-primary);
+}
+
