@@ -483,3 +483,159 @@ footer.legal {
   color: var(--c-primary);
 }
 
+/* ─── 관리자 대시보드 스켈레톤 ────────────────────────────── */
+.admin-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 20px 60px;
+  flex: 1;
+}
+
+.admin-side {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-card);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-self: flex-start;
+  position: sticky;
+  top: 16px;
+}
+
+.admin-side__role {
+  border-bottom: 1px solid var(--c-border);
+  padding-bottom: 12px;
+}
+
+.admin-side__role-label { margin-bottom: 2px; }
+.admin-side__role-value { font-weight: 700; color: var(--c-primary); margin-bottom: 8px; }
+.admin-side__role-switch { width: 100%; padding: 8px; min-height: 36px; font-size: 0.85rem; }
+
+.admin-side__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-nav-item {
+  background: transparent;
+  color: var(--c-text);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 10px 12px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 56px;
+}
+
+.admin-nav-item:hover { background: var(--c-bg-soft); }
+
+.admin-nav-item.selected {
+  background: var(--c-primary-soft);
+  border-color: var(--c-primary);
+  color: var(--c-primary);
+}
+
+.admin-nav-item__label { font-weight: 600; font-size: 0.95rem; }
+.admin-nav-item__desc { font-size: 0.78rem; line-height: 1.35; }
+
+.admin-side__note { padding-top: 8px; border-top: 1px solid var(--c-border); }
+
+.admin-main {
+  min-width: 0;
+}
+
+.admin-main h2 { font-size: 1.3rem; color: var(--c-primary); margin-bottom: 6px; }
+.admin-main h3 { font-size: 1.02rem; margin: 0 0 10px; }
+.admin-main section > p.muted { margin-top: 0; margin-bottom: 14px; }
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.kpi-card {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.kpi-card.warn   { background: #fff5e8; border-color: #f5a623; }
+.kpi-card.danger { background: #fff5f4; border-color: var(--c-danger); }
+
+.kpi-card__label { font-size: 0.8rem; color: var(--c-text-soft); margin-bottom: 6px; }
+.kpi-card__value { font-size: 1.4rem; font-weight: 700; color: var(--c-primary); }
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--c-border);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.admin-table thead th {
+  background: var(--c-bg-soft);
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: var(--c-text-soft);
+}
+
+.small { font-size: 0.82rem; }
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.role-pick {
+  background: var(--c-bg);
+  color: var(--c-text);
+  border: 1.5px solid var(--c-border);
+  border-radius: 10px;
+  padding: 16px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 80px;
+}
+
+.role-pick:hover { border-color: var(--c-primary); background: var(--c-primary-soft); }
+
+.word-cloud-placeholder {
+  height: 160px;
+  background: repeating-linear-gradient(45deg, #f6f8fb, #f6f8fb 6px, #e8eef9 6px, #e8eef9 12px);
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+/* 좁은 화면에서는 상단 메뉴 + 컨텐츠 세로 배치 */
+@media (max-width: 720px) {
+  .admin-shell {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+  .admin-side { position: static; }
+  .admin-side__nav { flex-direction: row; flex-wrap: wrap; }
+  .admin-nav-item { flex: 1 1 calc(50% - 4px); min-height: 50px; }
+}
+
