@@ -1,0 +1,309 @@
+{
+  "version": "1.0-draft",
+  "description": "응답자 정보 입력(STEP 2) 16개 항목 스키마. 학과 매칭 가중치에는 영향 없는 메타데이터(분석·상담용).",
+  "purpose": "메타데이터. lib/recommendation_engine.js 의 적합도 산출과는 무관.",
+  "sections": [
+    {
+      "key": "A",
+      "title": "기본 정보",
+      "subtitle": "필수 5개",
+      "fields": ["nickname", "birth_year", "gender", "academic_status", "self_designed_reason"]
+    },
+    {
+      "key": "B",
+      "title": "진로 방향",
+      "subtitle": "필수 2개 + 선택 1개",
+      "fields": ["career_direction", "decision_maker", "wants_counseling"]
+    },
+    {
+      "key": "C",
+      "title": "학습·경험 배경",
+      "subtitle": "모두 선택",
+      "fields": ["high_school_type", "high_school_major", "work_experience", "part_time_experience", "prior_college"]
+    },
+    {
+      "key": "D",
+      "title": "학과 선택 현황",
+      "subtitle": "모두 선택, 순차 노출",
+      "fields": ["preferred_dept_1", "preferred_dept_2", "preferred_dept_3"]
+    }
+  ],
+  "fields": {
+    "nickname": {
+      "order": 1,
+      "section": "A",
+      "label_ko": "닉네임",
+      "help_ko": "결과지에 표시될 닉네임을 입력해 주세요. 학번·이름은 수집하지 않습니다.",
+      "type": "text",
+      "required": true,
+      "min_length": 1,
+      "max_length": 20,
+      "placeholder": "예: 2027신입생, 홍길동"
+    },
+    "birth_year": {
+      "order": 2,
+      "section": "A",
+      "label_ko": "출생연도",
+      "type": "dropdown",
+      "required": true,
+      "range": { "min": 1990, "max": 2010 },
+      "label_format": "{year}년생"
+    },
+    "gender": {
+      "order": 3,
+      "section": "A",
+      "label_ko": "성별",
+      "type": "radio_buttons",
+      "required": true,
+      "options": [
+        { "value": "M", "label_ko": "남성" },
+        { "value": "F", "label_ko": "여성" },
+        { "value": "NONE", "label_ko": "응답하지 않음" }
+      ]
+    },
+    "academic_status": {
+      "order": 4,
+      "section": "A",
+      "label_ko": "학적 상태",
+      "type": "radio_buttons",
+      "required": true,
+      "options": [
+        { "value": "FRESHMAN", "label_ko": "신입생(2027학번)" },
+        { "value": "ENROLLED", "label_ko": "재학생" },
+        { "value": "TRANSFER_HOPEFUL", "label_ko": "편입 희망자" },
+        { "value": "POST_GRADUATION", "label_ko": "졸업 후 진로 탐색" }
+      ]
+    },
+    "self_designed_reason": {
+      "order": 5,
+      "section": "A",
+      "label_ko": "자유전공 진학 이유",
+      "help_ko": "가장 가까운 이유를 1개 선택해 주세요.",
+      "type": "radio_buttons",
+      "required": true,
+      "options": [
+        { "value": "UNDECIDED", "label_ko": "아직 진로를 정하지 못해서" },
+        { "value": "EXPLORE", "label_ko": "여러 분야를 두루 탐색하고 싶어서" },
+        { "value": "SCORE_MATCH", "label_ko": "성적·입시 결과에 맞춰서" },
+        { "value": "OTHER", "label_ko": "기타", "allow_text": true }
+      ]
+    },
+    "career_direction": {
+      "order": 6,
+      "section": "B",
+      "label_ko": "진로방향 유형",
+      "help_ko": "졸업 후 우선적으로 고려하는 경로 1개를 선택해 주세요.",
+      "type": "radio_buttons",
+      "required": true,
+      "options": [
+        { "value": "EMPLOYMENT", "label_ko": "취업" },
+        { "value": "STARTUP", "label_ko": "창업" },
+        { "value": "UNIV_TRANSFER", "label_ko": "4년제 편입" },
+        { "value": "GRAD_SCHOOL", "label_ko": "대학원 진학" },
+        { "value": "UNDECIDED", "label_ko": "아직 정하지 못함" }
+      ]
+    },
+    "decision_maker": {
+      "order": 7,
+      "section": "B",
+      "label_ko": "의사결정 유형",
+      "help_ko": "현재 학과·진로 선택에 가장 큰 영향을 주는 사람은 누구입니까?",
+      "type": "radio_buttons",
+      "required": true,
+      "options": [
+        { "value": "SELF", "label_ko": "본인" },
+        { "value": "FAMILY", "label_ko": "가족(부모·형제 등)" },
+        { "value": "FRIEND_SENIOR", "label_ko": "친구·선후배" },
+        { "value": "TEACHER", "label_ko": "교사·교수·진로상담사" },
+        { "value": "OTHER", "label_ko": "기타", "allow_text": true }
+      ]
+    },
+    "wants_counseling": {
+      "order": 8,
+      "section": "B",
+      "label_ko": "진로상담 희망",
+      "type": "radio_buttons",
+      "required": false,
+      "options": [
+        { "value": "NO", "label_ko": "원하지 않음" },
+        { "value": "AFTER_RESULT", "label_ko": "결과지 확인 후 결정" },
+        { "value": "REGARDLESS", "label_ko": "결과와 무관하게 상담 희망" }
+      ]
+    },
+    "high_school_type": {
+      "order": 9,
+      "section": "C",
+      "label_ko": "고등학교 유형",
+      "type": "radio_buttons",
+      "required": false,
+      "options": [
+        { "value": "GENERAL", "label_ko": "일반계 고등학교" },
+        { "value": "SPECIAL_PURPOSE", "label_ko": "특성화·특수목적고" },
+        { "value": "MEISTER", "label_ko": "마이스터고" },
+        { "value": "GED", "label_ko": "검정고시" },
+        { "value": "OTHER", "label_ko": "기타", "allow_text": true }
+      ]
+    },
+    "high_school_major": {
+      "order": 10,
+      "section": "C",
+      "label_ko": "고교 전공 분야",
+      "help_ko": "특성화고·마이스터고를 선택한 경우에만 응답해 주세요.",
+      "type": "text",
+      "required": false,
+      "max_length": 40,
+      "placeholder": "예: 정보통신과, 디자인과",
+      "visible_if": {
+        "field": "high_school_type",
+        "in": ["SPECIAL_PURPOSE", "MEISTER"]
+      }
+    },
+    "work_experience": {
+      "order": 11,
+      "section": "C",
+      "label_ko": "직장 경험",
+      "type": "compound",
+      "required": false,
+      "subfields": {
+        "has": {
+          "label_ko": "직장 근무 경험이 있습니까?",
+          "type": "radio_buttons",
+          "options": [
+            { "value": true, "label_ko": "있음" },
+            { "value": false, "label_ko": "없음" }
+          ]
+        },
+        "field": {
+          "label_ko": "근무 분야",
+          "type": "radio_buttons",
+          "visible_if": { "subfield": "has", "equals": true },
+          "options": [
+            { "value": "SERVICE", "label_ko": "서비스·판매" },
+            { "value": "OFFICE", "label_ko": "사무·관리" },
+            { "value": "MANUFACTURING", "label_ko": "제조·생산" },
+            { "value": "IT", "label_ko": "IT·기술" },
+            { "value": "EDUCATION_CARE", "label_ko": "교육·돌봄" },
+            { "value": "MEDICAL", "label_ko": "보건·의료" },
+            { "value": "OTHER", "label_ko": "기타", "allow_text": true }
+          ]
+        }
+      }
+    },
+    "part_time_experience": {
+      "order": 12,
+      "section": "C",
+      "label_ko": "아르바이트 경험",
+      "type": "compound",
+      "required": false,
+      "subfields": {
+        "has": {
+          "label_ko": "아르바이트 경험이 있습니까?",
+          "type": "radio_buttons",
+          "options": [
+            { "value": true, "label_ko": "있음" },
+            { "value": false, "label_ko": "없음" }
+          ]
+        },
+        "field": {
+          "label_ko": "주된 분야",
+          "type": "radio_buttons",
+          "visible_if": { "subfield": "has", "equals": true },
+          "options": [
+            { "value": "SERVICE", "label_ko": "서비스·판매" },
+            { "value": "OFFICE", "label_ko": "사무·관리" },
+            { "value": "MANUFACTURING", "label_ko": "제조·생산" },
+            { "value": "IT", "label_ko": "IT·기술" },
+            { "value": "EDUCATION_CARE", "label_ko": "교육·돌봄" },
+            { "value": "MEDICAL", "label_ko": "보건·의료" },
+            { "value": "OTHER", "label_ko": "기타", "allow_text": true }
+          ]
+        }
+      }
+    },
+    "prior_college": {
+      "order": 13,
+      "section": "C",
+      "label_ko": "이전 대학 경험",
+      "type": "radio_buttons",
+      "required": false,
+      "options": [
+        { "value": "NONE", "label_ko": "없음" },
+        { "value": "ENROLLED", "label_ko": "재학 중(이중)" },
+        { "value": "GRADUATED", "label_ko": "졸업 후 재입학" },
+        { "value": "WITHDREW", "label_ko": "중도 포기 경험" }
+      ]
+    },
+    "preferred_dept_1": {
+      "order": 14,
+      "section": "D",
+      "label_ko": "희망학과 1지망",
+      "help_ko": "현재 마음에 두고 있는 학과가 있으면 선택해 주세요. 없으면 비워두셔도 됩니다.",
+      "type": "department_dropdown",
+      "required": false,
+      "options_source": "departments_dna.json"
+    },
+    "preferred_dept_2": {
+      "order": 15,
+      "section": "D",
+      "label_ko": "희망학과 2지망",
+      "type": "department_dropdown",
+      "required": false,
+      "options_source": "departments_dna.json",
+      "visible_if": {
+        "field": "preferred_dept_1",
+        "not_null": true
+      }
+    },
+    "preferred_dept_3": {
+      "order": 16,
+      "section": "D",
+      "label_ko": "희망학과 3지망",
+      "type": "department_dropdown",
+      "required": false,
+      "options_source": "departments_dna.json",
+      "visible_if": {
+        "field": "preferred_dept_2",
+        "not_null": true
+      }
+    }
+  },
+  "department_groups": [
+    {
+      "school": "AI.SW 융합학부",
+      "codes": ["AISW_CS", "AISW_GAME", "AISW_SEC", "AISW_ICT", "AISW_ELEC"]
+    },
+    {
+      "school": "스마트시스템공학부",
+      "codes": ["SMART_MECH", "SMART_ELEC", "SMART_DRONE", "SMART_CIVIL", "SMART_GEO", "SMART_IE"]
+    },
+    {
+      "school": "경영휴먼라이프학부",
+      "codes": [
+        "BIZ_MGT", "BIZ_TAX", "BIZ_REAL", "BIZ_PUBADM", "BIZ_AIR",
+        "BIZ_JP", "BIZ_CN", "BIZ_EDU", "BIZ_WELF", "BIZ_WRITE"
+      ]
+    },
+    {
+      "school": "예술건강학부",
+      "codes": [
+        "ART_INDD", "ART_COMD", "ART_FASH", "ART_FILM", "ART_MUS",
+        "ART_BTY_HR", "ART_BTY_SC", "ART_BTY_BS", "ART_PE", "ART_MED"
+      ]
+    }
+  ],
+  "validation": {
+    "required_field_keys": [
+      "nickname", "birth_year", "gender", "academic_status", "self_designed_reason",
+      "career_direction", "decision_maker"
+    ],
+    "duplicate_preference_check": {
+      "fields": ["preferred_dept_1", "preferred_dept_2", "preferred_dept_3"],
+      "rule": "동일 학과를 1·2·3지망에 중복 선택할 수 없습니다."
+    }
+  },
+  "consent": {
+    "key": "anonymous_use_consent",
+    "label_ko": "본 응답은 익명 처리되어 학과 운영·진로 상담 자료로 활용됨에 동의합니다. 개인을 식별할 수 있는 형태로는 가공·공개되지 않습니다.",
+    "required": true
+  }
+}
