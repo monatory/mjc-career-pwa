@@ -36,6 +36,10 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,svg,woff2,json}"],
         navigateFallback: "index.html",
         cleanupOutdatedCaches: true,
+        // 새 SW를 즉시 활성화해 사용자가 한 번만 새로고침해도
+        // 최신 빌드를 보게 한다. (PWA 첫 방문 옛 버전 문제 완화)
+        skipWaiting: true,
+        clientsClaim: true,
       },
       devOptions: {
         enabled: true,
