@@ -721,34 +721,55 @@ footer.legal {
   font-size: 0.78rem;
 }
 
-/* 레이더 차트 + 진단축 점수 표 (>720px에서 좌우 배치) */
-.radar-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+/* 진단축 점수 표 — 레이더 차트 아래 펼치기/접기 토글 */
+.axis-score-details {
+  margin-top: 8px;
+  border-top: 1px solid var(--c-border);
+  padding-top: 8px;
 }
-.radar-wrap__chart { flex: 1 1 auto; min-width: 0; }
+.axis-score-details > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 4px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--c-primary);
+  font-weight: 500;
+  user-select: none;
+}
+.axis-score-details > summary::-webkit-details-marker { display: none; }
+.axis-score-details > summary:hover { background: var(--c-bg-soft); }
+
+.axis-score-details__icon {
+  display: inline-block;
+  transition: transform 0.2s ease;
+  font-size: 0.9rem;
+}
+.axis-score-details[open] > summary > .axis-score-details__icon {
+  transform: rotate(180deg);
+}
 
 .axis-score-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  margin-top: 6px;
 }
 .axis-score-table th,
 .axis-score-table td {
-  padding: 6px 10px;
+  padding: 8px 10px;
   border-bottom: 1px solid var(--c-border);
 }
 .axis-score-table thead th {
   background: var(--c-bg-soft);
   font-weight: 600;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--c-text-soft);
-}
-
-@media (min-width: 721px) {
-  .radar-wrap { flex-direction: row; align-items: center; }
-  .axis-score-table { width: 220px; flex-shrink: 0; }
+  text-align: left;
 }
 
 /* ─── 관리자 대시보드 스켈레톤 ────────────────────────────── */

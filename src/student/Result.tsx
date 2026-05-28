@@ -191,23 +191,27 @@ export default function Result() {
 
       <div className="card">
         <h2>진단축 8개 프로파일</h2>
-        <div className="radar-wrap">
-          <div className="radar-wrap__chart">
-            <ResponsiveContainer width="100%" height={320}>
-              <RadarChart data={radarData}>
-                <PolarGrid />
-                <PolarAngleAxis dataKey="axis" tick={{ fontSize: 12 }} />
-                <PolarRadiusAxis angle={90} domain={[0, 5]} tick={{ fontSize: 10 }} />
-                <Radar
-                  name="응답"
-                  dataKey="value"
-                  stroke="#0b3d91"
-                  fill="#0b3d91"
-                  fillOpacity={0.35}
-                />
-              </RadarChart>
-            </ResponsiveContainer>
-          </div>
+        <div style={{ width: "100%", height: 320 }}>
+          <ResponsiveContainer>
+            <RadarChart data={radarData}>
+              <PolarGrid />
+              <PolarAngleAxis dataKey="axis" tick={{ fontSize: 12 }} />
+              <PolarRadiusAxis angle={90} domain={[0, 5]} tick={{ fontSize: 10 }} />
+              <Radar
+                name="응답"
+                dataKey="value"
+                stroke="#0b3d91"
+                fill="#0b3d91"
+                fillOpacity={0.35}
+              />
+            </RadarChart>
+          </ResponsiveContainer>
+        </div>
+        <details className="axis-score-details">
+          <summary>
+            <span className="axis-score-details__label">점수 자세히 보기</span>
+            <span className="axis-score-details__icon" aria-hidden>▾</span>
+          </summary>
           <table className="axis-score-table">
             <thead>
               <tr><th>진단축</th><th style={{ textAlign: "right" }}>점수</th></tr>
@@ -224,7 +228,7 @@ export default function Result() {
               ))}
             </tbody>
           </table>
-        </div>
+        </details>
       </div>
 
       <div className="card">
