@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "source": "2026 명지전문대학 자유전공학과 신입생 가이드북",
+  "notes": {
+    "purpose": "1학기 필수 과목 누락 시 자격증 취득이 어려운 학과만 등록. 결과지·수강계획서에서 경고 배너 표시 근거.",
+    "warning_level": "HIGH = 결과지 상단/카드에 강조 배너, MEDIUM/LOW는 향후 사용 예약.",
+    "pending_dept_data": "true면 학과 자체 데이터(DNA·카드·교과)는 단계 B에서 추가 예정. 자격증 자리만 미리 마련."
+  },
+  "departments": {
+    "BIZ_WELF": {
+      "dept_name": "사회복지과",
+      "warning_level": "HIGH",
+      "warning_message": "사회복지사 2급 자격증 취득에는 1학기 필수 5개 과목이 있습니다. 누락 시 자격증 취득이 어려울 수 있으니 수강 신청 전 반드시 학과 상담을 권장합니다.",
+      "certifications": [
+        {
+          "name": "사회복지사 2급",
+          "required_courses_1st_semester": [
+            "사회복지학개론",
+            "정신건강론",
+            "아동복지론",
+            "지역사회복지론",
+            "노인복지론"
+          ]
+        },
+        {
+          "name": "건강가정사",
+          "required_courses_1st_semester": [
+            "건강가정론"
+          ]
+        }
+      ]
+    },
+    "BIZ_YOUTH": {
+      "dept_name": "청소년교육상담과",
+      "warning_level": "HIGH",
+      "warning_message": "평생교육사·청소년지도사 자격증 취득에는 1학기 필수 과목이 있습니다. 누락 시 자격증 취득이 어려울 수 있으니 수강 신청 전 반드시 학과 상담을 권장합니다.",
+      "certifications": [
+        {
+          "name": "평생교육사",
+          "required_courses_1st_semester": ["평생교육론"],
+          "elective_courses_1st_semester": ["청소년교육론", "성인학습및상담"]
+        },
+        {
+          "name": "청소년지도사",
+          "required_courses_1st_semester": ["청소년활동", "청소년심리및상담"]
+        }
+      ],
+      "pending_dept_data": true
+    }
+  }
+}

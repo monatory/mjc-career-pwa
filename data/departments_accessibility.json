@@ -1,0 +1,47 @@
+{
+  "version": "2026-v1",
+  "source": "2026 명지전문대학 자유전공학과 신입생 가이드북",
+  "notes": {
+    "ACCESSIBLE": "자유전공학과에서 직접 진입 가능. 결과지·수강계획서에 정상 노출.",
+    "NOT_ACCESSIBLE": "별도 모집 단위. 결과지에는 적합도 계산 결과 그대로 노출하되 안내 배너 표시. 수강계획서에서는 노출하지 않음.",
+    "stage_b_pending": "신규 3개 학과(BIZ_YOUTH·ART_AIMD·ART_BTY_MN)는 단계 B에서 추가 예정. 추가 시 모두 ACCESSIBLE."
+  },
+  "labels": {
+    "ACCESSIBLE": "자유전공 진입 가능",
+    "NOT_ACCESSIBLE": "별도 모집 학과"
+  },
+  "not_accessible_notice": "이 학과는 자유전공학과에서 직접 진입할 수 없습니다. 입학 시 별도 모집 단위로 운영되며, 진학을 희망하시면 학생지원처 진로상담을 신청해 주세요.",
+  "accessibility": {
+    "AISW_CS": "ACCESSIBLE",
+    "AISW_GAME": "ACCESSIBLE",
+    "AISW_SEC": "ACCESSIBLE",
+    "AISW_ICT": "ACCESSIBLE",
+    "AISW_ELEC": "ACCESSIBLE",
+    "SMART_MECH": "ACCESSIBLE",
+    "SMART_ELEC": "ACCESSIBLE",
+    "SMART_DRONE": "ACCESSIBLE",
+    "SMART_CIVIL": "ACCESSIBLE",
+    "SMART_GEO": "ACCESSIBLE",
+    "SMART_IE": "ACCESSIBLE",
+    "BIZ_MGT": "ACCESSIBLE",
+    "BIZ_TAX": "ACCESSIBLE",
+    "BIZ_REAL": "ACCESSIBLE",
+    "BIZ_PUBADM": "ACCESSIBLE",
+    "BIZ_AIR": "ACCESSIBLE",
+    "BIZ_JP": "ACCESSIBLE",
+    "BIZ_CN": "ACCESSIBLE",
+    "BIZ_EDU": "NOT_ACCESSIBLE",
+    "BIZ_WELF": "ACCESSIBLE",
+    "BIZ_WRITE": "ACCESSIBLE",
+    "ART_INDD": "ACCESSIBLE",
+    "ART_COMD": "ACCESSIBLE",
+    "ART_FASH": "ACCESSIBLE",
+    "ART_FILM": "NOT_ACCESSIBLE",
+    "ART_MUS": "NOT_ACCESSIBLE",
+    "ART_BTY_HR": "ACCESSIBLE",
+    "ART_BTY_SC": "ACCESSIBLE",
+    "ART_BTY_BS": "ACCESSIBLE",
+    "ART_PE": "NOT_ACCESSIBLE",
+    "ART_MED": "ACCESSIBLE"
+  }
+}

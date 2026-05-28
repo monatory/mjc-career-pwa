@@ -1,0 +1,331 @@
+{
+  "version": "1.0",
+  "source": "2026 명지전문대학 자유전공학과 신입생 가이드북 (p.19~21)",
+  "notes": {
+    "credits_unit": "정수 학점. 인성채플은 P/NP(is_pass_fail=true)이며 학점 합산에서 0으로 처리.",
+    "strongly_recommended": "원자료의 ● 표시 = 학과 강력추천 (true).",
+    "name_in_guidebook": "우리 시스템의 학과명과 가이드북 표기가 다를 때 보조 표기용. 같아도 명시.",
+    "stage_b_pending": "신규 학과 3개(BIZ_YOUTH·ART_AIMD·ART_BTY_MN)는 단계 B에서 추가 예정."
+  },
+  "common_courses": {
+    "free_major_dedicated": [
+      {
+        "name": "전공기초학문탐구",
+        "credits": 1,
+        "note": "선이수 가능"
+      },
+      {
+        "name": "전공탐색동행세미나",
+        "credits": 2
+      }
+    ],
+    "liberal_required": [
+      {
+        "name": "인성채플",
+        "credits": 0,
+        "is_pass_fail": true
+      },
+      {
+        "name": "성경과 삶",
+        "credits": 2
+      }
+    ],
+    "strongly_recommended_liberal": [
+      {
+        "name": "진로탐색과 자기계발",
+        "credits": 2
+      },
+      {
+        "name": "컴퓨터활용능력",
+        "credits": 2
+      }
+    ]
+  },
+  "departments": {
+    "AISW_GAME": {
+      "name_in_guidebook": "AI게임소프트웨어학과",
+      "duration_years": 3,
+      "courses": [
+        { "name": "컴퓨팅사고기반혁신적개발", "credits": 3, "strongly_recommended": false },
+        { "name": "게임프로그래밍", "credits": 3, "strongly_recommended": true },
+        { "name": "게임그래픽기초", "credits": 3, "strongly_recommended": true },
+        { "name": "프론트엔드프로그래밍", "credits": 3, "strongly_recommended": false },
+        { "name": "객체지향프로그래밍", "credits": 3, "strongly_recommended": true }
+      ]
+    },
+    "AISW_CS": {
+      "name_in_guidebook": "컴퓨터공학과",
+      "duration_years": 3,
+      "courses": [
+        { "name": "컴퓨터과학개론", "credits": 3, "strongly_recommended": true },
+        { "name": "프로그래밍언어실습Ⅰ", "credits": 3, "strongly_recommended": true },
+        { "name": "인터넷콘텐츠", "credits": 3, "strongly_recommended": true }
+      ]
+    },
+    "AISW_SEC": {
+      "name_in_guidebook": "컴퓨터보안공학과",
+      "duration_years": 3,
+      "courses": [
+        { "name": "정보통신개론", "credits": 3, "strongly_recommended": true },
+        { "name": "보안코딩", "credits": 3, "strongly_recommended": true },
+        { "name": "알고리즘과데이터구조", "credits": 3, "strongly_recommended": true },
+        { "name": "인공지능코딩기초", "credits": 3, "strongly_recommended": false }
+      ]
+    },
+    "AISW_ELEC": {
+      "name_in_guidebook": "전자공학과",
+      "duration_years": 3,
+      "courses": [
+        { "name": "공학수학", "credits": 3, "strongly_recommended": true },
+        { "name": "디지털공학", "credits": 3, "strongly_recommended": true },
+        { "name": "C프로그래밍", "credits": 3, "strongly_recommended": false },
+        { "name": "기초회로및실험", "credits": 3, "strongly_recommended": true }
+      ]
+    },
+    "AISW_ICT": {
+      "name_in_guidebook": "정보통신공학과",
+      "duration_years": 3,
+      "courses": [
+        { "name": "인터넷프로그래밍", "credits": 3, "strongly_recommended": true },
+        { "name": "프로그래밍언어실습", "credits": 3, "strongly_recommended": true },
+        { "name": "디지털공학개론", "credits": 3, "strongly_recommended": true },
+        { "name": "정보통신개론", "credits": 3, "strongly_recommended": false }
+      ]
+    },
+    "SMART_MECH": {
+      "name_in_guidebook": "기계공학과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "기계공학기초", "credits": 2, "strongly_recommended": true },
+        { "name": "전산응용제도", "credits": 2, "strongly_recommended": true },
+        { "name": "기계제작실습", "credits": 3, "strongly_recommended": true },
+        { "name": "AI영상인식응용실습", "credits": 3, "strongly_recommended": false },
+        { "name": "승강기기초", "credits": 2, "strongly_recommended": false }
+      ]
+    },
+    "SMART_IE": {
+      "name_in_guidebook": "산업경영공학과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "경영과학", "credits": 3, "strongly_recommended": true },
+        { "name": "물류시스템경영", "credits": 3, "strongly_recommended": true },
+        { "name": "산업경영공학개론", "credits": 3, "strongly_recommended": true },
+        { "name": "통계학", "credits": 3, "strongly_recommended": false }
+      ]
+    },
+    "SMART_ELEC": {
+      "name_in_guidebook": "전기공학과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "회로이론Ⅰ", "credits": 3, "strongly_recommended": true },
+        { "name": "회로이론실습", "credits": 3, "strongly_recommended": false },
+        { "name": "전기자기학Ⅰ", "credits": 3, "strongly_recommended": true },
+        { "name": "디지털공학", "credits": 3, "strongly_recommended": true },
+        { "name": "C언어", "credits": 3, "strongly_recommended": false },
+        { "name": "AI전기디자인씽킹", "credits": 2, "strongly_recommended": false }
+      ]
+    },
+    "SMART_CIVIL": {
+      "name_in_guidebook": "토목공학과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "수리학Ⅰ", "credits": 3, "strongly_recommended": false },
+        { "name": "응용역학Ⅰ", "credits": 3, "strongly_recommended": true },
+        { "name": "토질역학Ⅰ", "credits": 3, "strongly_recommended": true },
+        { "name": "상수도설계", "credits": 2, "strongly_recommended": false },
+        { "name": "측량학및실습", "credits": 3, "strongly_recommended": true }
+      ]
+    },
+    "SMART_GEO": {
+      "name_in_guidebook": "지적공간정보학과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "기초측량및실습", "credits": 3, "strongly_recommended": true },
+        { "name": "AI지적학", "credits": 3, "strongly_recommended": true },
+        { "name": "도시계획Ⅰ", "credits": 3, "strongly_recommended": false },
+        { "name": "민법총칙", "credits": 3, "strongly_recommended": true }
+      ]
+    },
+    "SMART_DRONE": {
+      "name_in_guidebook": "드론정보공학과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "드론과항공기상", "credits": 3, "strongly_recommended": true },
+        { "name": "측량학및실습", "credits": 3, "strongly_recommended": false },
+        { "name": "항공법규", "credits": 2, "strongly_recommended": true },
+        { "name": "드론조종및시뮬레이션실습", "credits": 3, "strongly_recommended": true }
+      ]
+    },
+    "BIZ_MGT": {
+      "name_in_guidebook": "경영학과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "회계원리", "credits": 3, "strongly_recommended": true },
+        { "name": "마케팅원론", "credits": 3, "strongly_recommended": true },
+        { "name": "조직행위론", "credits": 3, "strongly_recommended": false },
+        { "name": "사무자동화", "credits": 3, "strongly_recommended": false },
+        { "name": "경영학개론", "credits": 3, "strongly_recommended": true }
+      ]
+    },
+    "BIZ_TAX": {
+      "name_in_guidebook": "세무회계과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "회계원리", "credits": 3, "strongly_recommended": true },
+        { "name": "세법개론", "credits": 3, "strongly_recommended": true },
+        { "name": "경제학", "credits": 3, "strongly_recommended": false },
+        { "name": "창업과경영마인드", "credits": 3, "strongly_recommended": true }
+      ]
+    },
+    "BIZ_REAL": {
+      "name_in_guidebook": "부동산경영과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "부동산경제학", "credits": 3, "strongly_recommended": false },
+        { "name": "부동산사법Ⅰ", "credits": 3, "strongly_recommended": true },
+        { "name": "부동산AI·디지털정보처리", "credits": 3, "strongly_recommended": true },
+        { "name": "부동산학개론", "credits": 3, "strongly_recommended": true }
+      ]
+    },
+    "BIZ_WELF": {
+      "name_in_guidebook": "사회복지과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "사회복지학개론", "credits": 3, "strongly_recommended": true },
+        { "name": "정신건강론", "credits": 3, "strongly_recommended": true },
+        { "name": "아동복지론", "credits": 3, "strongly_recommended": true },
+        { "name": "지역사회복지론", "credits": 3, "strongly_recommended": true },
+        { "name": "노인복지론", "credits": 3, "strongly_recommended": true },
+        { "name": "건강가정론", "credits": 3, "strongly_recommended": true }
+      ]
+    },
+    "BIZ_PUBADM": {
+      "name_in_guidebook": "공공행정서비스과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "행정학개론", "credits": 3, "strongly_recommended": true },
+        { "name": "조직론", "credits": 3, "strongly_recommended": true },
+        { "name": "자치행정론", "credits": 3, "strongly_recommended": false },
+        { "name": "사무자동화", "credits": 3, "strongly_recommended": true }
+      ]
+    },
+    "BIZ_AIR": {
+      "name_in_guidebook": "항공서비스과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "이미지메이킹실습", "credits": 3, "strongly_recommended": true },
+        { "name": "항공객실업무이해", "credits": 3, "strongly_recommended": true },
+        { "name": "항공안전보안실습", "credits": 3, "strongly_recommended": false },
+        { "name": "항공운송실무실습", "credits": 3, "strongly_recommended": true },
+        { "name": "기초토익", "credits": 3, "strongly_recommended": false }
+      ]
+    },
+    "BIZ_CN": {
+      "name_in_guidebook": "중국어비즈니스과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "초급중국어작문", "credits": 3, "strongly_recommended": false },
+        { "name": "중국어회화Ⅰ", "credits": 3, "strongly_recommended": true },
+        { "name": "초급중국어독해", "credits": 3, "strongly_recommended": true },
+        { "name": "중국어문법", "credits": 3, "strongly_recommended": true }
+      ]
+    },
+    "BIZ_JP": {
+      "name_in_guidebook": "일본어과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "기초일본어회화", "credits": 3, "strongly_recommended": true },
+        { "name": "일본어입문", "credits": 3, "strongly_recommended": true },
+        { "name": "일본어작문Ⅰ", "credits": 3, "strongly_recommended": true }
+      ]
+    },
+    "BIZ_WRITE": {
+      "name_in_guidebook": "문예창작과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "문예창작", "credits": 3, "strongly_recommended": false },
+        { "name": "소설창작론", "credits": 3, "strongly_recommended": true },
+        { "name": "시론", "credits": 3, "strongly_recommended": true },
+        { "name": "희곡론", "credits": 3, "strongly_recommended": true },
+        { "name": "소설의이해및분석", "credits": 3, "strongly_recommended": false }
+      ]
+    },
+    "ART_INDD": {
+      "name_in_guidebook": "산업디자인학과",
+      "duration_years": 3,
+      "courses": [
+        { "name": "기초공간표현기법", "credits": 2, "strongly_recommended": false },
+        { "name": "기초공간디자인", "credits": 3, "strongly_recommended": true },
+        { "name": "기초제품표현기법", "credits": 2, "strongly_recommended": false },
+        { "name": "기초산업디자인", "credits": 3, "strongly_recommended": true },
+        { "name": "2D컴퓨터그래픽", "credits": 2, "strongly_recommended": true },
+        { "name": "입체조형", "credits": 3, "strongly_recommended": false },
+        { "name": "디자인트렌드", "credits": 2, "strongly_recommended": false }
+      ]
+    },
+    "ART_FASH": {
+      "name_in_guidebook": "패션·리빙디자인과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "기초디자인", "credits": 2, "strongly_recommended": false },
+        { "name": "써피스디자인실습", "credits": 3, "strongly_recommended": false },
+        { "name": "패션디자인론", "credits": 2, "strongly_recommended": true },
+        { "name": "패턴과소잉", "credits": 3, "strongly_recommended": true },
+        { "name": "리빙오브제", "credits": 3, "strongly_recommended": true }
+      ]
+    },
+    "ART_COMD": {
+      "name_in_guidebook": "커뮤니케이션디자인과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "레이아웃디자인", "credits": 3, "strongly_recommended": true },
+        { "name": "타이포그라피Ⅰ", "credits": 3, "strongly_recommended": true },
+        { "name": "영상디자인기초", "credits": 3, "strongly_recommended": true },
+        { "name": "일러스트레이션", "credits": 3, "strongly_recommended": false }
+      ]
+    },
+    "ART_BTY_SC": {
+      "name_in_guidebook": "뷰티매니지먼트과 스킨케어·메디컬코스메틱전공",
+      "duration_years": 2,
+      "courses": [
+        { "name": "피부미용학", "credits": 2, "strongly_recommended": false },
+        { "name": "화장품학", "credits": 2, "strongly_recommended": false },
+        { "name": "기초에스테틱", "credits": 3, "strongly_recommended": true },
+        { "name": "뷰티메이크업", "credits": 3, "strongly_recommended": false },
+        { "name": "네일케어실습", "credits": 2, "strongly_recommended": false },
+        { "name": "다이어트건강관리실습", "credits": 3, "strongly_recommended": true }
+      ]
+    },
+    "ART_BTY_HR": {
+      "name_in_guidebook": "뷰티매니지먼트과 헤어디자인전공",
+      "duration_years": 2,
+      "courses": [
+        { "name": "SNS마케팅실습", "credits": 3, "strongly_recommended": true },
+        { "name": "맨즈커트", "credits": 3, "strongly_recommended": false },
+        { "name": "아이롱실습", "credits": 3, "strongly_recommended": true },
+        { "name": "베이직헤어컬러링", "credits": 3, "strongly_recommended": true }
+      ]
+    },
+    "ART_BTY_BS": {
+      "name_in_guidebook": "뷰티매니지먼트과 방송스타일디렉터전공",
+      "duration_years": 2,
+      "courses": [
+        { "name": "일러스트레이션", "credits": 3, "strongly_recommended": true },
+        { "name": "패션기초실습", "credits": 3, "strongly_recommended": false },
+        { "name": "스타일리스트실습", "credits": 3, "strongly_recommended": true },
+        { "name": "퍼스널이미지", "credits": 3, "strongly_recommended": true },
+        { "name": "기초쏘잉Ⅰ", "credits": 3, "strongly_recommended": false }
+      ]
+    },
+    "ART_MED": {
+      "name_in_guidebook": "보건의료정보과",
+      "duration_years": 2,
+      "courses": [
+        { "name": "공중보건학", "credits": 3, "strongly_recommended": true },
+        { "name": "프로그래밍언어", "credits": 3, "strongly_recommended": false },
+        { "name": "의료정보관리와인공지능", "credits": 3, "strongly_recommended": true },
+        { "name": "의학용어", "credits": 3, "strongly_recommended": true }
+      ]
+    }
+  }
+}
