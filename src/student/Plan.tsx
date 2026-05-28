@@ -63,10 +63,36 @@ export default function Plan() {
   const cache = loadResultCache();
   const nick = getNickname() || "익명";
 
-  // 결과지 캐시 없으면 STEP 1 회귀
-  useEffect(() => {
-    if (!cache) nav("/", { replace: true });
-  }, [cache, nav]);
+  // 결과지 캐시가 없으면 자동 이동 대신 안내 화면을 보여준다.
+  // QR/링크로 /plan 만 직접 받은 학생이 "왜 이동됐지?" 혼란을 겪지 않도록
+  // 명시적인 메시지를 노출하고 본인이 검사를 시작하도록 유도.
+  if (!cache) {
+    return (
+      <>
+        <AppHeader />
+        <main className="page plan-page plan-page--empty">
+          <div className="card plan-empty">
+            <h1 className="plan-title">
+              <span aria-hidden>📋</span> 수강 계획서
+            </h1>
+            <p>
+              수강 계획서는 진단 결과를 바탕으로 1학기 학습 계획을 세우는
+              화면입니다. 진단을 먼저 완료해 주세요.
+            </p>
+            <p className="muted small">
+              90문항(약 12~15분)을 응답하시면 31개 학과 중 적합도 TOP5를
+              먼저 안내해 드립니다.
+            </p>
+            <div className="btn-row">
+              <button onClick={() => nav("/", { replace: true })}>
+                검사 시작하기 →
+              </button>
+            </div>
+          </div>
+        </main>
+      </>
+    );
+  }
 
   /* ── 섹션별 과목 목록 (계산은 1회) ────────────────────────────── */
   const sections = useMemo(() => {

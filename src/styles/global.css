@@ -1148,6 +1148,27 @@ footer.legal {
 .plan-page {
   padding-bottom: 80px;
 }
+.plan-page--empty {
+  padding-top: 32px;
+}
+.plan-empty {
+  text-align: center;
+  max-width: 480px;
+  margin: 24px auto;
+  padding: 28px 24px;
+}
+.plan-empty .plan-title {
+  justify-content: center;
+  margin: 0 0 12px;
+}
+.plan-empty p {
+  margin: 0 0 10px;
+  line-height: 1.6;
+}
+.plan-empty .btn-row {
+  margin-top: 18px;
+  justify-content: center;
+}
 .plan-back-row {
   margin: 0 0 6px;
 }
