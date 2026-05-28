@@ -54,7 +54,7 @@ export function exportAllResponsesCsv(responses: SavedResponse[]) {
       r.anonymousId,
       r.completedAt,
       p.nickname ?? "",
-      p.birth_year ?? "",
+      p.birth_year == null ? "" : String(p.birth_year),
       p.gender ?? "",
       p.academic_status ?? "",
       p.self_designed_reason ?? "",

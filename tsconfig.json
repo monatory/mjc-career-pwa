@@ -28,6 +28,6 @@
       "@lib/*": ["lib/*"]
     }
   },
-  "include": ["src", "lib/recommendation_engine.d.ts"],
+  "include": ["src", "lib/recommendation_engine.d.ts", "lib/analytics.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

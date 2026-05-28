@@ -162,7 +162,7 @@ export function aggregateHitSummary(responses: SavedResponse[]) {
 
 export interface DistributionRow { label: string; count: number; ratio: number; }
 
-function countBy<T extends string | number | null | undefined>(
+function countBy<T extends string | number | boolean | null | undefined>(
   responses: SavedResponse[],
   picker: (p: SavedResponse["profile"]) => T,
 ): Map<string, number> {

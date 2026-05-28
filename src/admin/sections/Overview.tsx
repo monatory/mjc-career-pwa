@@ -2,7 +2,7 @@
  * 종합 현황 — KPI 카드 + 참여 추이 시계열
  * 권한: CENTER / EDU_SUPPORT / DEPT_HEAD 공통
  */
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Area, AreaChart } from "recharts";
+import { XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Area, AreaChart } from "recharts";
 import { mockKpi, mockTrend } from "../mockData";
 import { aggregateKpi, aggregateTrend } from "../../lib/firestoreAdmin";
 import { exportAllResponsesCsv } from "../csvExport";
