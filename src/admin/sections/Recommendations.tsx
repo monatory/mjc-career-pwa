@@ -31,25 +31,37 @@ export default function Recommendations({ role, responses }: Props) {
 
   return (
     <section>
-      <h2>학과별 추천 분포</h2>
-      {role === "DEPT_HEAD" && (
-        <p className="muted small">
-          현재 권한: 학과장 — 본인 학과({MOCK_DEPT_HEAD_OF})와 같은 학부의 집계만 표시됩니다.
-        </p>
-      )}
+      <div className="section-head">
+        <h2>학과별 추천 분포</h2>
+      </div>
+      <p className="section-desc">
+        시스템이 학생별 TOP1·TOP5 추천에 학과를 몇 번 포함시켰는지 집계합니다.
+        {role === "DEPT_HEAD" && ` (학과장 권한 — 본인 학과 ${MOCK_DEPT_HEAD_OF}과 같은 학부 한정)`}
+      </p>
 
-      <div className="card">
+      <div className="card chart-card">
         <h3>TOP1 / TOP5 분포 (상위 10개 학과)</h3>
-        <div style={{ width: "100%", height: 320 }}>
+        <div style={{ width: "100%", height: 380 }}>
           <ResponsiveContainer>
-            <BarChart data={chartData} margin={{ top: 8, right: 8, bottom: 28, left: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e8eef9" />
-              <XAxis dataKey="name" tick={{ fontSize: 10 }} angle={-25} textAnchor="end" interval={0} />
-              <YAxis tick={{ fontSize: 11 }} />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="TOP1" fill="#0b3d91" />
-              <Bar dataKey="TOP5" fill="#f5a623" />
+            <BarChart data={chartData} margin={{ top: 12, right: 12, bottom: 52, left: -4 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e8eef9" vertical={false} />
+              <XAxis
+                dataKey="name"
+                tick={{ fontSize: 11 }}
+                angle={-25}
+                textAnchor="end"
+                interval={0}
+                tickLine={false}
+                axisLine={{ stroke: "#d8dde6" }}
+              />
+              <YAxis tick={{ fontSize: 11 }} tickLine={false} axisLine={false} width={36} />
+              <Tooltip
+                contentStyle={{ borderRadius: 8, border: "1px solid #d8dde6", fontSize: 13 }}
+                cursor={{ fill: "rgba(11,61,145,0.05)" }}
+              />
+              <Legend wrapperStyle={{ paddingTop: 8 }} />
+              <Bar dataKey="TOP1" fill="#0b3d91" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="TOP5" fill="#f5a623" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

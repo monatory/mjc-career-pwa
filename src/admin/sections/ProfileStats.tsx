@@ -27,13 +27,16 @@ export default function ProfileStats({ responses }: Props) {
 
   return (
     <section>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 8 }}>
+      <div className="section-head">
         <h2>응답자 통계</h2>
         <button className="ghost" onClick={() => exportProfileStatsCsv(stats)}>
           전체 통계 CSV 다운로드
         </button>
       </div>
-      <p className="muted small">총 응답자 {stats.total}명 · 학번·이름은 일체 수집·표시하지 않습니다.</p>
+      <p className="section-desc">
+        STEP 2에서 학생들이 입력한 일반사항 16항목의 분포입니다. 총 응답자 {stats.total}명.
+        학번·이름은 일체 수집·표시하지 않습니다.
+      </p>
 
       <DistGrid title="[A] 기본 정보">
         <DistCard title="출생연도"           rows={stats.birthYear} />

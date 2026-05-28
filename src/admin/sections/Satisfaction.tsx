@@ -14,9 +14,11 @@ export default function Satisfaction(_: Props) {
 
   return (
     <section>
-      <h2>만족도·자유응답</h2>
-      <p className="muted small">{MOCK_PREVIEW_MSG}</p>
-      <p className="muted small">
+      <div className="section-head">
+        <h2>만족도·자유응답</h2>
+      </div>
+      <p className="section-desc">{MOCK_PREVIEW_MSG}</p>
+      <p className="section-desc">
         결과지 확인 직후 학생에게 5점 척도 4문항 + 자유응답 1문항을 노출하는 만족도 폼을
         본격 구현 시 추가할 예정입니다(계획서 Ⅸ ⑩).
       </p>

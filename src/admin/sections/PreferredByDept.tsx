@@ -35,7 +35,7 @@ export default function PreferredByDept({ role, responses }: Props) {
 
   return (
     <section>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 8 }}>
+      <div className="section-head">
         <h2>학과별 희망학생 명단</h2>
         {role === "CENTER" && live && (
           <button className="ghost" onClick={() => exportPreferredStudentsByDeptCsv(groups)}>
@@ -43,7 +43,7 @@ export default function PreferredByDept({ role, responses }: Props) {
           </button>
         )}
       </div>
-      <p className="muted small">
+      <p className="section-desc">
         STEP 2에서 입력한 1·2·3지망을 학과별로 집계한 명단입니다.
         진로상담 초기 자료 및 학과 운영 참고 자료로 활용해 주세요.
       </p>

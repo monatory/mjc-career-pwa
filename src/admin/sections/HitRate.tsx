@@ -18,8 +18,10 @@ export default function HitRate({ responses }: Props) {
 
   return (
     <section>
-      <h2>추천 적중률 (Hit@1 / Hit@3 / Hit@5)</h2>
-      <p className="muted small">
+      <div className="section-head">
+        <h2>추천 적중률 (Hit@1 / Hit@3 / Hit@5)</h2>
+      </div>
+      <p className="section-desc">
         학기말 진로취업팀이 학생별 실제 선택 학과를 입력하면, 시스템 추천 TOP N 안에 포함된
         비율을 자동 계산합니다. 1지망 미입력 학생은 계산 대상에서 제외(evaluable=false).
       </p>

@@ -17,8 +17,10 @@ export default function Counseling({ responses }: Props) {
 
   return (
     <section>
-      <h2>상담 필요군 자동 추출</h2>
-      <p className="muted small">
+      <div className="section-head">
+        <h2>상담 필요군 자동 추출</h2>
+      </div>
+      <p className="section-desc">
         규칙: <strong>rule_a</strong> 상담 필요도 ≥ 70 ·{" "}
         <strong>rule_b</strong> 가족·친구 결정 + 1지망 미스매치 ·{" "}
         <strong>rule_c</strong> TOP1 적합도 &lt; 50점

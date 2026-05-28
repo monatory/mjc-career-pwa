@@ -102,19 +102,23 @@ export default function AdminDashboard() {
 
         <main className="admin-main">
           {adminData.loading && (
-            <p className="muted small" style={{ marginBottom: 8 }}>
-              데이터 불러오는 중…
-            </p>
+            <div className="admin-data-banner admin-data-banner--loading">
+              <span>⏳</span><span>데이터 불러오는 중…</span>
+            </div>
           )}
           {!adminData.loading && !adminData.isLive && (
-            <p className="muted small" style={{ marginBottom: 8 }}>
-              실측 데이터가 없어 미리보기(가상 데이터)로 표시합니다. 학생 응답이 누적되면 자동으로 실측치로 전환됩니다.
-            </p>
+            <div className="admin-data-banner admin-data-banner--preview">
+              <strong>미리보기</strong>
+              <span>·</span>
+              <span>실측 데이터가 없어 가상 데이터로 표시합니다. 학생 응답이 누적되면 자동 전환됩니다.</span>
+            </div>
           )}
           {!adminData.loading && adminData.isLive && (
-            <p className="muted small" style={{ marginBottom: 8 }}>
-              <strong>실측 데이터</strong> · 총 {adminData.responses.length}명 응답 누적
-            </p>
+            <div className="admin-data-banner admin-data-banner--live">
+              <strong>실측 데이터</strong>
+              <span>·</span>
+              <span>총 {adminData.responses.length}명 응답 누적</span>
+            </div>
           )}
           <SectionRenderer
             id={sectionId}
