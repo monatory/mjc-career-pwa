@@ -27,6 +27,8 @@ import jsPDF from "jspdf";
 import AppHeader from "../components/AppHeader";
 import ConfirmModal from "../components/ConfirmModal";
 import DepartmentDetailModal from "../components/DepartmentDetailModal";
+import { saveResponseToFirestore } from "../lib/firestoreClient";
+import { getProfile } from "../lib/sessionState";
 
 // 상담 필요도 시각화 — SVG 반원 게이지(0~100)
 function CounselingGauge({ score }: { score: number }) {
@@ -90,6 +92,28 @@ export default function Result() {
   useEffect(() => {
     if (!cache) nav("/", { replace: true });
   }, [cache, nav]);
+
+  // Firestore에 결과 자동 저장 (시범운영 백엔드)
+  // 결과지에 처음 진입할 때 한 번만. 실패해도 UX에 영향 없음.
+  useEffect(() => {
+    if (!cache) return;
+    const profile = getProfile();
+    if (!profile) return;
+    let cancelled = false;
+    (async () => {
+      const r = await saveResponseToFirestore({
+        profile,
+        axisScores: cache.axisScores,
+        fits: cache.fits,
+        counselingNeed: cache.counseling,
+      });
+      if (!cancelled && r.ok) {
+        console.info("[Firestore] saved:", r.anonymousId);
+      }
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const diagnostic = useMemo(
     () => calcDiagnosticAverages(getResponses()),

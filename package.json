@@ -13,6 +13,7 @@
   "license": "UNLICENSED",
   "author": "명지전문대학 학생지원처 AI융합진로지원센터",
   "dependencies": {
+    "firebase": "^12.13.0",
     "jspdf": "^2.5.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

@@ -31,6 +31,7 @@ const KEY_RESP_S2 = "mjc_cat_responses_stage2";
 const KEY_S1_DONE = "mjc_cat_stage1_done";
 const KEY_BRANCHES = "mjc_cat_active_branches";
 const KEY_RESULT = "mjc_cat_result";
+const KEY_ANON_ID = "mjc_cat_anonymous_id";
 
 // 구(舊) 키 — clearAll에서 함께 정리(작업 4 이전 데이터 호환)
 const LEGACY_KEYS = [
@@ -259,5 +260,21 @@ export function clearAll() {
   sessionStorage.removeItem(KEY_S1_DONE);
   sessionStorage.removeItem(KEY_BRANCHES);
   sessionStorage.removeItem(KEY_RESULT);
+  sessionStorage.removeItem(KEY_ANON_ID);
   for (const k of LEGACY_KEYS) sessionStorage.removeItem(k);
+}
+
+/* ────────────────────────────────────────────────────────────
+ * 익명 ID — Firestore 학생 레코드 식별용
+ *   학번·이름 대신 사용하는 임의 UUID. 한 번 생성하면 sessionStorage에 유지.
+ *   탭 종료 시 사라지므로 다음 진단은 새 익명ID로 시작 (반복 응답 분리 분석).
+ * ────────────────────────────────────────────────────────── */
+export function getAnonymousId(): string {
+  let id = sessionStorage.getItem(KEY_ANON_ID);
+  if (!id) {
+    // crypto.randomUUID는 모든 HTTPS·localhost에서 지원
+    id = crypto.randomUUID();
+    sessionStorage.setItem(KEY_ANON_ID, id);
+  }
+  return id;
 }
