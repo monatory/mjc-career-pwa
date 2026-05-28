@@ -20,6 +20,7 @@ export default function Satisfaction() {
       <div className="card">
         <h3>5점 척도 평균</h3>
         {noData && <p className="muted small">응답이 없습니다.</p>}
+        <div className="admin-table-wrap">
         <table className="admin-table">
           <thead>
             <tr>
@@ -38,6 +39,7 @@ export default function Satisfaction() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       <div className="card">

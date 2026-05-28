@@ -27,6 +27,7 @@ export default function Counseling() {
         {rows.length === 0 ? (
           <p className="muted small">상담 필요군 학생이 없습니다.</p>
         ) : (
+          <div className="admin-table-wrap">
           <table className="admin-table">
             <thead>
               <tr>
@@ -55,6 +56,7 @@ export default function Counseling() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
 

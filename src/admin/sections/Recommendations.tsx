@@ -55,6 +55,7 @@ export default function Recommendations({ role }: Props) {
 
       <div className="card">
         <h3>전체 학과 집계 표</h3>
+        <div className="admin-table-wrap">
         <table className="admin-table">
           <thead>
             <tr>
@@ -75,6 +76,7 @@ export default function Recommendations({ role }: Props) {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </section>
   );

@@ -963,6 +963,13 @@ footer.legal {
 .kpi-card__label { font-size: 0.8rem; color: var(--c-text-soft); margin-bottom: 6px; }
 .kpi-card__value { font-size: 1.4rem; font-weight: 700; color: var(--c-primary); }
 
+.admin-table-wrap {
+  overflow-x: auto;
+  /* 모바일에서 카드 padding 너머까지 가로 스크롤 활용 */
+  margin: 0 -20px;
+  padding: 0 20px;
+}
+
 .admin-table {
   width: 100%;
   border-collapse: collapse;
