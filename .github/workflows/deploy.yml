@@ -1,0 +1,69 @@
+name: Deploy to GitHub Pages
+
+# main 브랜치에 push가 들어오면 자동으로 빌드해서 GitHub Pages에 배포한다.
+# 배포 URL: https://monatory.github.io/mjc-career-pwa/
+#
+# 본 운영 시 학내 도메인으로 옮기면 이 워크플로 비활성 + vite.config.ts의
+# BASE를 "/"로 환원하면 됨.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:  # 수동 실행 버튼
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 같은 브랜치 동시 배포 방지 (큐잉)
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Run regression tests
+        run: |
+          node tests/test_engine.js
+          node tests/test_analytics.js
+
+      - name: Build (Vite + PWA)
+        env:
+          GITHUB_PAGES: "1"
+        run: npm run build
+
+      - name: Convert OG card SVG → PNG (카카오톡 호환)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y librsvg2-bin
+          rsvg-convert -w 1200 -h 630 public/og-card.svg -o dist/og-card.png
+          ls -la dist/og-card.png
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

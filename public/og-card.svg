@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b3d91"/>
+      <stop offset="1" stop-color="#1d5cd4"/>
+    </linearGradient>
+    <linearGradient id="accentLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f5a623"/>
+      <stop offset="1" stop-color="#ffd97a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 배경 -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- 우측 상단 장식 (8축 미니 레이더 모티프) -->
+  <g transform="translate(960 130)" opacity="0.18" stroke="#ffffff" fill="none" stroke-width="1.5">
+    <polygon points="0,-90 64,-64 90,0 64,64 0,90 -64,64 -90,0 -64,-64"/>
+    <polygon points="0,-60 42,-42 60,0 42,42 0,60 -42,42 -60,0 -42,-42"/>
+    <polygon points="0,-30 21,-21 30,0 21,21 0,30 -21,21 -30,0 -21,-21"/>
+    <line x1="-90" y1="0" x2="90" y2="0"/>
+    <line x1="0" y1="-90" x2="0" y2="90"/>
+    <line x1="-64" y1="-64" x2="64" y2="64"/>
+    <line x1="64" y1="-64" x2="-64" y2="64"/>
+  </g>
+
+  <!-- 상단: 기관 표기 -->
+  <text x="80" y="100" font-family="Pretendard, 'Noto Sans KR', sans-serif"
+        font-size="22" fill="#ffffff" opacity="0.85" letter-spacing="0.04em">
+    명지전문대학 · 학생지원처 AI융합진로지원센터
+  </text>
+  <line x1="80" y1="118" x2="200" y2="118" stroke="url(#accentLine)" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- 메인 타이틀 -->
+  <text x="80" y="270" font-family="Pretendard, 'Noto Sans KR', sans-serif"
+        font-size="120" font-weight="800" fill="#ffffff" letter-spacing="-0.02em">
+    MJC-CAT
+  </text>
+
+  <text x="80" y="340" font-family="Pretendard, 'Noto Sans KR', sans-serif"
+        font-size="38" font-weight="600" fill="#ffffff" letter-spacing="-0.01em">
+    명지전문대학 학과 적합도 진단
+  </text>
+
+  <text x="80" y="385" font-family="Pretendard, 'Noto Sans KR', sans-serif"
+        font-size="22" fill="#ffffff" opacity="0.7" font-style="italic">
+    Myongji College Career Aptitude Test
+  </text>
+
+  <!-- 하단 4통계 -->
+  <g transform="translate(80 480)" font-family="Pretendard, 'Noto Sans KR', sans-serif">
+    <!-- 8 진단축 -->
+    <g>
+      <text font-size="44" font-weight="800" fill="#ffd97a">8</text>
+      <text x="56" y="0" font-size="22" fill="#ffffff" opacity="0.85">진단축</text>
+    </g>
+    <!-- 90 문항 -->
+    <g transform="translate(220 0)">
+      <text font-size="44" font-weight="800" fill="#ffd97a">90</text>
+      <text x="78" y="0" font-size="22" fill="#ffffff" opacity="0.85">기본 문항</text>
+    </g>
+    <!-- 31 학과 -->
+    <g transform="translate(450 0)">
+      <text font-size="44" font-weight="800" fill="#ffd97a">31</text>
+      <text x="78" y="0" font-size="22" fill="#ffffff" opacity="0.85">대상 학과</text>
+    </g>
+    <!-- TOP 5 -->
+    <g transform="translate(680 0)">
+      <text font-size="44" font-weight="800" fill="#ffd97a">TOP 5</text>
+      <text x="170" y="0" font-size="22" fill="#ffffff" opacity="0.85">추천</text>
+    </g>
+  </g>
+
+  <!-- 하단 안내문 -->
+  <text x="80" y="580" font-family="Pretendard, 'Noto Sans KR', sans-serif"
+        font-size="18" fill="#ffffff" opacity="0.6">
+    자유전공 학생을 위한 학과 탐색 도구 · 모바일 진단 약 20~25분
+  </text>
+</svg>

@@ -6,7 +6,16 @@ import path from "node:path";
 // Vite는 프로젝트 루트(=index.html이 있는 폴더) 바깥의 파일을 import할 때
 // fs.allow 또는 publicDir 설정이 필요. 우리는 data/, lib/ 가 루트에 있어
 // 별도 설정 없이 import 가능하지만 명시적으로 alias를 둠.
+// GitHub Pages 하위 경로 배포 대응:
+//   https://monatory.github.io/mjc-career-pwa/ 에서 동작
+// CI(GitHub Actions)에서 자동 적용; 로컬 dev에서는 "/" 유지.
+// 본 운영 시 학내 도메인(루트)으로 옮길 때는 워크플로 비활성하면 됨.
+const IS_PAGES_BUILD =
+  process.env.GITHUB_ACTIONS === "true" || process.env.GITHUB_PAGES === "1";
+const BASE = IS_PAGES_BUILD ? "/mjc-career-pwa/" : "/";
+
 export default defineConfig({
+  base: BASE,
   plugins: [
     react(),
     // PWA: 오프라인 캐싱 + 설치 가능.
