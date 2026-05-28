@@ -378,6 +378,9 @@ export default function Result() {
         )}
       </div>
 
+      {/* 내 희망학과 vs 시스템 추천 비교 — 상담 필요도 직후로 배치(가독성) */}
+      <PreferenceComparisonCard nick={nick} fits={fits} />
+
       <div className="card">
         <h2>진단축 8개 프로파일</h2>
         <div style={{ width: "100%", height: 320 }}>
@@ -487,9 +490,6 @@ export default function Result() {
           ))}
         </div>
       )}
-
-      {/* 내 희망학과 vs 시스템 추천 비교 — 1지망 입력자 한정 */}
-      <PreferenceComparisonCard nick={nick} fits={fits} />
 
       {/* 진로 상담 신청 CTA — 70점 이상이면 강조 */}
       <div className={`card counseling-cta ${cache.counseling.score >= 70 ? "counseling-cta--urgent" : ""}`}>
