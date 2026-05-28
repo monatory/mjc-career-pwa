@@ -7,11 +7,8 @@ dev-dist/
 vite.config.d.ts
 vite.config.js
 
-# 의존성
+# 의존성 (lock 파일은 commit — 의존성 재현 + CI 캐시 활용)
 node_modules/
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
 
 # IDE
 .vscode/
