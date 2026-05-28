@@ -5,13 +5,16 @@
  * 학과장은 본인 학과 한 행만 + 인접 학과 비교(같은 학부)만 노출.
  */
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from "recharts";
-import { mockDeptDistribution, MOCK_PREVIEW_MSG } from "../mockData";
+import { mockDeptDistribution } from "../mockData";
+import { aggregateDeptDistribution } from "../../lib/firestoreAdmin";
 import { MOCK_DEPT_HEAD_OF, type Role } from "../permissions";
+import type { SavedResponse } from "../../lib/firestoreClient";
 
-interface Props { role: Role; }
+interface Props { role: Role; responses: SavedResponse[] | null; }
 
-export default function Recommendations({ role }: Props) {
-  const all = mockDeptDistribution();
+export default function Recommendations({ role, responses }: Props) {
+  const live = responses && responses.length > 0;
+  const all = live ? aggregateDeptDistribution(responses) : mockDeptDistribution();
   // 학과장은 본인 학과 + 같은 학부 인접 학과로 좁힘
   const rows = role === "DEPT_HEAD"
     ? all.filter((d) => {
@@ -29,7 +32,6 @@ export default function Recommendations({ role }: Props) {
   return (
     <section>
       <h2>학과별 추천 분포</h2>
-      <p className="muted small">{MOCK_PREVIEW_MSG}</p>
       {role === "DEPT_HEAD" && (
         <p className="muted small">
           현재 권한: 학과장 — 본인 학과({MOCK_DEPT_HEAD_OF})와 같은 학부의 집계만 표시됩니다.

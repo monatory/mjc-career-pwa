@@ -539,7 +539,104 @@ on: push (main)
 
 ---
 
-## 13. 이 문서 유지보수
+## 15. Firebase Firestore 백엔드 (시범운영)
+
+### 15.1 프로젝트 정보
+
+| 항목 | 값 |
+|---|---|
+| Firebase 프로젝트 ID | `mjc-career-pwa` |
+| 요금제 | Spark (무료) |
+| Firestore 위치 | `asia-northeast3` (서울) |
+| Analytics | **사용 안 함** (CLAUDE.md §7 외부 분석 금지) |
+| Hosting | **사용 안 함** (PWA는 GitHub Pages) |
+
+`firebaseConfig`는 `src/lib/firebase.ts`에 직접 포함됨 (Firebase Web SDK 키는 frontend 노출이 정상 — Security Rules로 보호).
+
+### 15.2 데이터 모델 (Firestore)
+
+```
+responses/{anonymousId}
+  anonymousId       : crypto.randomUUID() (학번·이름과 무관)
+  profile           : StudentProfile JSON (16항목)
+  axisScores        : 24개 매칭축 점수
+  fits              : 31학과 적합도 중 TOP10만 저장
+  counselingNeed    : {score, category, conf_avg, need_avg}
+  hits              : calcHitMetrics 결과 (1지망 있을 때만 evaluable=true)
+  priority          : classifyCounselingPriority 결과 (HIGH/MEDIUM/LOW)
+  undecided         : detectUndecided 결과
+  completedAt       : ISO 8601
+  schemaVersion     : "1.0-pilot"
+  _serverCreatedAt  : Firestore server timestamp
+  app               : { env: 'production'|'development' }
+```
+
+**학번·이름 절대 저장 안 함**(CLAUDE.md §7.2). 본 운영 전환 시 별도 `students/{studentId}` 컬렉션에 AES-256 암호화하여 보관하고, `responses`는 익명ID만 유지.
+
+### 15.3 저장·조회 함수
+
+| 위치 | 함수 | 용도 |
+|---|---|---|
+| `src/lib/firebase.ts` | `getApp() / getDb()` | Firebase 초기화 (lazy singleton) |
+| `src/lib/firestoreClient.ts` | `saveResponseToFirestore({profile, axisScores, fits, counselingNeed})` | 결과지 진입 시 자동 저장(fire-and-forget) |
+| `src/lib/firestoreAdmin.ts` | `fetchAllResponses()` | 관리자 대시보드 전체 fetch |
+| `src/lib/firestoreAdmin.ts` | `aggregateKpi / Trend / DeptDistribution / CounselingList / HitSummary` | 클라이언트 사이드 집계 |
+| `src/admin/useAdminData.ts` | `useAdminData()` 훅 | 대시보드 로딩·실측/mock 폴백 결정 |
+| `src/admin/csvExport.ts` | `exportAllResponsesCsv / exportCounselingCsv` | CSV 다운로드 (UTF-8 BOM, Excel 한글 호환) |
+
+### 15.4 관리자 대시보드 동작
+
+```
+권한 선택(mock) → useAdminData() → Firestore 전체 fetch
+   ↓ (응답 >= 1건)
+실측 데이터로 KPI·시계열·분포·상담군·Hit 자동 집계
+   ↓ (응답 0건이거나 fetch 실패)
+mockData.ts 가상 데이터로 폴백 (미리보기 모드 안내)
+```
+
+CSV 다운로드:
+- 종합 현황 → "전체 응답 CSV 다운로드" (모든 16항목 + 결과)
+- 상담 필요군 → "CSV 다운로드 (닉네임 + 응답)" (HIGH/MEDIUM 만)
+
+### 15.5 Security Rules (`firestore.rules`)
+
+```
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /responses/{anonymousId} {
+      allow create: if isValidResponse(...);  // 검증 통과 시 허용
+      allow read:   if true;                   // ⚠ 시범운영 임시 허용
+      allow update, delete: if false;          // 차단
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}
+```
+
+`isValidResponse`가 검증하는 항목:
+- 필수 키: `anonymousId`, `profile`, `completedAt`, `schemaVersion`
+- 문서 ID와 `anonymousId` 일치
+- `profile`에 학번·이름·전화·이메일·주민번호 등 **식별 정보 절대 금지**
+- 필드 200개 상한, 닉네임 20자 상한
+
+**본 운영 전환 시 필수 강화**:
+1. Firebase Anonymous Auth 도입 → `request.auth.uid == anonymousId` 강제
+2. 관리자 custom claim (`role:'admin'`) 부여 → read 권한 관리자로 한정
+3. `read: if true`를 `read: if request.auth.token.role == 'admin'`로 교체
+
+### 15.6 시범운영 → 본 운영 전환 체크리스트
+
+- [ ] Anonymous Auth 활성화 (Firebase Console → Authentication → Sign-in method)
+- [ ] custom claim 부여용 Cloud Function 작성 (관리자 이메일 화이트리스트)
+- [ ] `firestore.rules` 강화 후 `firebase deploy --only firestore:rules`
+- [ ] `students/{studentId}` 컬렉션 + AES-256 암호화 (학번·이름)
+- [ ] 보관 기간 자동 삭제 Cloud Function (졸업 후 3년)
+- [ ] Firestore 백업 스케줄 설정
+- [ ] Authorized Domains에 학내 도메인 추가
+
+---
+
+## 16. 이 문서 유지보수
 
 이 `CLAUDE.md`는 **프로젝트의 살아있는 명세**. 다음과 같은 변경이 있으면 반드시 갱신:
 
@@ -549,5 +646,6 @@ on: push (main)
 - 적합도 공식 변경 (절대 없을 예정)
 - 신규 데이터 파일 추가
 - 배포 URL·도메인 변경, 백엔드 도입 (Firebase 등)
+- Firestore 데이터 모델 / Security Rules 변경
 
 문서가 코드보다 뒤처지면 다음 Claude Code 세션의 컨텍스트가 깨진다.

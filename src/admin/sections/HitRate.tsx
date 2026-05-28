@@ -5,16 +5,20 @@
  * 본격 구현 시 lib/analytics.js 의 calcHitMetrics 결과를 학생 단위로 누적 집계.
  * "실제 선택 학과" 입력 폼은 학기 종료 후 진로취업팀이 일괄 입력.
  */
-import { mockHitSummary, MOCK_PREVIEW_MSG } from "../mockData";
+import { mockHitSummary } from "../mockData";
+import { aggregateHitSummary } from "../../lib/firestoreAdmin";
+import type { SavedResponse } from "../../lib/firestoreClient";
 
-export default function HitRate() {
-  const s = mockHitSummary();
+interface Props { responses: SavedResponse[] | null; }
+
+export default function HitRate({ responses }: Props) {
+  const live = responses && responses.length > 0;
+  const s = live ? aggregateHitSummary(responses) : mockHitSummary();
   const noData = s.evaluableCount === 0;
 
   return (
     <section>
       <h2>추천 적중률 (Hit@1 / Hit@3 / Hit@5)</h2>
-      <p className="muted small">{MOCK_PREVIEW_MSG}</p>
       <p className="muted small">
         학기말 진로취업팀이 학생별 실제 선택 학과를 입력하면, 시스템 추천 TOP N 안에 포함된
         비율을 자동 계산합니다. 1지망 미입력 학생은 계산 대상에서 제외(evaluable=false).

@@ -3,16 +3,21 @@
  * 권한: CENTER / EDU_SUPPORT / DEPT_HEAD 공통
  */
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
-import { mockKpi, mockTrend, MOCK_PREVIEW_MSG } from "../mockData";
+import { mockKpi, mockTrend } from "../mockData";
+import { aggregateKpi, aggregateTrend } from "../../lib/firestoreAdmin";
+import { exportAllResponsesCsv } from "../csvExport";
+import type { SavedResponse } from "../../lib/firestoreClient";
 
-export default function Overview() {
-  const kpi = mockKpi();
-  const trend = mockTrend();
+interface Props { responses: SavedResponse[] | null; }
+
+export default function Overview({ responses }: Props) {
+  const live = responses && responses.length > 0;
+  const kpi = live ? aggregateKpi(responses) : mockKpi();
+  const trend = live ? aggregateTrend(responses) : mockTrend();
 
   return (
     <section>
       <h2>종합 현황</h2>
-      <p className="muted small">{MOCK_PREVIEW_MSG}</p>
 
       <div className="kpi-grid">
         <KpiCard label="참여 학생 수" value={kpi.participants.toLocaleString() + "명"} />
@@ -26,6 +31,15 @@ export default function Overview() {
         <KpiCard label="Hit@5 적중률" value={kpi.hitAt5Rate == null ? "학기말 입력 후" : fmtPct(kpi.hitAt5Rate)} />
         <KpiCard label="만족도 평균" value={kpi.satisfactionAvg == null ? "—" : kpi.satisfactionAvg.toFixed(2)} />
       </div>
+
+      {live && (
+        <div className="card" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <span className="muted small">전체 응답 원본을 CSV로 내려받습니다.</span>
+          <button className="ghost" onClick={() => exportAllResponsesCsv(responses)}>
+            전체 응답 CSV 다운로드
+          </button>
+        </div>
+      )}
 
       <div className="card">
         <h3>최근 14일 참여 추이</h3>

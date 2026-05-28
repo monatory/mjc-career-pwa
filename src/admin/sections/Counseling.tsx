@@ -4,15 +4,20 @@
  *
  * 본격 구현 시 lib/analytics.js 의 classifyCounselingPriority 결과로 채움.
  */
-import { mockCounselingList, MOCK_PREVIEW_MSG } from "../mockData";
+import { mockCounselingList } from "../mockData";
+import { aggregateCounselingList } from "../../lib/firestoreAdmin";
+import { exportCounselingCsv } from "../csvExport";
+import type { SavedResponse } from "../../lib/firestoreClient";
 
-export default function Counseling() {
-  const rows = mockCounselingList();
+interface Props { responses: SavedResponse[] | null; }
+
+export default function Counseling({ responses }: Props) {
+  const live = responses && responses.length > 0;
+  const rows = live ? aggregateCounselingList(responses) : mockCounselingList();
 
   return (
     <section>
       <h2>상담 필요군 자동 추출</h2>
-      <p className="muted small">{MOCK_PREVIEW_MSG}</p>
       <p className="muted small">
         규칙: <strong>rule_a</strong> 상담 필요도 ≥ 70 ·{" "}
         <strong>rule_b</strong> 가족·친구 결정 + 1지망 미스매치 ·{" "}
@@ -22,7 +27,13 @@ export default function Counseling() {
       <div className="card">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <h3>상담 권장 학생 목록</h3>
-          <button className="ghost" disabled>CSV 다운로드 (개인정보 포함)</button>
+          <button
+            className="ghost"
+            disabled={!live || rows.length === 0}
+            onClick={() => responses && exportCounselingCsv(responses)}
+          >
+            CSV 다운로드 (닉네임 + 응답)
+          </button>
         </div>
         {rows.length === 0 ? (
           <p className="muted small">상담 필요군 학생이 없습니다.</p>

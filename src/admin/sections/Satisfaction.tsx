@@ -3,8 +3,12 @@
  * 권한: CENTER / EDU_SUPPORT
  */
 import { mockSatisfaction, MOCK_PREVIEW_MSG } from "../mockData";
+import type { SavedResponse } from "../../lib/firestoreClient";
 
-export default function Satisfaction() {
+// 만족도 폼은 본 구현 이전이라 실데이터 없음. responses가 와도 mock 표시.
+interface Props { responses: SavedResponse[] | null; }
+
+export default function Satisfaction(_: Props) {
   const rows = mockSatisfaction();
   const noData = rows.every((r) => r.responseCount === 0);
 

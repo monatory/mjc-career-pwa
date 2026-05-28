@@ -26,12 +26,17 @@ import Recommendations from "./sections/Recommendations";
 import Counseling from "./sections/Counseling";
 import HitRate from "./sections/HitRate";
 import Satisfaction from "./sections/Satisfaction";
+import { useAdminData } from "./useAdminData";
+import type { SavedResponse } from "../lib/firestoreClient";
 
 export default function AdminDashboard() {
   const [role, setRole] = useState<Role | null>(() => getMockRole());
   const [sectionId, setSectionId] = useState<SectionId>("overview");
   // 모바일 사이드 메뉴 접기 — 데스크탑(>720px)에서는 CSS로 강제 펼침
   const [sideOpen, setSideOpen] = useState(false);
+
+  // Firestore 데이터 로딩 (권한 선택 후에만 호출)
+  const adminData = useAdminData();
 
   // 권한이 바뀌면 첫 가시 섹션으로 자동 이동
   useEffect(() => {
@@ -94,7 +99,26 @@ export default function AdminDashboard() {
         </aside>
 
         <main className="admin-main">
-          <SectionRenderer id={sectionId} role={role} />
+          {adminData.loading && (
+            <p className="muted small" style={{ marginBottom: 8 }}>
+              데이터 불러오는 중…
+            </p>
+          )}
+          {!adminData.loading && !adminData.isLive && (
+            <p className="muted small" style={{ marginBottom: 8 }}>
+              실측 데이터가 없어 미리보기(가상 데이터)로 표시합니다. 학생 응답이 누적되면 자동으로 실측치로 전환됩니다.
+            </p>
+          )}
+          {!adminData.loading && adminData.isLive && (
+            <p className="muted small" style={{ marginBottom: 8 }}>
+              <strong>실측 데이터</strong> · 총 {adminData.responses.length}명 응답 누적
+            </p>
+          )}
+          <SectionRenderer
+            id={sectionId}
+            role={role}
+            responses={adminData.isLive ? adminData.responses : null}
+          />
         </main>
       </div>
     </>
@@ -104,13 +128,19 @@ export default function AdminDashboard() {
 /* ──────────────────────────────────────────────────────────────
  * 권한별 섹션 라우팅
  * ──────────────────────────────────────────────────────────── */
-function SectionRenderer({ id, role }: { id: SectionId; role: Role }) {
+function SectionRenderer({
+  id, role, responses,
+}: {
+  id: SectionId;
+  role: Role;
+  responses: SavedResponse[] | null;
+}) {
   switch (id) {
-    case "overview":        return <Overview />;
-    case "recommendations": return <Recommendations role={role} />;
-    case "counseling":      return <Counseling />;
-    case "hitRate":         return <HitRate />;
-    case "satisfaction":    return <Satisfaction />;
+    case "overview":        return <Overview responses={responses} />;
+    case "recommendations": return <Recommendations role={role} responses={responses} />;
+    case "counseling":      return <Counseling responses={responses} />;
+    case "hitRate":         return <HitRate responses={responses} />;
+    case "satisfaction":    return <Satisfaction responses={responses} />;
   }
 }
 
