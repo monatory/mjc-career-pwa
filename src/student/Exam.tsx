@@ -16,6 +16,8 @@ import {
   calcFitScores,
   calcCounselingNeed,
   routeToBranches,
+  DIAGNOSTIC_AXES,
+  type DiagnosticAxis,
 } from "@lib/recommendation_engine";
 import ProgressBar from "../components/ProgressBar";
 import ScaleButtons from "../components/ScaleButtons";
@@ -52,8 +54,9 @@ export default function Exam() {
     setResponses((prev) => ({ ...prev, [qid]: v }));
 
     // 자동 진행: 마지막 문항이 아니면 다음 문항으로
+    // 선택 인지 시간 확보를 위해 500ms 대기 (잘못 누른 경우 변경 가능)
     if (idx < items.length - 1) {
-      setTimeout(() => setIdx((i) => i + 1), 180);
+      setTimeout(() => setIdx((i) => i + 1), 500);
     }
   }
 
@@ -101,12 +104,22 @@ export default function Exam() {
 
   const item = items[idx];
 
+  // 응답자 정보 수정 링크 조건: 응답 5건 미만일 때만 허용 (데이터 무결성)
+  const canEditProfile = answeredCount < 5;
+
   return (
     <>
       <AppHeader />
       <main className="page">
         <StepIndicator current={3} label="진단 검사 · 1차" />
-      <h1>1차 기본검사</h1>
+      <div className="exam-h1-row">
+        <h1>1차 기본검사</h1>
+        {canEditProfile && (
+          <button className="link-btn" onClick={() => nav("/profile")}>
+            응답자 정보 수정
+          </button>
+        )}
+      </div>
       <ProgressBar
         current={answeredCount}
         total={items.length}
@@ -114,7 +127,9 @@ export default function Exam() {
       />
 
       <div className="card question-card">
-        <span className="badge">{item.axis}</span>
+        <span className="badge">
+          {item.axis} · {DIAGNOSTIC_AXES[item.axis as DiagnosticAxis] ?? ""}
+        </span>
         <p className="text">{item.text}</p>
 
         <ScaleButtons value={responses[item.id]} onChange={answer} />

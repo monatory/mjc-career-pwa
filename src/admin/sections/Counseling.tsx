@@ -4,7 +4,7 @@
  *
  * 본격 구현 시 lib/analytics.js 의 classifyCounselingPriority 결과로 채움.
  */
-import { mockCounselingList, PILOT_NOT_STARTED_MSG } from "../mockData";
+import { mockCounselingList, MOCK_PREVIEW_MSG } from "../mockData";
 
 export default function Counseling() {
   const rows = mockCounselingList();
@@ -12,6 +12,7 @@ export default function Counseling() {
   return (
     <section>
       <h2>상담 필요군 자동 추출</h2>
+      <p className="muted small">{MOCK_PREVIEW_MSG}</p>
       <p className="muted small">
         규칙: <strong>rule_a</strong> 상담 필요도 ≥ 70 ·{" "}
         <strong>rule_b</strong> 가족·친구 결정 + 1지망 미스매치 ·{" "}
@@ -24,7 +25,7 @@ export default function Counseling() {
           <button className="ghost" disabled>CSV 다운로드 (개인정보 포함)</button>
         </div>
         {rows.length === 0 ? (
-          <p className="muted small">{PILOT_NOT_STARTED_MSG}</p>
+          <p className="muted small">상담 필요군 학생이 없습니다.</p>
         ) : (
           <table className="admin-table">
             <thead>

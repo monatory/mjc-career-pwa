@@ -32,13 +32,14 @@ export interface KpiSummary {
 }
 
 export function mockKpi(): KpiSummary {
+  // 시범운영 한 달차 누적된 가상 수치 (본격 구현 시 백엔드 API로 교체)
   return {
-    participants: 0,
-    completionRate: 0,
-    avgMinutes: 0,
-    counselingPriorityHigh: 0,
-    hitAt5Rate: null,
-    satisfactionAvg: null,
+    participants: 87,
+    completionRate: 0.83,
+    avgMinutes: 22,
+    counselingPriorityHigh: 11,
+    hitAt5Rate: null,        // 학기말 입력 후 계산
+    satisfactionAvg: 4.21,
   };
 }
 
@@ -49,15 +50,19 @@ export interface TrendPoint {
 }
 
 export function mockTrend(days = 14): TrendPoint[] {
+  // 학기 중반 평일 6~12명·주말 1~3명 자연스러운 패턴
   const r = rng(42);
   const out: TrendPoint[] = [];
   const today = new Date("2026-05-28");
   for (let i = days - 1; i >= 0; i--) {
     const d = new Date(today);
     d.setDate(d.getDate() - i);
+    const weekend = d.getDay() === 0 || d.getDay() === 6;
+    const base = weekend ? 1 : 6;
+    const variance = weekend ? 2 : 6;
     const mm = String(d.getMonth() + 1).padStart(2, "0");
     const dd = String(d.getDate()).padStart(2, "0");
-    out.push({ date: `${mm}-${dd}`, count: Math.floor(r() * 12) });
+    out.push({ date: `${mm}-${dd}`, count: base + Math.floor(r() * variance) });
   }
   return out;
 }
@@ -93,8 +98,20 @@ export interface CounselingRow {
 }
 
 export function mockCounselingList(): CounselingRow[] {
-  // 시범운영 누적 전이므로 빈 배열 반환
-  return [];
+  // 시범운영 한 달차 가상 데이터 11명 (rule_a/b/c 트리거 다양)
+  return [
+    { nickname: "민서",  needScore: 86, priority: "HIGH",   triggeredRules: ["rule_a", "rule_c"], top1Name: "사회복지과",   preferredName: "유아교육과" },
+    { nickname: "지훈",  needScore: 82, priority: "HIGH",   triggeredRules: ["rule_a", "rule_b"], top1Name: "컴퓨터공학과", preferredName: "경영학과"   },
+    { nickname: "수아",  needScore: 78, priority: "HIGH",   triggeredRules: ["rule_a", "rule_b", "rule_c"], top1Name: "산업디자인학과", preferredName: "세무회계과" },
+    { nickname: "건우",  needScore: 76, priority: "MEDIUM", triggeredRules: ["rule_a"],          top1Name: "기계공학과",   preferredName: "기계공학과" },
+    { nickname: "예린",  needScore: 73, priority: "MEDIUM", triggeredRules: ["rule_a"],          top1Name: "패션리빙디자인과", preferredName: null     },
+    { nickname: "도윤",  needScore: 71, priority: "MEDIUM", triggeredRules: ["rule_a"],          top1Name: "AI게임소프트웨어학과", preferredName: "AI게임소프트웨어학과" },
+    { nickname: "다은",  needScore: 68, priority: "MEDIUM", triggeredRules: ["rule_b"],          top1Name: "정보통신공학과", preferredName: "유아교육과" },
+    { nickname: "현우",  needScore: 64, priority: "MEDIUM", triggeredRules: ["rule_b"],          top1Name: "산업경영공학과", preferredName: "경영학과"  },
+    { nickname: "서윤",  needScore: 49, priority: "MEDIUM", triggeredRules: ["rule_c"],          top1Name: "공공행정서비스상담과", preferredName: null  },
+    { nickname: "윤서",  needScore: 47, priority: "MEDIUM", triggeredRules: ["rule_c"],          top1Name: "사회체육과",     preferredName: null     },
+    { nickname: "하준",  needScore: 45, priority: "MEDIUM", triggeredRules: ["rule_c"],          top1Name: "토목공학과",     preferredName: "기계공학과" },
+  ];
 }
 
 /* ─── 추천 적중률 ────────────────────────────────────────────── */
@@ -106,7 +123,9 @@ export interface HitMetricsSummary {
 }
 
 export function mockHitSummary(): HitMetricsSummary {
-  return { evaluableCount: 0, hitAt1: 0, hitAt3: 0, hitAt5: 0 };
+  // 학기말 이후 실제 선택 학과 입력이 완료된 가상 시나리오
+  // evaluableCount = 1지망 입력자 한정. 실제 학생 72명 중 1지망 입력자 58명 가정.
+  return { evaluableCount: 58, hitAt1: 22, hitAt3: 39, hitAt5: 47 };
 }
 
 /* ─── 만족도 ──────────────────────────────────────────────── */
@@ -118,13 +137,16 @@ export interface SatisfactionRow {
 
 export function mockSatisfaction(): SatisfactionRow[] {
   return [
-    { question: "결과가 진로 탐색에 도움이 되었다", avg: null, responseCount: 0 },
-    { question: "문항이 이해하기 쉬웠다",            avg: null, responseCount: 0 },
-    { question: "검사 소요 시간이 적절했다",         avg: null, responseCount: 0 },
-    { question: "결과지의 학과 정보가 충실했다",     avg: null, responseCount: 0 },
+    { question: "결과가 진로 탐색에 도움이 되었다", avg: 4.35, responseCount: 72 },
+    { question: "문항이 이해하기 쉬웠다",            avg: 4.18, responseCount: 72 },
+    { question: "검사 소요 시간이 적절했다",         avg: 3.92, responseCount: 72 },
+    { question: "결과지의 학과 정보가 충실했다",     avg: 4.41, responseCount: 71 },
   ];
 }
 
-/* ─── 공통: 데이터 누적 안내 메시지 ──────────────────────────── */
+/* ─── 공통: 더미 데이터 안내 메시지 ──────────────────────────── */
 export const PILOT_NOT_STARTED_MSG =
   "시범운영 데이터가 아직 누적되지 않았습니다. 50~100명 응답 누적 후 실측 데이터로 자동 갱신됩니다.";
+
+export const MOCK_PREVIEW_MSG =
+  "본격 구현 미리보기용 가상 데이터입니다. 시범운영 응답이 누적되면 실측치로 자동 교체됩니다.";

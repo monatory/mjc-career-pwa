@@ -5,7 +5,7 @@
  * 학과장은 본인 학과 한 행만 + 인접 학과 비교(같은 학부)만 노출.
  */
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from "recharts";
-import { mockDeptDistribution, PILOT_NOT_STARTED_MSG } from "../mockData";
+import { mockDeptDistribution, MOCK_PREVIEW_MSG } from "../mockData";
 import { MOCK_DEPT_HEAD_OF, type Role } from "../permissions";
 
 interface Props { role: Role; }
@@ -20,7 +20,6 @@ export default function Recommendations({ role }: Props) {
       })
     : all;
 
-  const hasData = rows.some((r) => r.top1Count > 0 || r.top5Count > 0);
   const chartData = rows.slice(0, 10).map((r) => ({
     name: r.name.length > 8 ? r.name.slice(0, 7) + "…" : r.name,
     TOP1: r.top1Count,
@@ -30,12 +29,12 @@ export default function Recommendations({ role }: Props) {
   return (
     <section>
       <h2>학과별 추천 분포</h2>
+      <p className="muted small">{MOCK_PREVIEW_MSG}</p>
       {role === "DEPT_HEAD" && (
         <p className="muted small">
           현재 권한: 학과장 — 본인 학과({MOCK_DEPT_HEAD_OF})와 같은 학부의 집계만 표시됩니다.
         </p>
       )}
-      {!hasData && <p className="muted small">{PILOT_NOT_STARTED_MSG}</p>}
 
       <div className="card">
         <h3>TOP1 / TOP5 분포 (상위 10개 학과)</h3>

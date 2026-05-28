@@ -30,6 +30,8 @@ import Satisfaction from "./sections/Satisfaction";
 export default function AdminDashboard() {
   const [role, setRole] = useState<Role | null>(() => getMockRole());
   const [sectionId, setSectionId] = useState<SectionId>("overview");
+  // 모바일 사이드 메뉴 접기 — 데스크탑(>720px)에서는 CSS로 강제 펼침
+  const [sideOpen, setSideOpen] = useState(false);
 
   // 권한이 바뀌면 첫 가시 섹션으로 자동 이동
   useEffect(() => {
@@ -44,11 +46,23 @@ export default function AdminDashboard() {
 
   const sections = visibleSections(role);
 
+  const currentLabel = sections.find((s) => s.id === sectionId)?.label ?? "메뉴";
+
   return (
     <>
       <AppHeader />
       <div className="admin-shell">
-        <aside className="admin-side">
+        {/* 모바일에서만 보이는 메뉴 토글 바 */}
+        <button
+          className="admin-mobile-toggle"
+          aria-expanded={sideOpen}
+          onClick={() => setSideOpen((v) => !v)}
+        >
+          <span>{ROLE_LABEL[role]} · {currentLabel}</span>
+          <span>{sideOpen ? "✕" : "☰"}</span>
+        </button>
+
+        <aside className={`admin-side ${sideOpen ? "open" : ""}`}>
           <div className="admin-side__role">
             <div className="admin-side__role-label muted small">로그인 권한 (mock)</div>
             <div className="admin-side__role-value">{ROLE_LABEL[role]}</div>
@@ -65,7 +79,7 @@ export default function AdminDashboard() {
               <button
                 key={s.id}
                 className={`admin-nav-item ${s.id === sectionId ? "selected" : ""}`}
-                onClick={() => setSectionId(s.id)}
+                onClick={() => { setSectionId(s.id); setSideOpen(false); }}
               >
                 <span className="admin-nav-item__label">{s.label}</span>
                 <span className="admin-nav-item__desc muted small">{s.desc}</span>

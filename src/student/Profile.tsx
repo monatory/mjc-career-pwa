@@ -246,6 +246,9 @@ export default function Profile() {
     nav("/");
   }
 
+  const requiredDoneCount = requiredKeys.length - missing.length - (nicknameOk ? 0 : (missing.includes("nickname") ? 0 : 1));
+  const safeDone = Math.max(0, Math.min(requiredKeys.length, requiredDoneCount));
+
   return (
     <>
       <AppHeader />
@@ -256,6 +259,19 @@ export default function Profile() {
           기본 정보와 진로 방향만 필수입니다. 나머지는 응답하지 않으셔도 진단을 진행할 수 있습니다.
           <br />수집 정보는 학과 운영·진로 상담 자료로만 사용되며, 학번·이름은 수집하지 않습니다.
         </p>
+
+        <div className="profile-progress">
+          <div className="profile-progress__label">
+            <strong>필수 입력</strong> {safeDone} / {requiredKeys.length}
+            {safeDone === requiredKeys.length && <span className="profile-progress__done">완료</span>}
+          </div>
+          <div className="profile-progress__bar">
+            <div
+              className="profile-progress__fill"
+              style={{ width: `${(safeDone / requiredKeys.length) * 100}%` }}
+            />
+          </div>
+        </div>
 
         {/* ─────────── A. 기본 정보 ─────────── */}
         <SectionCard letter="A" title="기본 정보" subtitle="필수 5개">

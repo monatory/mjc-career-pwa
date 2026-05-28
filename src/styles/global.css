@@ -140,13 +140,24 @@ h2 {
   color: var(--c-primary);
 }
 
+.scale-row .scale-btn {
+  transition: background 0.18s, border-color 0.18s, transform 0.12s;
+}
+
 .scale-row .scale-btn.selected {
   background: var(--c-primary);
   color: #fff;
   border-color: var(--c-primary);
+  animation: scale-pop 0.25s ease;
 }
 
 .scale-row .scale-btn.selected .num { color: #fff; }
+
+@keyframes scale-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
 
 /* 진행률 바 */
 .progress-wrap {
@@ -244,6 +255,25 @@ footer.legal {
   color: #555;
   text-align: center;
   line-height: 1.5;
+  position: relative;
+}
+
+.legal__admin {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #d8d8d8;
+}
+
+.legal__admin-link {
+  color: #999;
+  font-size: 0.72rem;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.legal__admin-link:hover {
+  color: var(--c-primary);
+  text-decoration: underline;
 }
 
 /* ─── 공통 앱 헤더 (STEP 1·2·3 상단 고정) ──────────────────── */
@@ -293,6 +323,12 @@ footer.legal {
 .step-indicator__num { font-weight: 700; }
 .step-indicator__sep { opacity: 0.5; }
 
+/* 검사 완료 상태 (결과지) — 초록색 토큰 */
+.step-indicator--done {
+  background: #e6f4ea;
+  color: var(--c-success);
+}
+
 /* ─── 검사명 헤더 (MJC-CAT + 부제) ────────────────────────── */
 .exam-title { margin: 0 0 14px; }
 
@@ -317,16 +353,38 @@ footer.legal {
   letter-spacing: 0.01em;
 }
 
+/* h1 행에서 우측 보조 링크 — 응답자 정보 수정 등 */
+.exam-h1-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.exam-h1-row h1 { margin: 0; }
+
+.link-btn {
+  background: transparent;
+  color: var(--c-primary);
+  border: none;
+  padding: 4px 6px;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  min-height: auto;
+  border-radius: 4px;
+}
+.link-btn:hover { background: var(--c-primary-soft); filter: none; }
+
 /* ─── STEP 2 · 응답자 정보 입력 ───────────────────────────── */
-.profile-section { padding: 18px 20px; }
+.profile-section { padding: 20px 22px; margin-bottom: 20px; }
 
 .profile-section__head {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  padding-bottom: 12px;
+  padding-bottom: 14px;
   border-bottom: 1px solid var(--c-border);
-  margin-bottom: 14px;
+  margin-bottom: 18px;
 }
 
 .profile-section__letter {
@@ -357,7 +415,7 @@ footer.legal {
 .profile-section__body {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 22px;
 }
 
 .profile-field {
@@ -379,6 +437,43 @@ footer.legal {
 }
 
 .profile-field__input { margin-top: 2px; }
+
+/* 필수 입력 진행 카운터 */
+.profile-progress {
+  background: var(--c-primary-soft);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin: 12px 0 18px;
+}
+.profile-progress__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--c-primary);
+  margin-bottom: 8px;
+}
+.profile-progress__label strong { font-weight: 700; }
+.profile-progress__done {
+  margin-left: auto;
+  background: var(--c-success);
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.profile-progress__bar {
+  height: 6px;
+  background: rgba(11, 61, 145, 0.15);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.profile-progress__fill {
+  height: 100%;
+  background: var(--c-primary);
+  transition: width 0.3s ease;
+}
 
 .text-input {
   width: 100%;
@@ -415,10 +510,15 @@ footer.legal {
   background: var(--c-bg);
   color: var(--c-text);
   border: 1.5px solid var(--c-border);
-  padding: 10px 14px;
+  padding: 12px 16px;
   border-radius: var(--r-btn);
-  min-height: 42px;
-  font-size: 0.9rem;
+  min-height: 46px;
+  font-size: 0.93rem;
+  transition: border-color 0.12s, background 0.12s, color 0.12s;
+}
+
+.radio-btn:hover:not(:disabled):not(.selected) {
+  border-color: var(--c-primary);
 }
 
 .radio-btn.selected {
@@ -482,6 +582,8 @@ footer.legal {
   font-size: 1.15rem;
   color: var(--c-primary);
 }
+
+.modal__body { color: var(--c-text-soft); font-size: 0.93rem; line-height: 1.5; }
 
 /* ─── 관리자 대시보드 스켈레톤 ────────────────────────────── */
 .admin-shell {
@@ -628,14 +730,35 @@ footer.legal {
   margin-top: 8px;
 }
 
-/* 좁은 화면에서는 상단 메뉴 + 컨텐츠 세로 배치 */
+/* 데스크탑에서는 토글 바 숨김 */
+.admin-mobile-toggle { display: none; }
+
+/* 좁은 화면 — 토글로 접고 펴는 사이드 메뉴 */
 @media (max-width: 720px) {
   .admin-shell {
     grid-template-columns: 1fr;
     padding: 12px;
   }
-  .admin-side { position: static; }
-  .admin-side__nav { flex-direction: row; flex-wrap: wrap; }
-  .admin-nav-item { flex: 1 1 calc(50% - 4px); min-height: 50px; }
+  .admin-mobile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: var(--c-primary-soft);
+    color: var(--c-primary);
+    border: 1px solid var(--c-primary);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    min-height: 44px;
+  }
+  .admin-side {
+    position: static;
+    display: none;
+  }
+  .admin-side.open { display: flex; }
+  .admin-side__nav { flex-direction: column; }
+  .admin-nav-item { min-height: 56px; }
 }
 

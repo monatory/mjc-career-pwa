@@ -14,7 +14,9 @@ import {
   calcCounselingNeed,
   selectStage2Items,
   BRANCHES,
+  DIAGNOSTIC_AXES,
   type BranchCode,
+  type DiagnosticAxis,
 } from "@lib/recommendation_engine";
 import ProgressBar from "../components/ProgressBar";
 import ScaleButtons from "../components/ScaleButtons";
@@ -47,7 +49,7 @@ export default function Stage2() {
     const qid = items[idx].id;
     setResponse(qid, v);
     setResponses((prev) => ({ ...prev, [qid]: v }));
-    if (idx < items.length - 1) setTimeout(() => setIdx((i) => i + 1), 180);
+    if (idx < items.length - 1) setTimeout(() => setIdx((i) => i + 1), 500);
   }
   function goPrev() { if (idx > 0) setIdx(idx - 1); }
   function goNext() { if (idx < items.length - 1) setIdx(idx + 1); }
@@ -110,7 +112,9 @@ export default function Stage2() {
       />
 
       <div className="card question-card">
-        <span className="badge">{item.axis} · {BRANCHES[item.branch]}</span>
+        <span className="badge">
+          {item.axis} · {DIAGNOSTIC_AXES[item.axis as DiagnosticAxis] ?? ""} · {BRANCHES[item.branch]}
+        </span>
         <p className="text">{item.text}</p>
         <ScaleButtons value={responses[item.id]} onChange={answer} />
       </div>

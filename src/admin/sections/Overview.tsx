@@ -3,16 +3,16 @@
  * 권한: CENTER / EDU_SUPPORT / DEPT_HEAD 공통
  */
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
-import { mockKpi, mockTrend, PILOT_NOT_STARTED_MSG } from "../mockData";
+import { mockKpi, mockTrend, MOCK_PREVIEW_MSG } from "../mockData";
 
 export default function Overview() {
   const kpi = mockKpi();
   const trend = mockTrend();
-  const hasData = kpi.participants > 0;
 
   return (
     <section>
       <h2>종합 현황</h2>
+      <p className="muted small">{MOCK_PREVIEW_MSG}</p>
 
       <div className="kpi-grid">
         <KpiCard label="참여 학생 수" value={kpi.participants.toLocaleString() + "명"} />
@@ -21,7 +21,7 @@ export default function Overview() {
         <KpiCard
           label="상담 우선군"
           value={kpi.counselingPriorityHigh + "명"}
-          tone={kpi.counselingPriorityHigh > 0 ? "warn" : undefined}
+          tone={kpi.counselingPriorityHigh >= 10 ? "warn" : undefined}
         />
         <KpiCard label="Hit@5 적중률" value={kpi.hitAt5Rate == null ? "학기말 입력 후" : fmtPct(kpi.hitAt5Rate)} />
         <KpiCard label="만족도 평균" value={kpi.satisfactionAvg == null ? "—" : kpi.satisfactionAvg.toFixed(2)} />
@@ -29,7 +29,6 @@ export default function Overview() {
 
       <div className="card">
         <h3>최근 14일 참여 추이</h3>
-        {!hasData && <p className="muted small">{PILOT_NOT_STARTED_MSG}</p>}
         <div style={{ width: "100%", height: 240 }}>
           <ResponsiveContainer>
             <LineChart data={trend}>

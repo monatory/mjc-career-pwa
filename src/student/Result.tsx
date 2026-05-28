@@ -24,6 +24,8 @@ import {
   type DiagnosticAxis,
 } from "@lib/recommendation_engine";
 import jsPDF from "jspdf";
+import AppHeader from "../components/AppHeader";
+import ConfirmModal from "../components/ConfirmModal";
 
 // 8개 진단축 평균 (레이더용)
 function calcDiagnosticAverages(
@@ -50,6 +52,7 @@ export default function Result() {
   const nick = getNickname() || "익명";
   const cache = loadResultCache();
   const [downloading, setDownloading] = useState(false);
+  const [restartOpen, setRestartOpen] = useState(false);
   const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -134,19 +137,24 @@ export default function Result() {
     }
   }
 
-  function restart() {
-    if (confirm("응답을 모두 초기화하고 처음부터 다시 진단하시겠습니까?")) {
-      clearAll();
-      nav("/", { replace: true });
-    }
+  function confirmRestart() {
+    clearAll();
+    nav("/", { replace: true });
   }
 
   return (
-    <main className="page" ref={pageRef}>
-      <h1>진단 결과</h1>
-      <p className="muted">
-        {nick}님 · {new Date(cache.computedAt).toLocaleString()}
-      </p>
+    <>
+      <AppHeader />
+      <main className="page" ref={pageRef}>
+        <div className="step-indicator step-indicator--done">
+          <span className="step-indicator__num">검사 완료</span>
+          <span className="step-indicator__sep">·</span>
+          <span className="step-indicator__label">결과지</span>
+        </div>
+        <h1>진단 결과</h1>
+        <p className="muted">
+          {nick}님 · {new Date(cache.computedAt).toLocaleString()}
+        </p>
 
       <div className="card">
         <h2>상담 필요도</h2>
@@ -160,7 +168,9 @@ export default function Result() {
         </div>
         {undecided.is_undecided && (
           <p style={{ marginTop: 10, color: "var(--c-text-soft)" }}>
-            <strong>학과 결정 미정군</strong> — {undecided.reason}. 진로상담을 추천드립니다.
+            <strong>탐색이 더 필요한 단계</strong> — 추천 학과 간 적합도가 가까워 결정에 더 깊은
+            탐색이 도움됩니다. 진로·취업 컨설턴트와의 상담을 통해 학생의 강점과 가능성을 함께
+            살펴볼 수 있습니다.
           </p>
         )}
       </div>
@@ -231,11 +241,22 @@ export default function Result() {
       )}
 
       <div className="btn-row">
-        <button className="ghost" onClick={restart}>다시 진단하기</button>
+        <button className="ghost" onClick={() => setRestartOpen(true)}>다시 진단하기</button>
         <button onClick={exportPdf} disabled={downloading}>
           {downloading ? "PDF 저장 중…" : "PDF로 저장"}
         </button>
       </div>
-    </main>
+      </main>
+      <ConfirmModal
+        open={restartOpen}
+        title="응답을 모두 초기화하시겠습니까?"
+        body="현재 결과지와 240문항 응답이 모두 사라집니다. 처음부터 다시 진단을 시작합니다."
+        confirmText="초기화하고 다시 시작"
+        cancelText="취소"
+        tone="danger"
+        onConfirm={confirmRestart}
+        onCancel={() => setRestartOpen(false)}
+      />
+    </>
   );
 }

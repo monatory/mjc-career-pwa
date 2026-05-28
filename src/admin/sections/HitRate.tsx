@@ -5,7 +5,7 @@
  * 본격 구현 시 lib/analytics.js 의 calcHitMetrics 결과를 학생 단위로 누적 집계.
  * "실제 선택 학과" 입력 폼은 학기 종료 후 진로취업팀이 일괄 입력.
  */
-import { mockHitSummary, PILOT_NOT_STARTED_MSG } from "../mockData";
+import { mockHitSummary, MOCK_PREVIEW_MSG } from "../mockData";
 
 export default function HitRate() {
   const s = mockHitSummary();
@@ -14,6 +14,7 @@ export default function HitRate() {
   return (
     <section>
       <h2>추천 적중률 (Hit@1 / Hit@3 / Hit@5)</h2>
+      <p className="muted small">{MOCK_PREVIEW_MSG}</p>
       <p className="muted small">
         학기말 진로취업팀이 학생별 실제 선택 학과를 입력하면, 시스템 추천 TOP N 안에 포함된
         비율을 자동 계산합니다. 1지망 미입력 학생은 계산 대상에서 제외(evaluable=false).
@@ -31,7 +32,7 @@ export default function HitRate() {
           <h3>실제 선택 학과 입력</h3>
           <button disabled>학생별 입력 시작</button>
         </div>
-        {noData && <p className="muted small">{PILOT_NOT_STARTED_MSG}</p>}
+        {noData && <p className="muted small">실제 선택 학과 입력이 아직 진행되지 않았습니다.</p>}
         <p className="muted small">
           입력 폼은 본격 구현 시 학번·이름 검색 → 실제 선택 학과 드롭다운 → 저장 흐름으로
           만들어집니다(계획서 Ⅹ장). 시범운영 단계에서는 닉네임 기반 일괄 CSV 업로드도 검토.
