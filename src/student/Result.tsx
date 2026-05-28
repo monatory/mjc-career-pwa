@@ -19,8 +19,10 @@ import {
   getCard,
   getDepartment,
   accessibilityData,
+  certificationData,
 } from "../lib/dataLoader";
-import { isFreeMajorAccessible } from "@lib/courses";
+import { isFreeMajorAccessible, getCertificationRequirements } from "@lib/courses";
+import CertificationBanner from "../components/CertificationBanner";
 import {
   DIAGNOSTIC_AXES,
   generateReason,
@@ -268,6 +270,12 @@ export default function Result() {
   const next3: FitResult[] = fits.slice(5, 8);
   const undecided = detectUndecided(fits);
 
+  // 자격증 요건 학과(BIZ_WELF 등)가 TOP1~3 안에 있으면 결과지 상단 배너.
+  // TOP4~8 에 있을 때는 모달 내부에서 표시(DepartmentDetailModal).
+  const certInTop3 = fits.slice(0, 3).find((f) =>
+    getCertificationRequirements(f.code, certificationData),
+  );
+
   const radarData = (["INT", "ACT", "LRN", "COMP", "JOB", "VAL", "CONF", "NEED"] as DiagnosticAxis[]).map(
     (ax) => ({
       axis: DIAGNOSTIC_AXES[ax],
@@ -361,6 +369,14 @@ export default function Result() {
         <p className="muted">
           {nick}님 · {new Date(cache.computedAt).toLocaleString()}
         </p>
+
+      {certInTop3 && (
+        <CertificationBanner
+          deptCode={certInTop3.code}
+          deptName={certInTop3.name}
+          placement="top"
+        />
+      )}
 
       <div className="card">
         <h2>상담 필요도</h2>
@@ -515,7 +531,10 @@ export default function Result() {
       )}
 
       {/* 진로 상담 신청 CTA — 70점 이상이면 강조 */}
-      <div className={`card counseling-cta ${cache.counseling.score >= 70 ? "counseling-cta--urgent" : ""}`}>
+      <div
+        id="counseling-cta"
+        className={`card counseling-cta ${cache.counseling.score >= 70 ? "counseling-cta--urgent" : ""}`}
+      >
         <div className="counseling-cta__head">
           <h2>진로·취업 상담 신청</h2>
           {cache.counseling.score >= 70 && (

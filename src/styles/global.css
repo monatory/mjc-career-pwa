@@ -1021,6 +1021,102 @@ footer.legal {
 }
 
 /* ─────────────────────────────────────────────────────────────
+ * 자격증 요건 학과 경고 배너 (CertificationBanner)
+ *   placement="top"   → 결과지 상단 (TOP1~3 자격증 학과)
+ *   placement="modal" → 모달 안 (TOP4~8 자격증 학과)
+ * ───────────────────────────────────────────────────────────── */
+.cert-banner {
+  border-radius: 12px;
+  padding: 16px 18px 14px;
+  margin: 0 0 16px;
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+.cert-banner--top {
+  background: #fff6f5;
+  border: 1px solid #f4c5be;
+  border-left: 4px solid #c0392b;
+  box-shadow: 0 1px 3px rgba(192, 57, 43, 0.06);
+}
+.cert-banner--modal {
+  background: #fff8f7;
+  border: 1px solid #f4c5be;
+  border-left: 4px solid #c0392b;
+  margin-top: 4px;
+}
+.cert-banner__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #8e2a1e;
+  font-size: 1rem;
+  margin: 0 0 8px;
+}
+.cert-banner__icon {
+  font-size: 1.05rem;
+}
+.cert-banner__lead {
+  margin: 0 0 10px;
+  color: #4a3232;
+}
+.cert-banner__lead strong {
+  color: #8e2a1e;
+}
+.cert-banner__courses {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 14px;
+}
+.cert-banner__courses li {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.92rem;
+  color: #4a3232;
+  font-weight: 500;
+}
+.cert-banner__dot {
+  color: #c0392b;
+  font-size: 0.7em;
+}
+.cert-banner__additional {
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  color: #6b4a45;
+}
+.cert-banner__warning {
+  margin: 0 0 12px;
+  font-size: 0.84rem;
+  color: #6b4a45;
+}
+.cert-banner__cta {
+  appearance: none;
+  background: #c0392b;
+  color: #fff;
+  border: 0;
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 9px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.05s;
+}
+.cert-banner__cta:hover {
+  background: #a92e23;
+}
+.cert-banner__cta:active {
+  transform: translateY(1px);
+}
+@media (max-width: 480px) {
+  .cert-banner__courses {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
  * 별도 모집 학과 안내 박스 (진입 불가 4개 학과)
  * ───────────────────────────────────────────────────────────── */
 .dept-modal__not-accessible {

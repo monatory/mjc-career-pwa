@@ -14,11 +14,14 @@ import {
   getCard,
   courseData,
   accessibilityData,
+  certificationData,
 } from "../lib/dataLoader";
 import {
   getCoursesForDept,
   isFreeMajorAccessible,
+  getCertificationRequirements,
 } from "@lib/courses";
+import CertificationBanner from "./CertificationBanner";
 
 interface Props {
   code: string | null;
@@ -42,6 +45,12 @@ export default function DepartmentDetailModal({ code, fit, onClose }: Props) {
   const courses = accessible ? getCoursesForDept(code, courseData) : null;
   const nameDiffers =
     courses && courses.name_in_guidebook && courses.name_in_guidebook !== card.name;
+
+  // 자격증 요건 학과인 동시에 TOP1~3 이 아닐 때만 모달에 배너 표시.
+  // TOP1~3 은 결과지 상단에 이미 노출되므로 중복 안내를 피한다.
+  const isInTop3 = fit?.rank != null && fit.rank <= 3;
+  const certInModal =
+    !isInTop3 && getCertificationRequirements(code, certificationData) ? code : null;
 
   return (
     <div className="modal-backdrop" role="dialog" aria-modal="true" onClick={onClose}>
@@ -141,6 +150,11 @@ export default function DepartmentDetailModal({ code, fit, onClose }: Props) {
               {accessibilityData.not_accessible_notice}
             </p>
           </section>
+        )}
+
+        {/* 자격증 요건 학과 배너 — TOP4~8 일 때만(TOP1~3 은 상단 배너) */}
+        {certInModal && (
+          <CertificationBanner deptCode={certInModal} deptName={card.name} placement="modal" />
         )}
 
         <div className="btn-row" style={{ marginTop: 20 }}>
