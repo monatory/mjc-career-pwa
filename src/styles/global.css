@@ -126,12 +126,12 @@ h2 {
   line-height: 1.25;
   border-radius: var(--r-btn);
   text-align: center;
-  min-height: 64px;
+  min-height: 76px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .scale-row .scale-btn .num {
@@ -199,6 +199,38 @@ h2 {
 
 .btn-row > * { flex: 1; }
 
+/* 결과지: 상담 필요도 게이지 */
+.need-gauge-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.need-gauge {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.need-gauge__score {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 6px;
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.need-gauge__unit {
+  font-size: 0.7rem;
+  color: var(--c-text-soft);
+  font-weight: 500;
+  margin-left: 2px;
+}
+.need-gauge-meta { flex: 1 1 200px; }
+
 /* 결과지: TOP5 카드 */
 .top-card {
   display: flex;
@@ -209,6 +241,69 @@ h2 {
   border-radius: var(--r-card);
   background: var(--c-bg);
   margin-bottom: 10px;
+  position: relative;
+}
+
+/* 1위 최적합 학과 강조 */
+.top-card--first {
+  border: 2px solid var(--c-primary);
+  background: linear-gradient(135deg, #f6f9ff 0%, #ffffff 60%);
+  box-shadow: 0 4px 14px rgba(11, 61, 145, 0.12);
+  padding-top: 22px;
+}
+.top-card--first .rank {
+  background: var(--c-primary);
+  color: #fff;
+  border-radius: 999px;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+.top-card--first .percent {
+  color: var(--c-primary);
+  font-size: 1.3rem;
+}
+.top-card__crown {
+  position: absolute;
+  top: -10px;
+  left: 14px;
+  background: var(--c-accent);
+  color: #fff;
+  padding: 3px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* 6~8위 비교탐색 카드 — TOP5보다 작은 시각 */
+.top-card--compare {
+  background: var(--c-bg-soft);
+  padding: 12px 14px;
+}
+.top-card--compare .name { font-size: 0.96rem; }
+
+/* 진로 상담 신청 CTA */
+.counseling-cta__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.counseling-cta__head h2 { margin: 0; }
+.counseling-cta--urgent {
+  background: #fff5f4;
+  border: 1.5px solid var(--c-danger);
+}
+.counseling-cta__contact {
+  margin: 0;
+  padding-left: 1.2em;
+  line-height: 1.7;
 }
 
 .top-card .rank {
@@ -571,11 +666,12 @@ footer.legal {
   min-height: var(--tap-min);
 }
 
-/* 라디오 버튼 그룹 (모바일에서 wrap) */
+/* 라디오 버튼 그룹 (모바일에서 wrap, 행에 균등 분배) */
 .radio-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
+  align-items: stretch;
 }
 
 .radio-btn {
@@ -584,8 +680,10 @@ footer.legal {
   border: 1.5px solid var(--c-border);
   padding: 12px 16px;
   border-radius: var(--r-btn);
-  min-height: 46px;
+  min-height: 48px;
   font-size: 0.93rem;
+  flex: 1 0 auto;       /* 줄에 균등 분배 */
+  min-width: 80px;
   transition: border-color 0.12s, background 0.12s, color 0.12s;
 }
 

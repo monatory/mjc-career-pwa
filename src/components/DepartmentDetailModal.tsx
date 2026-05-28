@@ -4,6 +4,7 @@
  * 결과지 TOP5의 학과 카드를 클릭하면 열림.
  * department_cards.json 의 intro_short / talent_type / top3_jobs / certifications 노출.
  */
+import { useEffect } from "react";
 import { getCard } from "../lib/dataLoader";
 
 interface Props {
@@ -13,6 +14,13 @@ interface Props {
 }
 
 export default function DepartmentDetailModal({ code, fit, onClose }: Props) {
+  useEffect(() => {
+    if (!code) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [code, onClose]);
+
   if (!code) return null;
   const card = getCard(code);
   if (!card) return null;

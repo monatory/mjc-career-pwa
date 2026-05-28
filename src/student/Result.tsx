@@ -28,6 +28,36 @@ import AppHeader from "../components/AppHeader";
 import ConfirmModal from "../components/ConfirmModal";
 import DepartmentDetailModal from "../components/DepartmentDetailModal";
 
+// 상담 필요도 시각화 — SVG 반원 게이지(0~100)
+function CounselingGauge({ score }: { score: number }) {
+  const clamped = Math.max(0, Math.min(100, score));
+  // 반원: 반지름 56, 둘레 = π·56 ≈ 175.93
+  const R = 56;
+  const C = Math.PI * R;
+  const dash = (clamped / 100) * C;
+  const color = clamped >= 70 ? "#c0392b" : clamped >= 40 ? "#f5a623" : "#2e7d32";
+  return (
+    <div className="need-gauge" aria-label={`상담 필요도 ${clamped}점`}>
+      <svg viewBox="0 0 140 80" width="140" height="80">
+        <path d="M 14 70 A 56 56 0 0 1 126 70" stroke="#e8eef9" strokeWidth="12" fill="none" strokeLinecap="round" />
+        <path
+          d="M 14 70 A 56 56 0 0 1 126 70"
+          stroke={color}
+          strokeWidth="12"
+          fill="none"
+          strokeLinecap="round"
+          strokeDasharray={`${dash} ${C}`}
+          style={{ transition: "stroke-dasharray 0.6s ease" }}
+        />
+      </svg>
+      <div className="need-gauge__score" style={{ color }}>
+        {clamped.toFixed(1)}
+        <span className="need-gauge__unit">/100</span>
+      </div>
+    </div>
+  );
+}
+
 // 8개 진단축 평균 (레이더용)
 function calcDiagnosticAverages(
   responses: Record<string, number>
@@ -172,16 +202,19 @@ export default function Result() {
 
       <div className="card">
         <h2>상담 필요도</h2>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <span style={{ fontSize: "2rem", fontWeight: 700, color: "var(--c-primary)" }}>
-            {cache.counseling.score}
-          </span>
-          <span className={`badge ${cache.counseling.score >= 70 ? "danger" : cache.counseling.score >= 40 ? "warn" : ""}`}>
-            {cache.counseling.category}
-          </span>
+        <div className="need-gauge-row">
+          <CounselingGauge score={cache.counseling.score} />
+          <div className="need-gauge-meta">
+            <span className={`badge ${cache.counseling.score >= 70 ? "danger" : cache.counseling.score >= 40 ? "warn" : ""}`}>
+              {cache.counseling.category}
+            </span>
+            <p className="muted small" style={{ margin: "8px 0 0" }}>
+              0~40 상담 선택군 · 40~70 상담 권장군 · 70 이상 상담 우선 권장군
+            </p>
+          </div>
         </div>
         {undecided.is_undecided && (
-          <p style={{ marginTop: 10, color: "var(--c-text-soft)" }}>
+          <p style={{ marginTop: 14, color: "var(--c-text-soft)" }}>
             <strong>탐색이 더 필요한 단계</strong> — 추천 학과 간 적합도가 가까워 결정에 더 깊은
             탐색이 도움됩니다. 진로·취업 컨설턴트와의 상담을 통해 학생의 강점과 가능성을 함께
             살펴볼 수 있습니다.
@@ -235,14 +268,16 @@ export default function Result() {
         <h2>추천 TOP 5</h2>
         {top5.map((f) => {
           const card = getCard(f.code);
+          const isFirst = f.rank === 1;
           return (
             <button
               key={f.code}
-              className="top-card top-card--clickable"
+              className={`top-card top-card--clickable ${isFirst ? "top-card--first" : ""}`}
               style={{ flexDirection: "column", alignItems: "stretch", textAlign: "left" }}
               onClick={() => setDetailCode(f.code)}
               aria-label={`${f.name} 상세 보기`}
             >
+              {isFirst && <span className="top-card__crown">최적합 학과</span>}
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <span className="rank">{f.rank}</span>
                 <div className="info">
@@ -268,20 +303,54 @@ export default function Result() {
       {next3.length > 0 && (
         <div className="card">
           <h2>비교탐색 학과 (6~8위)</h2>
+          <p className="muted small" style={{ margin: "0 0 10px" }}>
+            TOP 5에 가까운 적합도. 진로 탐색의 폭을 넓히는 데 참고하세요.
+          </p>
           {next3.map((f) => (
-            <div key={f.code} className="top-card">
-              <span className="rank" style={{ fontSize: "1.15rem", color: "var(--c-text-soft)" }}>{f.rank}</span>
-              <div className="info">
-                <div className="school">{f.school}</div>
-                <div className="name">{f.name}</div>
+            <button
+              key={f.code}
+              className="top-card top-card--clickable top-card--compare"
+              style={{ flexDirection: "column", alignItems: "stretch", textAlign: "left" }}
+              onClick={() => setDetailCode(f.code)}
+              aria-label={`${f.name} 상세 보기`}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <span className="rank" style={{ color: "var(--c-text-soft)" }}>{f.rank}</span>
+                <div className="info">
+                  <div className="school">{f.school}</div>
+                  <div className="name">{f.name}</div>
+                </div>
+                <span className="percent" style={{ color: "var(--c-text-soft)" }}>
+                  {f.percent.toFixed(1)}%
+                </span>
               </div>
-              <span className="percent" style={{ color: "var(--c-text-soft)" }}>
-                {f.percent.toFixed(1)}%
-              </span>
-            </div>
+              <p style={{ margin: "8px 0 0", fontSize: "0.88rem", color: "var(--c-text-soft)" }}>
+                {reasonFor(f.code)}
+              </p>
+            </button>
           ))}
         </div>
       )}
+
+      {/* 진로 상담 신청 CTA — 70점 이상이면 강조 */}
+      <div className={`card counseling-cta ${cache.counseling.score >= 70 ? "counseling-cta--urgent" : ""}`}>
+        <div className="counseling-cta__head">
+          <h2>진로·취업 상담 신청</h2>
+          {cache.counseling.score >= 70 && (
+            <span className="badge danger">상담 우선 권장</span>
+          )}
+        </div>
+        <p className="muted small" style={{ margin: "0 0 12px" }}>
+          {cache.counseling.score >= 70
+            ? "결과 해석과 학과 결정을 위해 진로·취업 컨설턴트와의 상담을 권장합니다. 학생지원처 AI융합진로지원센터로 문의해 주세요."
+            : "결과에 대한 추가 해석이나 학과 정보가 필요하시면 진로·취업 컨설턴트가 도와드립니다."}
+        </p>
+        <ul className="counseling-cta__contact muted small">
+          <li>학생지원처 AI융합진로지원센터</li>
+          <li>위치: (본관 OOO호 — 학과 회신 후 갱신 예정)</li>
+          <li>전화·이메일: (학과 회신 후 갱신 예정)</li>
+        </ul>
+      </div>
 
       <div className="btn-row">
         <button className="ghost" onClick={() => setRestartOpen(true)}>다시 진단하기</button>
