@@ -448,14 +448,21 @@ sessionStorage는 탭 종료 시 자동 삭제. LocalStorage 사용 금지.
 | 8 | STEP 2 응답자 정보 입력 (16항목) | ✅ 완료 (2026-05-28) | `Profile.tsx`, `student_profile_schema.json` |
 | 9 | 메타 분석 함수 + 회귀 테스트 (44건) | ✅ 완료 (2026-05-28) | `lib/analytics.js`, `tests/test_analytics.js` |
 | 10 | STEP 1↔2↔3 라우팅 + sessionStorage 정비 + 이어서 진행 모달 | ✅ 완료 (2026-05-28) | `sessionState.ts` 재작성, `Start.tsx` ResumeModal |
-| 11 | QR 접속 실기 테스트 | ⏳ 보류 | HTTPS 호스팅 환경 확보 후 (iOS Safari SW 요건) |
-| 12 | 관리자 대시보드 본격 구현 | ⏳ 보류 | 시범운영 데이터 50~100명 누적 후 |
+| 11 | QR 접속 실기 테스트 | ✅ 완료 (2026-05-28) | GitHub Pages HTTPS 자동 배포 충족 |
+| 12 | 관리자 대시보드 본격 구현 | ✅ 완료 (2026-05-28) | 7개 섹션 + Firestore 실측 + CSV 4종 + 데스크탑 우선 디자인 |
 | 13 | 뷰티매니지먼트과(메이크업&네일전공) 데이터 보강 | ⏳ 보류 | 자료 입수 후 |
 | 14 | 학과 홈페이지 URL 필드 추가 | ⏳ 보류 | 학과별 회신 후 `homepage_url` 필드 |
 | 15 | PWA 아이콘 MJC CI 교체 | ⏳ 보류 | 공식 CI 자산 입수 후 |
 | 16 | 1·2차 UX 검토 + 17건 + 8건 개선 (P0/P1/P2 + 추가 P1) | ✅ 완료 (2026-05-28) | 결과지 1위 강조·상담 게이지·CTA·모달 ESC·터치영역·테이블 가로 스크롤 등 |
-| 17 | GitHub 저장소 공개 푸시 | ✅ 완료 (2026-05-28) | `https://github.com/monatory/mjc-career-pwa` (Public, 14+ 커밋) |
+| 17 | GitHub 저장소 공개 푸시 | ✅ 완료 (2026-05-28) | `https://github.com/monatory/mjc-career-pwa` (Public, 22+ 커밋) |
 | 18 | GitHub Pages 자동 배포 + 카톡 OG 카드 | ✅ 완료 (2026-05-28) | `https://monatory.github.io/mjc-career-pwa/` (HTTPS, QR 공유 가능) |
+| 19 | Firebase Firestore 학생 응답 백엔드 (Phase 2~4) | ✅ 완료 (2026-05-28) | `responses/{anonymousId}`, Security Rules, CSV 4종 |
+| 20 | 관리자 대시보드 통계·학과별 명단 + 검사 흐름 개선 + 결과지 희망 비교 | ✅ 완료 (2026-05-28) | A·B·C 묶음 (Exam 다음 미응답 점프·ProfileStats·PreferredByDept·PreferenceComparisonCard) |
+| 21 | 가상 학생 5명 시드 + 시연 점검 | ✅ 완료 (2026-05-28) | `tests/seed_firestore.js` |
+| 22 | 관리자 페이지 데스크탑 우선 재디자인 + 반응형 | ✅ 완료 (2026-05-28) | max-width 1440, KPI·차트·테이블·사이드바 격식 |
+| 23 | 자율 점검 10라운드 — 가독성·색감·시연성 | ✅ 완료 (2026-05-28) | 헤더 그림자·검사 카드·1위 강조·분포 막대 그라데이션 등 |
+| 24 | PWA SW 즉시 활성화 (skipWaiting + clientsClaim) | ✅ 완료 (2026-05-28) | 새 빌드 배포 시 새로고침 1회로 적용 |
+| 25 | CI 빌드 실패 복구 — TS 타입 선언 추가 | ✅ 완료 (2026-05-28) | `lib/analytics.d.ts` 신설, 9회 누적 push 일괄 반영 |
 
 ### PWA 구성 요약 (2026-05-27 적용)
 
@@ -636,7 +643,168 @@ service cloud.firestore {
 
 ---
 
-## 16. 이 문서 유지보수
+## 16. 시범운영 1차 빌드 — 시연 가능 마일스톤 (2026-05-28)
+
+### 16.1 라이브 URL
+
+| 용도 | URL |
+|---|---|
+| **학생용 PWA** | https://monatory.github.io/mjc-career-pwa/ |
+| **관리자 대시보드** | https://monatory.github.io/mjc-career-pwa/#/admin |
+| **GitHub 저장소** | https://github.com/monatory/mjc-career-pwa (Public) |
+| **Firebase Console** | https://console.firebase.google.com/project/mjc-career-pwa |
+| **카톡 OG 카드** | `og:image` 자동 표시 (1200×630 PNG, librsvg 변환) |
+
+### 16.2 학생 흐름 (완성)
+
+```
+STEP 1 검사 소개  (#/)
+  · 명지전문대학 · AI융합진로지원센터 공통 헤더
+  · MJC-CAT 두문자 강조 + 부제
+  · 검사 구성 (8축 칩 + 90/+50/31/TOP5 4통계)
+  · 안내사항 + 동의 → "다음: 응답자 정보 입력 →"
+  · 진행 중인 검사 있으면 "이어서 진행" 모달
+
+STEP 2 응답자 정보 입력  (#/profile)
+  · A 기본(필수 5)·B 진로(필수 2+선택 1)·C 배경(선택 5)·D 학과 지망(선택 3)
+  · 필수 입력 진행 카운터 + 그라데이션 막대
+  · 라디오 그룹 균등 분배, 4 조건부 노출, 1·2·3지망 중복 방지
+  · 익명 활용 동의 (계획서 XI장 문구)
+
+STEP 3 진단 검사  (#/exam → #/stage2)
+  · 1차 90문항: 진단축 한국어 라벨 배지 + 문항
+  · 5점 척도 76px 터치, 자동 진행 500ms
+  · "응답 N / 90 · X개 남음 · 다음 미응답으로 ↦" 보조 링크
+  · 모두 응답 즉시 "1차 검사 제출 →" 그라데이션 강조
+  · 키보드: 1~5 응답 · ← 이전 · → 다음 · ? 미응답 이동
+  · 응답 5건 미만일 때만 "응답자 정보 수정" 링크
+
+결과지  (#/result)
+  · "검사 완료 · 결과지" 인디케이터
+  · 상담 필요도 SVG 반원 게이지(70+ 빨강·40+ 주황·이하 초록)
+  · 희망학과와의 비교 카드 (상담 필요도 직후)
+      1·2·3지망 시스템 순위·적합도, TOP5 강조, 4단계 톤 상담 권유
+  · 진단축 8개 레이더 + 점수 표 펼치기 토글
+  · 추천 TOP 5 — 1위 "최적합 학과" 크라운 + 그라데이션 + 큰 rank
+  · 비교탐색 학과 6~8위 (클릭 모달)
+  · 진로·취업 상담 신청 CTA (70+ 시 빨강 강조)
+  · 다시 진단(ConfirmModal) / PDF 저장(html2canvas 한글 보존)
+  · 결과지 진입 시 Firestore 자동 저장 (익명ID, fire-and-forget)
+```
+
+### 16.3 관리자 대시보드 (`/admin`)
+
+#### 진입 방법
+1. **URL 직접**: `https://monatory.github.io/mjc-career-pwa/#/admin`
+2. **푸터 미니 링크**: 학생 측 어느 화면이든 푸터 맨 아래 작은 회색 "관리자" 텍스트
+
+첫 진입 시 권한 선택기(센터·교지원·학과장 3카드) — `sessionStorage`에 저장되어 재진입 시 자동 적용. 사이드바 상단 "권한 전환" 버튼으로 재선택.
+
+#### 7개 섹션 + 권한별 노출
+
+| 섹션 | CENTER | EDU_SUPPORT | DEPT_HEAD |
+|---|---|---|---|
+| 종합 현황 (KPI 6 + 14일 AreaChart) | ✓ | ✓ | ✓ |
+| 응답자 통계 (11종 분포) | ✓ | ✓ | — |
+| 학과별 희망학생 명단 (1·2·3지망) | ✓ | — | ✓ (본인 학부) |
+| 학과별 추천 분포 (BarChart + 표) | ✓ | — | ✓ (본인 학부) |
+| 상담 필요군 자동 추출 (rule_a/b/c) | ✓ | — | — |
+| 추천 적중률 Hit@1/3/5 | ✓ | — | — |
+| 만족도·자유응답 (본 구현 전 mock) | ✓ | ✓ | — |
+
+#### CSV 다운로드 4종 (UTF-8 BOM, Excel 한글 호환)
+
+| 함수 | 결과 |
+|---|---|
+| `exportAllResponsesCsv` | 전체 응답 — 16항목 + 결과 + Hits |
+| `exportCounselingCsv` | 상담 권장 학생 (HIGH/MEDIUM 한정) |
+| `exportProfileStatsCsv` | 응답자 통계 11종 분포 |
+| `exportPreferredStudentsByDeptCsv` / `exportSingleDeptPreferredCsv` | 학과별 희망학생 명단 (상담 초기 자료) |
+
+#### 데이터 출처 표시
+화면 상단 배너 — **live**(초록·실측 N명) / **preview**(주황·미리보기 mock) / **loading**(회색)
+
+### 16.4 데스크탑 우선 디자인 (max-width 1440px)
+
+- 사이드바 240px + 그라데이션 권한 카드 + 활성 메뉴 좌측 파란 막대
+- KPI 카드 200px min · 1.9rem 800w 큰 숫자 · hover 부양 · warn/danger 톤
+- AreaChart 그라데이션 fill, BarChart radius 4px
+- 테이블 sticky header · UPPERCASE · hover 강조 · `tabular-nums`
+- 1024 / 720 / 400px 3단계 반응형 (모바일 토글 사이드)
+
+### 16.5 시드 데이터 (시연용)
+
+```bash
+node tests/seed_firestore.js          # 가상 학생 5명 등록
+node tests/seed_firestore.js --clean  # seed- 접두사 ID 일괄 삭제
+```
+
+5명 시나리오 다양성:
+- 민서 IT 지향 — 컴퓨터공학과 1지망 / 시스템 TOP1 AI게임소프트웨어학과 (TOP3 일치, MEDIUM)
+- 지훈 휴먼 지향 — 유아교육과 1지망 / 시스템 TOP1 사회복지과 (TOP3 일치, LOW)
+- 수아 ART 지향 — 경영학과 1지망(미스매치) / TOP1 뷰티매니지먼트과 (**HIGH** rule_a+b+c)
+- 건우 기계 지향 — 기계공학과 1지망 == TOP1 (완벽 일치, LOW)
+- 예린 항공 지향 — 1지망 미입력 + NEED 높음 (MEDIUM rule_a)
+
+---
+
+## 17. CI/CD 인프라
+
+### 17.1 GitHub Actions 워크플로
+
+`.github/workflows/deploy.yml` — main 브랜치 push 시 자동 빌드·배포:
+
+```
+checkout → setup-node 20 + npm cache → npm ci →
+  test_engine.js (5건) → test_analytics.js (44건) →
+  GITHUB_ACTIONS=true npm run build (= tsc -b && vite build) →
+  librsvg2-bin 설치 → og-card.svg → og-card.png 1200×630 →
+  upload-pages-artifact → deploy-pages
+```
+
+### 17.2 빌드 인계 — 반드시 지킬 점 (2026-05-28 9회 연속 실패 사고 회고)
+
+**npm run build를 로컬에서 통과시킨 뒤에만 commit + push.**
+
+`npx vite build`만 돌리면 TypeScript 단계(`tsc -b`)를 건너뛰어 strict 타입 에러를 발견하지 못한다. GitHub Actions는 `npm run build` 전체를 돌리므로 거기서 처음 에러가 드러나고, 그 사이의 모든 push가 라이브에 반영되지 않는다.
+
+```bash
+# 안전한 사전 검증
+npm run build
+node tests/test_engine.js
+node tests/test_analytics.js
+```
+
+세 가지 모두 초록색이면 push.
+
+특히 `lib/analytics.js`처럼 .js 파일을 .ts 코드에서 import할 때는 반드시 대응되는 `.d.ts` 파일이 있어야 strict 환경에서 안전. (`lib/recommendation_engine.d.ts`, `lib/analytics.d.ts`)
+
+### 17.3 PWA 자동 갱신 정책
+
+`vite.config.ts` workbox 옵션:
+- `registerType: "autoUpdate"`
+- `skipWaiting: true` + `clientsClaim: true` — 새 SW가 즉시 활성화, 한 번의 새로고침으로 새 빌드 적용
+
+사용자 측에서 옛 캐시가 강하게 잡혀 있는 경우(시연 직전 등):
+- 시크릿 창(Ctrl+Shift+N)으로 검증
+- 또는 DevTools → Application → Storage → "Clear site data" → 새로고침
+
+---
+
+## 18. 보류 작업 (자료·결정 필요)
+
+| # | 작업 | 필요 자료/결정 |
+|---|---|---|
+| 보류-1 | 뷰티매니지먼트과(메이크업&네일전공) 데이터 추가 | 학과 가이드북 또는 학과장 회신 |
+| 보류-2 | 학과별 홈페이지 URL — `department_cards.json`에 `homepage_url` 필드 | 학과별 회신 |
+| 보류-3 | PWA 아이콘 MJC CI 교체 | 공식 CI 자산 |
+| 보류-4 | 만족도 폼 본 구현 (결과지 PDF 저장 후 5점 척도 4문항) | 계획서 Ⅸ ⑩ |
+| 보류-5 | 결과지 PDF 헤더·푸터 보강 (학교 로고·발급일·페이지 번호) | — |
+| 보류-6 | 본 운영 전환 — Anonymous Auth + custom claims + 학내 도메인 매핑 | 학내 SSO 일정 |
+
+---
+
+## 19. 이 문서 유지보수
 
 이 `CLAUDE.md`는 **프로젝트의 살아있는 명세**. 다음과 같은 변경이 있으면 반드시 갱신:
 
