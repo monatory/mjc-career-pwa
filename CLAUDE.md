@@ -453,6 +453,9 @@ sessionStorage는 탭 종료 시 자동 삭제. LocalStorage 사용 금지.
 | 13 | 뷰티매니지먼트과(메이크업&네일전공) 데이터 보강 | ⏳ 보류 | 자료 입수 후 |
 | 14 | 학과 홈페이지 URL 필드 추가 | ⏳ 보류 | 학과별 회신 후 `homepage_url` 필드 |
 | 15 | PWA 아이콘 MJC CI 교체 | ⏳ 보류 | 공식 CI 자산 입수 후 |
+| 16 | 1·2차 UX 검토 + 17건 + 8건 개선 (P0/P1/P2 + 추가 P1) | ✅ 완료 (2026-05-28) | 결과지 1위 강조·상담 게이지·CTA·모달 ESC·터치영역·테이블 가로 스크롤 등 |
+| 17 | GitHub 저장소 공개 푸시 | ✅ 완료 (2026-05-28) | `https://github.com/monatory/mjc-career-pwa` (Public, 14+ 커밋) |
+| 18 | GitHub Pages 자동 배포 + 카톡 OG 카드 | ✅ 완료 (2026-05-28) | `https://monatory.github.io/mjc-career-pwa/` (HTTPS, QR 공유 가능) |
 
 ### PWA 구성 요약 (2026-05-27 적용)
 
@@ -466,13 +469,73 @@ sessionStorage는 탭 종료 시 자동 삭제. LocalStorage 사용 금지.
 
 ### 배포 시 체크리스트
 
-- [ ] HTTPS 필수 (Service Worker 동작 요건, iOS Safari 특히 엄격)
-- [ ] `npm run build` 산출물 `dist/`를 학내 정적 호스팅으로 업로드
+- [x] HTTPS 필수 (Service Worker 동작 요건, iOS Safari 특히 엄격) — GitHub Pages가 자동 제공
+- [x] `npm run build` 산출물 `dist/`를 정적 호스팅으로 업로드 — Actions 워크플로 자동
 - [ ] `public/icons/*.svg`를 실제 MJC CI 색·로고로 교체 (현재는 가안 네이비 #0b3d91 / 오렌지 #f5a623)
-- [ ] HashRouter 사용 중이므로 서버 측 SPA 폴백 라우트 설정 불요
-- [ ] 첫 접속 후 DevTools → Application → Cache Storage에서 16개 자산 캐싱 확인
+- [x] HashRouter 사용 중이므로 서버 측 SPA 폴백 라우트 설정 불요
+- [x] 첫 접속 후 DevTools → Application → Cache Storage에서 17개 자산 캐싱 확인
 
 각 단계마다 사용자에게 확인 후 다음 단계 진행.
+
+---
+
+## 14. 배포 정보 (시범운영)
+
+### 14.1 저장소와 URL
+
+| 항목 | 값 |
+|---|---|
+| **GitHub 저장소** | `https://github.com/monatory/mjc-career-pwa` (Public) |
+| **학생용 PWA URL** | `https://monatory.github.io/mjc-career-pwa/` |
+| **카톡 OG 카드** | `public/og-card.svg` → Actions에서 `librsvg`로 PNG 변환 후 배포 |
+| **운영 주체** | 명지전문대학 학생지원처 AI융합진로지원센터 |
+
+### 14.2 GitHub Pages 자동 배포 워크플로
+
+`.github/workflows/deploy.yml` — main 브랜치 push 시 자동 동작:
+
+```
+on: push (main)
+  ↓
+1) actions/checkout@v4
+2) actions/setup-node@v4 (node 20 + npm 캐시)
+3) npm ci || npm install
+4) node tests/test_engine.js                  ← 회귀 5건
+5) node tests/test_analytics.js               ← 회귀 44건
+6) GITHUB_PAGES=1 → npm run build             ← vite + PWA
+7) librsvg2-bin 설치 → SVG OG 카드 → PNG 변환 → dist/og-card.png
+8) actions/upload-pages-artifact@v3
+9) actions/deploy-pages@v4                    ← Pages 배포
+```
+
+`vite.config.ts`의 `base` 경로:
+- CI(GitHub Actions) 빌드: `/mjc-career-pwa/` (Pages 하위 경로)
+- 로컬 dev: `/` (변경 없음)
+
+### 14.3 본 운영 전환 시 절차
+
+본 운영 단계에서는 학내 도메인(예: `https://career.mjc.ac.kr/`)으로 옮길 예정. 다음 4개만 변경:
+
+1. `vite.config.ts` — `IS_PAGES_BUILD` 조건문 제거하고 `base = "/"` 고정
+2. `.github/workflows/deploy.yml` — Pages 배포 단계를 학내 호스팅으로 교체 (rsync/SFTP 등)
+3. `index.html`의 `og:url`과 `og:image` 도메인 갱신
+4. `public/manifest.webmanifest`는 상대 경로(`./`) 그대로 두면 자동 대응
+
+학내 SSO(Microsoft Entra ID / Keycloak 등) 연동도 본 운영 시 추가. `src/admin/permissions.ts`의 mock 권한 전환기를 SSO 결과로 교체.
+
+### 14.4 카톡·SNS 공유 메타태그
+
+`index.html`에 등록된 Open Graph + Twitter Card:
+
+| 키 | 값 |
+|---|---|
+| `og:title` | MJC-CAT · 명지전문대학 학과 적합도 진단 |
+| `og:description` | 자유전공 학생을 위한 학과 탐색 진단. 8개 진단축 90문항으로 31개 학과 중 가장 적합한 5개 학과를 안내합니다. |
+| `og:image` | `https://monatory.github.io/mjc-career-pwa/og-card.png` (1200×630) |
+| `og:site_name` | 명지전문대학 학생지원처 AI융합진로지원센터 |
+| `og:locale` | `ko_KR` |
+
+카톡 캐시 갱신: https://developers.kakao.com/tool/clear/og 에 URL 입력.
 
 ---
 
@@ -485,5 +548,6 @@ sessionStorage는 탭 종료 시 자동 삭제. LocalStorage 사용 금지.
 - DNA 가중치 학과장 보정 완료
 - 적합도 공식 변경 (절대 없을 예정)
 - 신규 데이터 파일 추가
+- 배포 URL·도메인 변경, 백엔드 도입 (Firebase 등)
 
 문서가 코드보다 뒤처지면 다음 Claude Code 세션의 컨텍스트가 깨진다.
