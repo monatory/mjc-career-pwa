@@ -348,9 +348,81 @@ footer.legal {
 }
 
 .exam-title__abbr {
-  margin: 2px 0 0;
-  font-size: 0.78rem;
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: var(--c-text-soft);
   letter-spacing: 0.01em;
+  font-style: italic;
+}
+
+.exam-title__abbr-mark {
+  color: var(--c-primary);
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* 8개 진단축 칩 */
+.axis-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 14px;
+}
+.axis-chip {
+  background: var(--c-bg-soft);
+  border: 1px solid var(--c-border);
+  color: var(--c-text-soft);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+/* 검사 통계 4칸 */
+.exam-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--c-border);
+}
+.exam-stat {
+  text-align: center;
+}
+.exam-stat__num {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--c-primary);
+  line-height: 1.1;
+}
+.exam-stat__label {
+  font-size: 0.75rem;
+  color: var(--c-text-soft);
+  margin-top: 4px;
+}
+
+/* 키보드 단축키 힌트 — 데스크탑(>720px)에서만 노출 */
+.kbd-hint {
+  display: none;
+  margin-top: 14px;
+  text-align: center;
+  font-size: 0.82rem;
+}
+.kbd-hint kbd {
+  display: inline-block;
+  background: var(--c-bg-soft);
+  border: 1px solid var(--c-border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 0.78rem;
+  color: var(--c-text);
+  font-family: inherit;
+  margin: 0 2px;
+}
+@media (min-width: 721px) {
+  .kbd-hint { display: block; }
 }
 
 /* h1 행에서 우측 보조 링크 — 응답자 정보 수정 등 */
@@ -584,6 +656,100 @@ footer.legal {
 }
 
 .modal__body { color: var(--c-text-soft); font-size: 0.93rem; line-height: 1.5; }
+
+.modal--wide { max-width: 560px; max-height: 90vh; overflow-y: auto; }
+
+/* 학과 상세 모달 */
+.dept-modal__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--c-border);
+  margin-bottom: 16px;
+}
+.dept-modal__fit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.dept-modal__rank {
+  background: var(--c-primary);
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.dept-modal__percent {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--c-accent);
+}
+.dept-modal__section { margin-bottom: 16px; }
+.dept-modal__section h3 {
+  font-size: 0.95rem;
+  margin: 0 0 6px;
+  color: var(--c-primary);
+}
+.dept-modal__text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--c-text-soft);
+}
+
+/* 결과지 학과 카드 클릭 가능 */
+.top-card--clickable {
+  background: var(--c-bg);
+  color: var(--c-text);
+  cursor: pointer;
+  width: 100%;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  min-height: auto;
+}
+.top-card--clickable:hover {
+  border-color: var(--c-primary);
+  box-shadow: 0 2px 8px rgba(11, 61, 145, 0.12);
+}
+.top-card__more {
+  margin-top: 8px;
+  text-align: right;
+  font-size: 0.78rem;
+}
+
+/* 레이더 차트 + 진단축 점수 표 (>720px에서 좌우 배치) */
+.radar-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.radar-wrap__chart { flex: 1 1 auto; min-width: 0; }
+
+.axis-score-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.axis-score-table th,
+.axis-score-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--c-border);
+}
+.axis-score-table thead th {
+  background: var(--c-bg-soft);
+  font-weight: 600;
+  font-size: 0.78rem;
+  color: var(--c-text-soft);
+}
+
+@media (min-width: 721px) {
+  .radar-wrap { flex-direction: row; align-items: center; }
+  .axis-score-table { width: 220px; flex-shrink: 0; }
+}
 
 /* ─── 관리자 대시보드 스켈레톤 ────────────────────────────── */
 .admin-shell {

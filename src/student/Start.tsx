@@ -57,8 +57,12 @@ export default function Start() {
         <header className="exam-title">
           <h1 className="exam-title__main">MJC-CAT</h1>
           <p className="exam-title__sub">명지전문대학 학과 적합도 진단</p>
-          <p className="exam-title__abbr muted">
-            <span className="muted">Myongji College Career Aptitude Test</span>
+          <p className="exam-title__abbr">
+            <span className="exam-title__abbr-mark">M</span>yongji{" "}
+            <span className="exam-title__abbr-mark">C</span>ollege{" "}
+            <span className="exam-title__abbr-mark">C</span>areer{" "}
+            <span className="exam-title__abbr-mark">A</span>ptitude{" "}
+            <span className="exam-title__abbr-mark">T</span>est
           </p>
         </header>
 
@@ -70,14 +74,36 @@ export default function Start() {
         <div className="card">
           <h2>검사 구성</h2>
           <p>
-            본 진단은 <strong>8개 진단축</strong>
-            <span className="muted">
-              (흥미·활동선호·학습방식·역량인식·직무선호·진로가치·선택확신도·상담필요도)
-            </span>
-            을 측정하는 <strong>총 90개 문항</strong>으로 구성됩니다.
-            응답 결과에 따라 추가 50문항이 자동 선별되며,
-            본교 <strong>31개 학과</strong> 중 본인에게 가장 적합한 5개 학과를 안내합니다.
+            본 진단은 <strong>8개 진단축</strong>을 측정하는 <strong>총 90개 문항</strong>으로
+            구성됩니다. 응답 결과에 따라 추가 50문항이 자동 선별되며, 본교
+            <strong> 31개 학과</strong> 중 본인에게 가장 적합한 5개 학과를 안내합니다.
           </p>
+          <div className="axis-chips">
+            {[
+              "흥미", "활동 선호", "학습 방식", "역량 인식",
+              "직무 선호", "진로 가치", "선택 확신도", "상담 필요도",
+            ].map((label) => (
+              <span key={label} className="axis-chip">{label}</span>
+            ))}
+          </div>
+          <div className="exam-stats">
+            <div className="exam-stat">
+              <div className="exam-stat__num">90</div>
+              <div className="exam-stat__label">기본 문항</div>
+            </div>
+            <div className="exam-stat">
+              <div className="exam-stat__num">+50</div>
+              <div className="exam-stat__label">적응형 추가</div>
+            </div>
+            <div className="exam-stat">
+              <div className="exam-stat__num">31</div>
+              <div className="exam-stat__label">대상 학과</div>
+            </div>
+            <div className="exam-stat">
+              <div className="exam-stat__num">TOP 5</div>
+              <div className="exam-stat__label">추천 결과</div>
+            </div>
+          </div>
         </div>
 
         <div className="card">
@@ -103,7 +129,7 @@ export default function Start() {
               onChange={(e) => setAgree(e.target.checked)}
               style={{ width: 20, height: 20 }}
             />
-            <span>위 안내사항을 확인했습니다.</span>
+            <span>위 안내사항을 확인하고 진단을 시작합니다.</span>
           </label>
         </div>
 

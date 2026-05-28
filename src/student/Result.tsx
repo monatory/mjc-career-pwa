@@ -26,6 +26,7 @@ import {
 import jsPDF from "jspdf";
 import AppHeader from "../components/AppHeader";
 import ConfirmModal from "../components/ConfirmModal";
+import DepartmentDetailModal from "../components/DepartmentDetailModal";
 
 // 8개 진단축 평균 (레이더용)
 function calcDiagnosticAverages(
@@ -53,6 +54,7 @@ export default function Result() {
   const cache = loadResultCache();
   const [downloading, setDownloading] = useState(false);
   const [restartOpen, setRestartOpen] = useState(false);
+  const [detailCode, setDetailCode] = useState<string | null>(null);
   const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -87,51 +89,63 @@ export default function Result() {
     return dept ? generateReason(axisScores, dept) : "";
   }
 
+  /**
+   * PDF 저장 — 결과지 화면을 html2canvas로 캡처해 한글 그대로 PDF에 임베드.
+   * jsPDF의 텍스트 출력은 한글 폰트 임베드가 무거워 캡처 방식 채택.
+   */
   async function exportPdf() {
+    if (!pageRef.current) return;
     setDownloading(true);
     try {
-      // 텍스트만으로 깔끔히 출력 (한글 폰트 임베드는 추후 단계)
-      const doc = new jsPDF({ unit: "pt", format: "a4" });
-      const W = doc.internal.pageSize.getWidth();
-      let y = 50;
+      // 동적 import로 번들 분할 (PDF 저장 클릭 시에만 로드)
+      const html2canvas = (await import("html2canvas")).default;
 
-      doc.setFontSize(18);
-      doc.text("MJC Career Path Diagnosis Result", W / 2, y, { align: "center" });
-      y += 28;
-      doc.setFontSize(11);
-      doc.text(`Nickname: ${nick}  /  Date: ${new Date().toLocaleString()}`, W / 2, y, { align: "center" });
-      y += 24;
-
-      doc.setFontSize(13);
-      doc.text("TOP 5 Recommended Departments", 50, y);
-      y += 18;
-      doc.setFontSize(11);
-      top5.forEach((f, i) => {
-        doc.text(
-          `${i + 1}. [${f.percent.toFixed(1)}%] ${f.school} / ${f.name}  (${f.code})`,
-          60,
-          y
-        );
-        y += 16;
+      // 결과지 main 영역 캡처 (모달은 portal 밖에 있어 자연스럽게 제외)
+      const canvas = await html2canvas(pageRef.current, {
+        scale: 2,           // 고해상도
+        backgroundColor: "#ffffff",
+        useCORS: true,
+        logging: false,
+        windowWidth: pageRef.current.scrollWidth,
       });
 
-      y += 12;
-      doc.setFontSize(13);
-      doc.text("Counseling Need", 50, y);
-      y += 18;
-      doc.setFontSize(11);
-      doc.text(`Score: ${c.counseling.score} (${c.counseling.category})`, 60, y);
-      y += 14;
-      doc.text(`Decision: ${undecided.is_undecided ? "Undecided" : "Decided"} — ${undecided.reason}`, 60, y);
+      const imgData = canvas.toDataURL("image/jpeg", 0.92);
+      const pdf = new jsPDF({ unit: "pt", format: "a4", orientation: "portrait" });
+      const pageW = pdf.internal.pageSize.getWidth();
+      const pageH = pdf.internal.pageSize.getHeight();
 
-      y += 30;
-      doc.setFontSize(9);
-      doc.setTextColor(120);
-      const legalEn =
-        "This result is reference material for major exploration. It does not constitute formal placement.";
-      doc.text(legalEn, W / 2, y, { align: "center" });
+      // 이미지 비율 유지하며 페이지 폭에 맞추고, 세로가 길면 페이지 분할
+      const imgW = pageW - 40; // 좌우 20pt 여백
+      const imgH = (canvas.height * imgW) / canvas.width;
 
-      doc.save(`MJC_Career_${nick}_${Date.now()}.pdf`);
+      if (imgH <= pageH - 40) {
+        pdf.addImage(imgData, "JPEG", 20, 20, imgW, imgH);
+      } else {
+        // 페이지 분할: 캔버스를 페이지 높이 단위로 잘라 추가
+        const pageContentH = pageH - 40;
+        const sliceH = (canvas.width * pageContentH) / imgW; // 한 페이지에 해당하는 캔버스 픽셀 높이
+        let yOffset = 0;
+        let firstPage = true;
+        while (yOffset < canvas.height) {
+          const slice = document.createElement("canvas");
+          slice.width = canvas.width;
+          slice.height = Math.min(sliceH, canvas.height - yOffset);
+          const ctx = slice.getContext("2d")!;
+          ctx.drawImage(
+            canvas,
+            0, yOffset, canvas.width, slice.height,
+            0, 0, canvas.width, slice.height,
+          );
+          const sliceData = slice.toDataURL("image/jpeg", 0.92);
+          const sliceImgH = (slice.height * imgW) / slice.width;
+          if (!firstPage) pdf.addPage();
+          pdf.addImage(sliceData, "JPEG", 20, 20, imgW, sliceImgH);
+          yOffset += sliceH;
+          firstPage = false;
+        }
+      }
+
+      pdf.save(`MJC-CAT_${nick}_${new Date().toISOString().slice(0, 10)}.pdf`);
     } finally {
       setDownloading(false);
     }
@@ -177,21 +191,39 @@ export default function Result() {
 
       <div className="card">
         <h2>진단축 8개 프로파일</h2>
-        <div style={{ width: "100%", height: 320 }}>
-          <ResponsiveContainer>
-            <RadarChart data={radarData}>
-              <PolarGrid />
-              <PolarAngleAxis dataKey="axis" tick={{ fontSize: 12 }} />
-              <PolarRadiusAxis angle={90} domain={[0, 5]} tick={{ fontSize: 10 }} />
-              <Radar
-                name="응답"
-                dataKey="value"
-                stroke="#0b3d91"
-                fill="#0b3d91"
-                fillOpacity={0.35}
-              />
-            </RadarChart>
-          </ResponsiveContainer>
+        <div className="radar-wrap">
+          <div className="radar-wrap__chart">
+            <ResponsiveContainer width="100%" height={320}>
+              <RadarChart data={radarData}>
+                <PolarGrid />
+                <PolarAngleAxis dataKey="axis" tick={{ fontSize: 12 }} />
+                <PolarRadiusAxis angle={90} domain={[0, 5]} tick={{ fontSize: 10 }} />
+                <Radar
+                  name="응답"
+                  dataKey="value"
+                  stroke="#0b3d91"
+                  fill="#0b3d91"
+                  fillOpacity={0.35}
+                />
+              </RadarChart>
+            </ResponsiveContainer>
+          </div>
+          <table className="axis-score-table">
+            <thead>
+              <tr><th>진단축</th><th style={{ textAlign: "right" }}>점수</th></tr>
+            </thead>
+            <tbody>
+              {radarData.map((d) => (
+                <tr key={d.axis}>
+                  <td>{d.axis}</td>
+                  <td style={{ textAlign: "right", fontVariantNumeric: "tabular-nums" }}>
+                    {d.value.toFixed(2)}
+                    <span className="muted small"> / 5</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -200,7 +232,13 @@ export default function Result() {
         {top5.map((f) => {
           const card = getCard(f.code);
           return (
-            <div key={f.code} className="top-card" style={{ flexDirection: "column", alignItems: "stretch" }}>
+            <button
+              key={f.code}
+              className="top-card top-card--clickable"
+              style={{ flexDirection: "column", alignItems: "stretch", textAlign: "left" }}
+              onClick={() => setDetailCode(f.code)}
+              aria-label={`${f.name} 상세 보기`}
+            >
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <span className="rank">{f.rank}</span>
                 <div className="info">
@@ -217,7 +255,8 @@ export default function Result() {
                   <span className="badge">인재상</span> {card.talent_type}
                 </p>
               )}
-            </div>
+              <span className="top-card__more muted small">자세히 보기 →</span>
+            </button>
           );
         })}
       </div>
@@ -256,6 +295,11 @@ export default function Result() {
         tone="danger"
         onConfirm={confirmRestart}
         onCancel={() => setRestartOpen(false)}
+      />
+      <DepartmentDetailModal
+        code={detailCode}
+        fit={detailCode ? fits.find((f) => f.code === detailCode) ?? null : null}
+        onClose={() => setDetailCode(null)}
       />
     </>
   );

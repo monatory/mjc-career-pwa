@@ -155,6 +155,10 @@ export default function Exam() {
           {items.length - answeredCount}개 문항이 비어 있습니다. 이전 버튼으로 돌아가 응답해 주세요.
         </p>
       )}
+
+      <p className="kbd-hint muted">
+        키보드: <kbd>1</kbd>~<kbd>5</kbd> 응답 · <kbd>←</kbd> 이전 · <kbd>→</kbd> 다음
+      </p>
       </main>
     </>
   );
