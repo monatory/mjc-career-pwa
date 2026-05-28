@@ -29,6 +29,138 @@ import ConfirmModal from "../components/ConfirmModal";
 import DepartmentDetailModal from "../components/DepartmentDetailModal";
 import { saveResponseToFirestore } from "../lib/firestoreClient";
 import { getProfile } from "../lib/sessionState";
+import { calcHitMetrics } from "@lib/analytics";
+
+/* ──────────────────────────────────────────────────────────────
+ * 희망학과 vs 시스템 추천 비교 카드
+ *   1지망 미입력 시 안내 + 상담 권유만 표시.
+ *   1지망 입력 시 1·2·3지망 각각의 시스템 순위 + 적합도 표시.
+ *   PDF는 결과지 화면 캡처 방식이라 자동 포함됨.
+ * ──────────────────────────────────────────────────────────── */
+function PreferenceComparisonCard({ nick, fits }: { nick: string; fits: FitResult[] }) {
+  const profile = getProfile();
+  if (!profile) return null;
+
+  const prefCodes = [
+    profile.preferred_dept_1,
+    profile.preferred_dept_2,
+    profile.preferred_dept_3,
+  ];
+  const hasAny = prefCodes.some((c) => c != null);
+
+  if (!hasAny) {
+    return (
+      <div className="card">
+        <h2>희망학과와의 비교</h2>
+        <p className="muted">
+          희망학과를 입력하지 않으셨습니다. 응답자 정보에서 1·2·3지망을 추가하시면,
+          본인이 마음에 두었던 학과와 시스템 추천 결과를 직접 비교해 볼 수 있습니다.
+        </p>
+        <p className="muted">
+          탐색이 더 필요한 단계라면, 진로·취업 컨설턴트와의 상담을 통해 결과지를 함께 살펴보고
+          의사결정에 도움을 받으시기 바랍니다.
+        </p>
+      </div>
+    );
+  }
+
+  const hits = calcHitMetrics(profile, fits);
+  const rows = prefCodes.map((code, i) => {
+    if (!code) return null;
+    const idx = fits.findIndex((f) => f.code === code);
+    const fit = idx >= 0 ? fits[idx] : null;
+    return {
+      rank: (i + 1) as 1 | 2 | 3,
+      code,
+      name: fit?.name ?? code,
+      school: fit?.school ?? "",
+      systemRank: fit ? idx + 1 : null,
+      systemPercent: fit?.percent ?? null,
+    };
+  }).filter((r): r is NonNullable<typeof r> => r !== null);
+
+  const summary = makeSummary(hits, rows);
+
+  return (
+    <div className="card pref-compare">
+      <h2>희망학과와의 비교</h2>
+      <p className="muted small">
+        {nick}님이 입력하신 희망학과와 시스템 추천 결과를 비교한 내용입니다.
+      </p>
+
+      <table className="pref-compare__table">
+        <thead>
+          <tr>
+            <th>희망</th>
+            <th>학과</th>
+            <th style={{ textAlign: "right" }}>시스템 순위</th>
+            <th style={{ textAlign: "right" }}>적합도</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.code} className={r.systemRank != null && r.systemRank <= 5 ? "pref-compare__top5" : ""}>
+              <td className="pref-compare__rank">{r.rank}지망</td>
+              <td>
+                <div className="pref-compare__name">{r.name}</div>
+                <div className="muted small">{r.school}</div>
+              </td>
+              <td style={{ textAlign: "right", fontVariantNumeric: "tabular-nums" }}>
+                {r.systemRank == null ? (
+                  <span className="muted">—</span>
+                ) : (
+                  <>
+                    <strong>{r.systemRank}</strong>
+                    <span className="muted small"> / {fits.length}</span>
+                  </>
+                )}
+              </td>
+              <td style={{ textAlign: "right", fontVariantNumeric: "tabular-nums" }}>
+                {r.systemPercent == null ? "—" : `${r.systemPercent.toFixed(1)}%`}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div className="pref-compare__summary">
+        <strong>{summary.headline}</strong>
+        <p style={{ margin: "6px 0 0", lineHeight: 1.55 }}>{summary.body}</p>
+      </div>
+    </div>
+  );
+}
+
+function makeSummary(
+  hits: ReturnType<typeof calcHitMetrics>,
+  rows: { rank: number; name: string; systemRank: number | null }[],
+): { headline: string; body: string } {
+  const names = rows.map((r) => r.name);
+  const myList = names.length === 1 ? names[0] : names.join(", ");
+
+  if (hits.hit_at_1) {
+    return {
+      headline: "희망학과와 시스템 추천 결과가 일치합니다",
+      body: `1지망 ${rows[0].name}이(가) 시스템 추천 TOP1과 일치합니다. 현재까지의 응답 결과는 본인의 학과 선택과 잘 부합하며, 결정에 가까운 상태로 보입니다. 진로·취업 컨설턴트와 함께 학과 생활과 진로 준비 방향을 구체화해 보시기 바랍니다.`,
+    };
+  }
+  if (hits.hit_at_3) {
+    return {
+      headline: "희망학과가 시스템 추천 TOP3 안에 있습니다",
+      body: `1지망 ${rows[0].name}이(가) 시스템 추천 상위 3개 학과 안에 포함됩니다. 결정에 도움이 되는 강한 신호입니다. 다른 추천 학과들과 비교해 보면서 본인에게 가장 잘 맞는 선택을 점검해 보세요.`,
+    };
+  }
+  if (hits.hit_at_5) {
+    return {
+      headline: "희망학과가 시스템 추천 TOP5 안에 있습니다",
+      body: `희망과 추천이 비교적 잘 부합합니다. 다만 시스템 TOP1~3과 본인 희망 사이에 차이가 있으니, 진로·취업 컨설턴트와 함께 결과지를 점검하시면 결정에 도움이 됩니다.`,
+    };
+  }
+  return {
+    headline: "희망학과와 시스템 추천 결과 사이에 차이가 있습니다",
+    body: `희망하신 ${myList}이(가) 시스템 추천 TOP5 밖에 위치합니다. 응답 결과가 다른 분야에 더 가까운 신호를 보이고 있으니, 진로·취업 컨설턴트와 상담을 통해 본인의 강점·관심사를 다시 한 번 살펴보시기 바랍니다. 시스템 결과는 참고자료이며 최종 선택은 학생 본인의 권리입니다.`,
+  };
+}
 
 // 상담 필요도 시각화 — SVG 반원 게이지(0~100)
 function CounselingGauge({ score }: { score: number }) {
@@ -355,6 +487,9 @@ export default function Result() {
           ))}
         </div>
       )}
+
+      {/* 내 희망학과 vs 시스템 추천 비교 — 1지망 입력자 한정 */}
+      <PreferenceComparisonCard nick={nick} fits={fits} />
 
       {/* 진로 상담 신청 CTA — 70점 이상이면 강조 */}
       <div className={`card counseling-cta ${cache.counseling.score >= 70 ? "counseling-cta--urgent" : ""}`}>

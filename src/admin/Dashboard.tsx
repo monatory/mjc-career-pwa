@@ -22,6 +22,8 @@ import {
   type SectionId,
 } from "./permissions";
 import Overview from "./sections/Overview";
+import ProfileStats from "./sections/ProfileStats";
+import PreferredByDept from "./sections/PreferredByDept";
 import Recommendations from "./sections/Recommendations";
 import Counseling from "./sections/Counseling";
 import HitRate from "./sections/HitRate";
@@ -136,11 +138,13 @@ function SectionRenderer({
   responses: SavedResponse[] | null;
 }) {
   switch (id) {
-    case "overview":        return <Overview responses={responses} />;
-    case "recommendations": return <Recommendations role={role} responses={responses} />;
-    case "counseling":      return <Counseling responses={responses} />;
-    case "hitRate":         return <HitRate responses={responses} />;
-    case "satisfaction":    return <Satisfaction responses={responses} />;
+    case "overview":         return <Overview responses={responses} />;
+    case "profileStats":     return <ProfileStats responses={responses} />;
+    case "preferredByDept":  return <PreferredByDept role={role} responses={responses} />;
+    case "recommendations":  return <Recommendations role={role} responses={responses} />;
+    case "counseling":       return <Counseling responses={responses} />;
+    case "hitRate":          return <HitRate responses={responses} />;
+    case "satisfaction":     return <Satisfaction responses={responses} />;
   }
 }
 

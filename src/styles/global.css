@@ -286,6 +286,42 @@ h2 {
 }
 .top-card--compare .name { font-size: 0.96rem; }
 
+/* 희망학과 vs 시스템 추천 비교 카드 */
+.pref-compare__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 0.92rem;
+}
+.pref-compare__table th,
+.pref-compare__table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--c-border);
+  text-align: left;
+}
+.pref-compare__table thead th {
+  font-size: 0.78rem;
+  color: var(--c-text-soft);
+  font-weight: 600;
+  background: var(--c-bg-soft);
+}
+.pref-compare__rank {
+  font-weight: 700;
+  color: var(--c-primary);
+  white-space: nowrap;
+}
+.pref-compare__name { font-weight: 600; }
+.pref-compare__top5 td { background: rgba(46, 125, 50, 0.06); }
+.pref-compare__summary {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: var(--c-primary-soft);
+  border-left: 3px solid var(--c-primary);
+  border-radius: 8px;
+  font-size: 0.92rem;
+  color: var(--c-text);
+}
+
 /* 진로 상담 신청 CTA */
 .counseling-cta__head {
   display: flex;
@@ -519,6 +555,30 @@ footer.legal {
 @media (min-width: 721px) {
   .kbd-hint { display: block; }
 }
+
+/* 검사 진행 상태 라인 (응답 카운트 + 미응답 이동 링크) */
+.exam-status {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 0.88rem;
+  margin: -8px 0 16px;
+}
+.exam-status__sep { opacity: 0.4; }
+.exam-status__done {
+  color: var(--c-success);
+  font-weight: 700;
+}
+
+/* 모두 응답 완료 시 강조 버튼 — 그라데이션 + 약간 큰 패딩 */
+.primary-cta {
+  background: linear-gradient(135deg, var(--c-primary) 0%, #1d5cd4 100%);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  box-shadow: 0 4px 14px rgba(11, 61, 145, 0.25);
+}
+.primary-cta:hover { filter: brightness(1.08); }
 
 /* h1 행에서 우측 보조 링크 — 응답자 정보 수정 등 */
 .exam-h1-row {
@@ -1014,6 +1074,30 @@ footer.legal {
 }
 
 .role-pick:hover { border-color: var(--c-primary); background: var(--c-primary-soft); }
+
+/* 응답자 통계 분포 카드 */
+.dist-section { margin-bottom: 18px; }
+.dist-section > h3 { color: var(--c-primary); margin: 14px 0 8px; font-size: 1rem; }
+.dist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.dist-card { padding: 14px 16px; margin-bottom: 0; }
+.dist-card h4 { margin: 0 0 10px; font-size: 0.95rem; }
+.dist-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.dist-list__head {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+  font-size: 0.86rem;
+}
+.dist-list__label { color: var(--c-text); }
+.dist-list__count { color: var(--c-text-soft); font-variant-numeric: tabular-nums; }
+.dist-list__bar { height: 6px; background: var(--c-bg-soft); border-radius: 999px; overflow: hidden; }
+.dist-list__fill { height: 100%; background: var(--c-primary); transition: width 0.25s ease; }
+
+/* 학과별 명단 표 — 선택된 행 강조 */
+.row-selected { background: var(--c-primary-soft); }
+.row-selected td { font-weight: 600; }
 
 .word-cloud-placeholder {
   height: 160px;

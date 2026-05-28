@@ -25,21 +25,20 @@ import ScaleButtons from "../components/ScaleButtons";
 export default function Exam() {
   const nav = useNavigate();
 
-  // STEP 3 진입 가드: 응답자 정보(profile)가 없으면 STEP 2로 강제 이동
+  // STEP 3 진입 가드
   useEffect(() => {
     if (!getProfile()) nav("/profile", { replace: true });
   }, [nav]);
 
-  // 1차 기본검사 90문항 (stage === 1)
+  // 1차 기본검사 90문항
   const items = useMemo(
     () => questionBank.items.filter((it) => it.stage === 1),
-    []
+    [],
   );
 
-  // 응답 상태 (sessionStorage 동기)
   const [responses, setResponses] = useState<Record<string, number>>(() => getResponses());
 
-  // 시작 위치: 가장 첫 미응답 문항
+  // 첫 미응답 위치에서 시작
   const initialIdx = useMemo(() => {
     const firstUnanswered = items.findIndex((it) => responses[it.id] == null);
     return firstUnanswered === -1 ? items.length - 1 : firstUnanswered;
@@ -47,37 +46,56 @@ export default function Exam() {
   }, []);
   const [idx, setIdx] = useState(initialIdx);
 
-  // 응답 변경 시 sessionStorage 즉시 반영
+  // 다음 미응답 문항 인덱스 (없으면 -1)
+  function nextUnansweredFrom(fromIdx: number, currentResponses: Record<string, number>): number {
+    // 현재 위치 다음부터 탐색
+    for (let i = fromIdx + 1; i < items.length; i++) {
+      if (currentResponses[items[i].id] == null) return i;
+    }
+    // 못 찾으면 처음부터 fromIdx 미만으로 탐색
+    for (let i = 0; i < fromIdx; i++) {
+      if (currentResponses[items[i].id] == null) return i;
+    }
+    return -1;
+  }
+
+  // 응답: sessionStorage 저장 + 미응답 자동 점프
   function answer(v: number) {
     const qid = items[idx].id;
     setResponse(qid, v);
-    setResponses((prev) => ({ ...prev, [qid]: v }));
+    const next = { ...responses, [qid]: v };
+    setResponses(next);
 
-    // 자동 진행: 마지막 문항이 아니면 다음 문항으로
-    // 선택 인지 시간 확보를 위해 500ms 대기 (잘못 누른 경우 변경 가능)
-    if (idx < items.length - 1) {
-      setTimeout(() => setIdx((i) => i + 1), 500);
+    // 자동 진행: 다음 미응답으로 (선형 idx+1 대신). 없으면 그대로 머무름.
+    const target = nextUnansweredFrom(idx, next);
+    if (target !== -1) {
+      setTimeout(() => setIdx(target), 500);
     }
   }
 
-  function goPrev() {
-    if (idx > 0) setIdx(idx - 1);
-  }
-  function goNext() {
-    if (idx < items.length - 1) setIdx(idx + 1);
+  function goPrev() { if (idx > 0) setIdx(idx - 1); }
+  function goNext() { if (idx < items.length - 1) setIdx(idx + 1); }
+  function jumpToNextUnanswered() {
+    const target = nextUnansweredFrom(idx, responses);
+    if (target !== -1) setIdx(target);
   }
 
-  // 응답 완료 여부
   const answeredCount = items.filter((it) => responses[it.id] != null).length;
-  const isAllDone = answeredCount === items.length;
+  const remaining = items.length - answeredCount;
+  const isAllDone = remaining === 0;
+  const hasNextUnanswered = !isAllDone && nextUnansweredFrom(idx, responses) !== -1;
 
-  // 키보드 1~5로 응답 (선택사항)
+  // 키보드 단축키
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
+      // 입력 요소에 포커스된 경우는 무시
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA") return;
       const n = parseInt(e.key, 10);
       if (n >= 1 && n <= 5) answer(n);
       else if (e.key === "ArrowLeft") goPrev();
       else if (e.key === "ArrowRight") goNext();
+      else if (e.key === "?" || e.key === "/") jumpToNextUnanswered();
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -85,16 +103,12 @@ export default function Exam() {
   }, [idx, responses]);
 
   function submit() {
-    // 1차 결과 산출 → 캐시 + 2차 라우팅 결정
     const axisScores = calcAxisScores(responses, questionBank);
     const fits = calcFitScores(axisScores, departmentsDna);
     const counseling = calcCounselingNeed(responses, questionBank);
     const active = routeToBranches(axisScores);
-
     saveResultCache({
-      axisScores,
-      fits,
-      counseling,
+      axisScores, fits, counseling,
       computedAt: new Date().toISOString(),
     });
     saveActiveBranches(active);
@@ -103,8 +117,6 @@ export default function Exam() {
   }
 
   const item = items[idx];
-
-  // 응답자 정보 수정 링크 조건: 응답 5건 미만일 때만 허용 (데이터 무결성)
   const canEditProfile = answeredCount < 5;
 
   return (
@@ -112,53 +124,76 @@ export default function Exam() {
       <AppHeader />
       <main className="page">
         <StepIndicator current={3} label="진단 검사 · 1차" />
-      <div className="exam-h1-row">
-        <h1>1차 기본검사</h1>
-        {canEditProfile && (
-          <button className="link-btn" onClick={() => nav("/profile")}>
-            응답자 정보 수정
-          </button>
-        )}
-      </div>
-      <ProgressBar
-        current={answeredCount}
-        total={items.length}
-        label={`문항 ${idx + 1} / ${items.length}`}
-      />
+        <div className="exam-h1-row">
+          <h1>1차 기본검사</h1>
+          {canEditProfile && (
+            <button className="link-btn" onClick={() => nav("/profile")}>
+              응답자 정보 수정
+            </button>
+          )}
+        </div>
 
-      <div className="card question-card">
-        <span className="badge">
-          {item.axis} · {DIAGNOSTIC_AXES[item.axis as DiagnosticAxis] ?? ""}
-        </span>
-        <p className="text">{item.text}</p>
+        <ProgressBar
+          current={answeredCount}
+          total={items.length}
+          label={`문항 ${idx + 1} / ${items.length}`}
+        />
+        <div className="exam-status muted">
+          <span>응답 <strong>{answeredCount}</strong> / {items.length}</span>
+          {!isAllDone && (
+            <>
+              <span className="exam-status__sep">·</span>
+              <span>{remaining}개 남음</span>
+              {hasNextUnanswered && (
+                <>
+                  <span className="exam-status__sep">·</span>
+                  <button className="link-btn" onClick={jumpToNextUnanswered}>
+                    다음 미응답으로 ↦
+                  </button>
+                </>
+              )}
+            </>
+          )}
+          {isAllDone && (
+            <>
+              <span className="exam-status__sep">·</span>
+              <span className="exam-status__done">모두 응답 완료</span>
+            </>
+          )}
+        </div>
 
-        <ScaleButtons value={responses[item.id]} onChange={answer} />
-      </div>
+        <div className="card question-card">
+          <span className="badge">
+            {item.axis} · {DIAGNOSTIC_AXES[item.axis as DiagnosticAxis] ?? ""}
+          </span>
+          <p className="text">{item.text}</p>
+          <ScaleButtons value={responses[item.id]} onChange={answer} />
+        </div>
 
-      <div className="btn-row">
-        <button className="ghost" onClick={goPrev} disabled={idx === 0}>
-          ← 이전
-        </button>
-        {idx < items.length - 1 ? (
-          <button onClick={goNext} disabled={responses[item.id] == null}>
-            다음 →
-          </button>
+        {/* 모두 응답된 즉시 제출 버튼 우선 노출 — 마지막 문항 도달 여부와 무관 */}
+        {isAllDone ? (
+          <div className="btn-row">
+            <button className="ghost" onClick={goPrev} disabled={idx === 0}>← 이전</button>
+            <button className="primary-cta" onClick={submit}>
+              1차 검사 제출 →
+            </button>
+          </div>
         ) : (
-          <button onClick={submit} disabled={!isAllDone}>
-            1차 검사 제출
-          </button>
+          <div className="btn-row">
+            <button className="ghost" onClick={goPrev} disabled={idx === 0}>← 이전</button>
+            {idx < items.length - 1 ? (
+              <button onClick={goNext} disabled={responses[item.id] == null}>다음 →</button>
+            ) : (
+              <button onClick={jumpToNextUnanswered}>
+                미응답 {remaining}개로 이동 ↦
+              </button>
+            )}
+          </div>
         )}
-      </div>
 
-      {!isAllDone && idx === items.length - 1 && (
-        <p className="muted" style={{ marginTop: 12 }}>
-          {items.length - answeredCount}개 문항이 비어 있습니다. 이전 버튼으로 돌아가 응답해 주세요.
+        <p className="kbd-hint muted">
+          키보드: <kbd>1</kbd>~<kbd>5</kbd> 응답 · <kbd>←</kbd> 이전 · <kbd>→</kbd> 다음 · <kbd>?</kbd> 미응답 이동
         </p>
-      )}
-
-      <p className="kbd-hint muted">
-        키보드: <kbd>1</kbd>~<kbd>5</kbd> 응답 · <kbd>←</kbd> 이전 · <kbd>→</kbd> 다음
-      </p>
       </main>
     </>
   );

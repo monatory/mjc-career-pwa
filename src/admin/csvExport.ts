@@ -6,6 +6,7 @@
  */
 
 import type { SavedResponse } from "../lib/firestoreClient";
+import type { DeptPreferenceGroup, ProfileStats } from "../lib/firestoreAdmin";
 
 function csvEscape(v: unknown): string {
   if (v == null) return "";
@@ -23,6 +24,10 @@ function downloadCsv(filename: string, rows: string[][]) {
   a.download = filename;
   a.click();
   URL.revokeObjectURL(url);
+}
+
+function today(): string {
+  return new Date().toISOString().slice(0, 10);
 }
 
 /* ── 1) 응답 전체 export ──────────────────────────────────── */
@@ -107,7 +112,98 @@ export function exportCounselingCsv(responses: SavedResponse[]) {
     r.completedAt,
   ]);
   downloadCsv(
-    `MJC-CAT_counseling_${new Date().toISOString().slice(0, 10)}.csv`,
+    `MJC-CAT_counseling_${today()}.csv`,
     [header, ...rows],
+  );
+}
+
+/* ── 3) 응답자 통계 export (모든 분포를 한 CSV에 섹션별로) ──── */
+export function exportProfileStatsCsv(stats: ProfileStats) {
+  const rows: string[][] = [];
+  rows.push(["MJC-CAT 응답자 통계", `총 ${stats.total}명`]);
+  rows.push([]);
+
+  function pushSection(title: string, dist: { label: string; count: number; ratio: number }[]) {
+    rows.push([title, "응답수", "비율"]);
+    for (const d of dist) {
+      rows.push([d.label, String(d.count), `${(d.ratio * 100).toFixed(1)}%`]);
+    }
+    rows.push([]);
+  }
+
+  pushSection("[A] 출생연도",          stats.birthYear);
+  pushSection("[A] 성별",              stats.gender);
+  pushSection("[A] 학적 상태",         stats.academicStatus);
+  pushSection("[A] 자유전공 진학 이유", stats.selfDesignedReason);
+  pushSection("[B] 진로방향",          stats.careerDirection);
+  pushSection("[B] 의사결정 유형",     stats.decisionMaker);
+  pushSection("[B] 진로상담 희망",     stats.wantsCounseling);
+  pushSection("[C] 고등학교 유형",     stats.highSchoolType);
+  pushSection("[C] 직장 경험",         stats.workExperience);
+  pushSection("[C] 아르바이트 경험",   stats.partTimeExperience);
+  pushSection("[C] 이전 대학 경험",    stats.priorCollege);
+
+  downloadCsv(`MJC-CAT_profile_stats_${today()}.csv`, rows);
+}
+
+/* ── 4) 학과별 희망학생 명단 export — 상담 초기 자료 ──────── */
+export function exportPreferredStudentsByDeptCsv(groups: DeptPreferenceGroup[]) {
+  const rows: string[][] = [];
+  rows.push(["MJC-CAT 학과별 희망학생 명단", "1·2·3지망 누적, 상담 초기 자료"]);
+  rows.push([]);
+  const header = [
+    "학과 코드", "학과", "학부",
+    "닉네임", "희망 순위", "시스템 추천 순위", "시스템 적합도(%)",
+    "상담 필요도", "상담 우선순위", "진로방향",
+    "anonymousId", "completedAt",
+  ];
+  rows.push(header);
+  for (const g of groups) {
+    const all = [...g.pref1, ...g.pref2, ...g.pref3].sort((a, b) => a.preferenceRank - b.preferenceRank);
+    for (const s of all) {
+      rows.push([
+        g.code, g.name, g.school,
+        s.nickname, String(s.preferenceRank),
+        s.systemRank == null ? "" : String(s.systemRank),
+        s.systemPercent == null ? "" : s.systemPercent.toFixed(1),
+        String(s.counselingScore),
+        s.priority,
+        s.careerDirection ?? "",
+        s.anonymousId,
+        s.completedAt,
+      ]);
+    }
+    if (all.length > 0) rows.push([]);
+  }
+  downloadCsv(`MJC-CAT_preferred_by_dept_${today()}.csv`, rows);
+}
+
+/** 단일 학과의 희망학생 명단만 (학과장 전달용) */
+export function exportSingleDeptPreferredCsv(g: DeptPreferenceGroup) {
+  const rows: string[][] = [];
+  rows.push([`${g.school} · ${g.name} 희망학생 명단`, `총 ${g.totalUnique}명 (중복 제외)`]);
+  rows.push([]);
+  const header = [
+    "닉네임", "희망 순위", "시스템 추천 순위", "시스템 적합도(%)",
+    "상담 필요도", "상담 우선순위", "진로방향", "anonymousId", "completedAt",
+  ];
+  rows.push(header);
+  const all = [...g.pref1, ...g.pref2, ...g.pref3].sort((a, b) => a.preferenceRank - b.preferenceRank);
+  for (const s of all) {
+    rows.push([
+      s.nickname,
+      String(s.preferenceRank),
+      s.systemRank == null ? "" : String(s.systemRank),
+      s.systemPercent == null ? "" : s.systemPercent.toFixed(1),
+      String(s.counselingScore),
+      s.priority,
+      s.careerDirection ?? "",
+      s.anonymousId,
+      s.completedAt,
+    ]);
+  }
+  downloadCsv(
+    `MJC-CAT_dept_${g.code}_${today()}.csv`,
+    rows,
   );
 }

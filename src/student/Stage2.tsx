@@ -45,17 +45,35 @@ export default function Stage2() {
   }, []);
   const [idx, setIdx] = useState(initialIdx);
 
+  function nextUnansweredFrom(fromIdx: number, current: Record<string, number>): number {
+    for (let i = fromIdx + 1; i < items.length; i++) {
+      if (current[items[i].id] == null) return i;
+    }
+    for (let i = 0; i < fromIdx; i++) {
+      if (current[items[i].id] == null) return i;
+    }
+    return -1;
+  }
+
   function answer(v: number) {
     const qid = items[idx].id;
     setResponse(qid, v);
-    setResponses((prev) => ({ ...prev, [qid]: v }));
-    if (idx < items.length - 1) setTimeout(() => setIdx((i) => i + 1), 500);
+    const next = { ...responses, [qid]: v };
+    setResponses(next);
+    const target = nextUnansweredFrom(idx, next);
+    if (target !== -1) setTimeout(() => setIdx(target), 500);
   }
   function goPrev() { if (idx > 0) setIdx(idx - 1); }
   function goNext() { if (idx < items.length - 1) setIdx(idx + 1); }
+  function jumpToNextUnanswered() {
+    const target = nextUnansweredFrom(idx, responses);
+    if (target !== -1) setIdx(target);
+  }
 
   const answeredCount = items.filter((it) => responses[it.id] != null).length;
-  const isAllDone = answeredCount === items.length;
+  const remaining = items.length - answeredCount;
+  const isAllDone = remaining === 0;
+  const hasNextUnanswered = !isAllDone && nextUnansweredFrom(idx, responses) !== -1;
 
   function finish() {
     // 2차 응답까지 합쳐 최종 결과 재산출
@@ -110,6 +128,29 @@ export default function Stage2() {
         total={items.length}
         label={`문항 ${idx + 1} / ${items.length}`}
       />
+      <div className="exam-status muted">
+        <span>응답 <strong>{answeredCount}</strong> / {items.length}</span>
+        {!isAllDone && (
+          <>
+            <span className="exam-status__sep">·</span>
+            <span>{remaining}개 남음</span>
+            {hasNextUnanswered && (
+              <>
+                <span className="exam-status__sep">·</span>
+                <button className="link-btn" onClick={jumpToNextUnanswered}>
+                  다음 미응답으로 ↦
+                </button>
+              </>
+            )}
+          </>
+        )}
+        {isAllDone && (
+          <>
+            <span className="exam-status__sep">·</span>
+            <span className="exam-status__done">모두 응답 완료</span>
+          </>
+        )}
+      </div>
 
       <div className="card question-card">
         <span className="badge">
@@ -119,20 +160,23 @@ export default function Stage2() {
         <ScaleButtons value={responses[item.id]} onChange={answer} />
       </div>
 
-      <div className="btn-row">
-        <button className="ghost" onClick={goPrev} disabled={idx === 0}>
-          ← 이전
-        </button>
-        {idx < items.length - 1 ? (
-          <button onClick={goNext} disabled={responses[item.id] == null}>
-            다음 →
-          </button>
-        ) : (
-          <button onClick={finish} disabled={!isAllDone}>
-            결과 보기
-          </button>
-        )}
-      </div>
+      {isAllDone ? (
+        <div className="btn-row">
+          <button className="ghost" onClick={goPrev} disabled={idx === 0}>← 이전</button>
+          <button className="primary-cta" onClick={finish}>결과 보기 →</button>
+        </div>
+      ) : (
+        <div className="btn-row">
+          <button className="ghost" onClick={goPrev} disabled={idx === 0}>← 이전</button>
+          {idx < items.length - 1 ? (
+            <button onClick={goNext} disabled={responses[item.id] == null}>다음 →</button>
+          ) : (
+            <button onClick={jumpToNextUnanswered}>
+              미응답 {remaining}개로 이동 ↦
+            </button>
+          )}
+        </div>
+      )}
       </main>
     </>
   );

@@ -20,6 +20,8 @@ export const ROLE_LABEL: Record<Role, string> = {
 
 export type SectionId =
   | "overview"
+  | "profileStats"
+  | "preferredByDept"
   | "recommendations"
   | "counseling"
   | "hitRate"
@@ -38,6 +40,18 @@ export const SECTIONS: SectionDef[] = [
     label: "종합 현황",
     desc: "참여 추이·검사 완료율·KPI 요약",
     visibleFor: ["CENTER", "EDU_SUPPORT", "DEPT_HEAD"],
+  },
+  {
+    id: "profileStats",
+    label: "응답자 통계",
+    desc: "STEP 2 일반사항 16항목 분포 + CSV",
+    visibleFor: ["CENTER", "EDU_SUPPORT"],
+  },
+  {
+    id: "preferredByDept",
+    label: "학과별 희망학생",
+    desc: "1·2·3지망 누적 명단, 상담 초기 자료",
+    visibleFor: ["CENTER", "DEPT_HEAD"],
   },
   {
     id: "recommendations",
