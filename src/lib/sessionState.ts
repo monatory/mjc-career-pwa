@@ -32,6 +32,7 @@ const KEY_S1_DONE = "mjc_cat_stage1_done";
 const KEY_BRANCHES = "mjc_cat_active_branches";
 const KEY_RESULT = "mjc_cat_result";
 const KEY_ANON_ID = "mjc_cat_anonymous_id";
+const KEY_PLAN = "mjc_cat_plan";
 
 // 구(舊) 키 — clearAll에서 함께 정리(작업 4 이전 데이터 호환)
 const LEGACY_KEYS = [
@@ -204,6 +205,36 @@ export function loadResultCache(): ResultCache | null {
 }
 
 /* ────────────────────────────────────────────────────────────
+ * 수강 계획서 (1학기 학습 계획 — 결과지 이후 부가 기능)
+ *   - 학생이 체크한 과목 리스트와 갱신 시각만 저장
+ *   - dept_code 가 "COMMON" 이면 자유전공 공통 / 교양 강력 추천 그룹
+ * ────────────────────────────────────────────────────────── */
+export interface PlanCourseItem {
+  dept_code: string;          // 학과 코드 또는 "COMMON"
+  course_name: string;
+  credits: number;            // P/NP 과목은 0
+  is_pass_fail?: boolean;
+}
+
+export interface PlanState {
+  selected_courses: PlanCourseItem[];
+  updated_at: string;         // ISO 8601
+}
+
+export function savePlanState(p: PlanState) {
+  sessionStorage.setItem(KEY_PLAN, JSON.stringify(p));
+}
+
+export function loadPlanState(): PlanState | null {
+  try {
+    const raw = sessionStorage.getItem(KEY_PLAN);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────
  * 진행 상태 판단 (STEP 1 "이어서 진행" 모달용)
  * ────────────────────────────────────────────────────────── */
 export type ResumeStage =
@@ -261,6 +292,7 @@ export function clearAll() {
   sessionStorage.removeItem(KEY_BRANCHES);
   sessionStorage.removeItem(KEY_RESULT);
   sessionStorage.removeItem(KEY_ANON_ID);
+  sessionStorage.removeItem(KEY_PLAN);
   for (const k of LEGACY_KEYS) sessionStorage.removeItem(k);
 }
 

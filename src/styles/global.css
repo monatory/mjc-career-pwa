@@ -1117,6 +1117,263 @@ footer.legal {
 }
 
 /* ─────────────────────────────────────────────────────────────
+ * 결과지 "수강 계획 세우기" 버튼 (다른 액션과 구분되는 강조 톤)
+ * ───────────────────────────────────────────────────────────── */
+.btn-row--plan {
+  margin-top: 14px;
+}
+.btn-plan {
+  flex: 1;
+  background: linear-gradient(135deg, #0b3d91 0%, #1a5fc1 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 0;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(11, 61, 145, 0.18);
+  transition: transform 0.05s, box-shadow 0.15s;
+}
+.btn-plan:hover {
+  box-shadow: 0 4px 10px rgba(11, 61, 145, 0.28);
+}
+.btn-plan:active {
+  transform: translateY(1px);
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 수강 계획서 페이지 (/plan)
+ * ───────────────────────────────────────────────────────────── */
+.plan-page {
+  padding-bottom: 80px;
+}
+.plan-back-row {
+  margin: 0 0 6px;
+}
+.link-back {
+  background: transparent;
+  border: 0;
+  color: var(--c-primary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 4px 0;
+}
+.link-back:hover { text-decoration: underline; }
+
+.plan-title {
+  margin: 6px 0 4px;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.plan-subtitle { margin: 0 0 14px; }
+
+.plan-intro {
+  background: #eef4fb;
+  border: 1px solid #cfdef3;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.92rem;
+  color: var(--c-text);
+  line-height: 1.55;
+  margin: 0 0 20px;
+}
+
+.plan-section {
+  margin: 0 0 22px;
+}
+.plan-section h2 {
+  font-size: 1.05rem;
+  margin: 0 0 10px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.plan-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.plan-row {
+  background: var(--c-bg);
+  border: 1px solid #e8eef9;
+  border-radius: 8px;
+  transition: background 0.1s, border-color 0.1s;
+}
+.plan-row--strong {
+  background: #fff8e1;
+  border-color: #ffe082;
+}
+.plan-row--on {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 2px rgba(11, 61, 145, 0.1) inset;
+}
+.plan-row__label {
+  display: grid;
+  grid-template-columns: 22px auto 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 0.94rem;
+}
+.plan-row__check {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--c-primary);
+}
+.plan-row__star {
+  font-size: 0.92rem;
+  line-height: 1;
+}
+.plan-row__name {
+  font-weight: 500;
+  color: var(--c-text);
+}
+.plan-row__credits {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.86rem;
+  color: var(--c-text-soft);
+  white-space: nowrap;
+}
+.plan-row__group {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: #e1ecf9;
+  color: #0b3d91;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.plan-row--strong .plan-row__group {
+  background: #ffe9a3;
+  color: #b07b00;
+}
+
+.plan-dept {
+  background: var(--c-bg);
+  border: 1px solid #e8eef9;
+  border-radius: 10px;
+  margin: 8px 0;
+  overflow: hidden;
+}
+.plan-dept--open { border-color: #cfdef3; }
+.plan-dept__head {
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  padding: 12px 14px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.96rem;
+  color: var(--c-text);
+}
+.plan-dept__head:hover { background: #f6f9fd; }
+.plan-dept__caret {
+  font-size: 0.9rem;
+  color: var(--c-text-soft);
+}
+.plan-dept__name strong { font-weight: 600; }
+.plan-dept__count {
+  font-variant-numeric: tabular-nums;
+}
+.plan-dept__list { padding: 0 14px 12px; }
+
+.plan-total {
+  position: sticky;
+  bottom: 0;
+  background: var(--c-bg-card, #fff);
+  border-top: 1px solid #e8eef9;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 14px 0 12px;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.05);
+}
+.plan-total__main {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.plan-total__label {
+  font-size: 0.88rem;
+  color: var(--c-text-soft);
+}
+.plan-total__credits {
+  font-size: 1.8rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.plan-total__unit {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-left: 2px;
+}
+.plan-total__msg {
+  margin: 4px 0 0;
+  font-size: 0.88rem;
+  color: var(--c-text-soft);
+}
+.plan-total--ok       .plan-total__credits { color: #2e7d32; }
+.plan-total--too_low  .plan-total__credits { color: #6c757d; }
+.plan-total--too_high .plan-total__credits { color: #c0392b; }
+.plan-total--ok       { border-top-color: #b5dec1; }
+.plan-total--too_high { border-top-color: #f4c5be; }
+
+.plan-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 10px 0 6px;
+}
+.plan-actions button {
+  flex: 1;
+  min-width: 140px;
+}
+.plan-print-hint {
+  margin: 4px 0 0;
+}
+
+/* ── 인쇄 스타일 ──────────────────────────────────────────── */
+@media print {
+  body { background: #fff; }
+  .app-shell > header,
+  .legal-footer,
+  .no-print,
+  .plan-back-row,
+  .plan-actions,
+  .plan-print-hint {
+    display: none !important;
+  }
+  .plan-page { padding: 0; }
+  .plan-dept,
+  .plan-section { break-inside: avoid; }
+  /* 인쇄에는 모든 학과 펼침으로 표시 */
+  .plan-dept__list { display: block !important; }
+  .plan-row { border: 1px solid #ccc; }
+  .plan-row--strong { background: #fff !important; }
+  .plan-total {
+    position: static;
+    box-shadow: none;
+    border: 1px solid #888;
+  }
+  .cert-banner { break-inside: avoid; }
+}
+
+/* ─────────────────────────────────────────────────────────────
  * 별도 모집 학과 안내 박스 (진입 불가 4개 학과)
  * ───────────────────────────────────────────────────────────── */
 .dept-modal__not-accessible {

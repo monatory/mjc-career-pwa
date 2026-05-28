@@ -4,6 +4,7 @@ import Profile from "./student/Profile";
 import Exam from "./student/Exam";
 import Stage2 from "./student/Stage2";
 import Result from "./student/Result";
+import Plan from "./student/Plan";
 import AdminDashboard from "./admin/Dashboard";
 import LegalFooter from "./components/LegalFooter";
 
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="/exam" element={<Exam />} />
         <Route path="/stage2" element={<Stage2 />} />
         <Route path="/result" element={<Result />} />
+        <Route path="/plan" element={<Plan />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

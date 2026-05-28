@@ -553,6 +553,16 @@ export default function Result() {
         </ul>
       </div>
 
+      <div className="btn-row btn-row--plan">
+        <button
+          className="btn-plan"
+          onClick={() => nav("/plan")}
+          aria-label="1학기 수강 계획 세우기"
+        >
+          <span aria-hidden>📋</span> 수강 계획 세우기 →
+        </button>
+      </div>
+
       <div className="btn-row">
         <button className="ghost" onClick={() => setRestartOpen(true)}>다시 진단하기</button>
         <button onClick={exportPdf} disabled={downloading}>
