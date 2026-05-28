@@ -10,6 +10,7 @@
 
 import { collection, getDocs } from "firebase/firestore";
 import { getDb } from "./firebase";
+import { getDepartment } from "./dataLoader";
 import type { SavedResponse } from "./firestoreClient";
 
 /** 모든 응답 fetch — 실패 시 빈 배열 (mock 폴백 트리거) */
@@ -126,8 +127,11 @@ export function aggregateCounselingList(responses: SavedResponse[]): CounselingR
     .map((r) => {
       const top1 = r.fits?.[0];
       const preferredCode = r.profile?.preferred_dept_1 ?? null;
+      // fits에 없으면(TOP10 밖) dataLoader의 정적 학과 메타로 폴백
       const preferredName = preferredCode
-        ? (r.fits?.find((f) => f.code === preferredCode)?.name ?? preferredCode)
+        ? (r.fits?.find((f) => f.code === preferredCode)?.name
+            ?? getDepartment(preferredCode)?.name
+            ?? preferredCode)
         : null;
       return {
         nickname: r.profile?.nickname ?? "익명",
@@ -281,8 +285,12 @@ export function aggregatePreferredStudents(responses: SavedResponse[]): DeptPref
   function ensureGroup(code: string): DeptPreferenceGroup {
     let g = groups.get(code);
     if (!g) {
-      const m = meta.get(code) ?? { name: code, school: "" };
-      g = { code, name: m.name, school: m.school, pref1: [], pref2: [], pref3: [], totalUnique: 0 };
+      // fits에 없으면 정적 학과 메타로 폴백
+      const fromFits = meta.get(code);
+      const fromStatic = getDepartment(code);
+      const name = fromFits?.name ?? fromStatic?.name ?? code;
+      const school = fromFits?.school ?? fromStatic?.school ?? "";
+      g = { code, name, school, pref1: [], pref2: [], pref3: [], totalUnique: 0 };
       groups.set(code, g);
     }
     return g;

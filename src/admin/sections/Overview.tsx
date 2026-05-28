@@ -79,10 +79,12 @@ export default function Overview({ responses }: Props) {
 }
 
 function KpiCard({ label, value, tone }: { label: string; value: string; tone?: "warn" | "danger" }) {
+  // 숫자형 값과 텍스트형 값을 시각적으로 구분 — 텍스트는 살짝 작게
+  const isTextual = /[가-힣]/.test(value) && !/^\d/.test(value);
   return (
     <div className={`kpi-card ${tone ?? ""}`}>
       <div className="kpi-card__label">{label}</div>
-      <div className="kpi-card__value">{value}</div>
+      <div className={`kpi-card__value ${isTextual ? "kpi-card__value--text" : ""}`}>{value}</div>
     </div>
   );
 }
