@@ -920,6 +920,122 @@ footer.legal {
   color: var(--c-text-soft);
 }
 
+/* ─────────────────────────────────────────────────────────────
+ * 진입 가능성 라벨 (모달 헤더 + 학과 카드)
+ * ───────────────────────────────────────────────────────────── */
+.access-label {
+  display: inline-block;
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+.access-label--ok {
+  background: #e6f4ea;
+  color: #1e7c3a;
+  border: 1px solid #b5dec1;
+}
+.access-label--no {
+  background: #f1f3f5;
+  color: #6c757d;
+  border: 1px solid #d6d9dd;
+}
+.top-card__access {
+  margin-top: 8px;
+  align-self: flex-start;
+}
+.top-card--no-access {
+  opacity: 0.92;
+}
+.top-card--no-access .name {
+  color: var(--c-text-soft);
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 1학기 추천 교과목 섹션
+ * ───────────────────────────────────────────────────────────── */
+.dept-modal__courses h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.dept-modal__courses-hint {
+  margin-left: auto;
+  font-weight: 400;
+}
+.dept-modal__courses-alias {
+  margin: -2px 0 8px;
+}
+.course-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.course-item {
+  display: grid;
+  grid-template-columns: 22px 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  background: var(--c-bg);
+  border: 1px solid #e8eef9;
+  border-radius: 8px;
+  font-size: 0.92rem;
+}
+.course-item--strong {
+  background: #fff8e1;
+  border-color: #ffe082;
+}
+.course-item__star {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #b5b5b5;
+}
+.course-item--strong .course-item__star {
+  color: #f5a623;
+}
+.course-item__name {
+  font-weight: 500;
+  color: var(--c-text);
+}
+.course-item__credits {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85rem;
+  color: var(--c-text-soft);
+  white-space: nowrap;
+}
+.course-item__badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #b07b00;
+  background: #ffe9a3;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 별도 모집 학과 안내 박스 (진입 불가 4개 학과)
+ * ───────────────────────────────────────────────────────────── */
+.dept-modal__not-accessible {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.dept-modal__not-accessible h3 {
+  color: #495057;
+}
+.dept-modal__not-accessible .dept-modal__text {
+  color: #495057;
+}
+
 /* 결과지 학과 카드 클릭 가능 */
 .top-card--clickable {
   background: var(--c-bg);

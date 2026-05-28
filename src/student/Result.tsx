@@ -14,7 +14,13 @@ import {
   clearAll,
   getResponses,
 } from "../lib/sessionState";
-import { questionBank, getCard, getDepartment } from "../lib/dataLoader";
+import {
+  questionBank,
+  getCard,
+  getDepartment,
+  accessibilityData,
+} from "../lib/dataLoader";
+import { isFreeMajorAccessible } from "@lib/courses";
 import {
   DIAGNOSTIC_AXES,
   generateReason,
@@ -428,10 +434,11 @@ export default function Result() {
         {top5.map((f) => {
           const card = getCard(f.code);
           const isFirst = f.rank === 1;
+          const accessible = isFreeMajorAccessible(f.code, accessibilityData);
           return (
             <button
               key={f.code}
-              className={`top-card top-card--clickable ${isFirst ? "top-card--first" : ""}`}
+              className={`top-card top-card--clickable ${isFirst ? "top-card--first" : ""} ${!accessible ? "top-card--no-access" : ""}`}
               style={{ flexDirection: "column", alignItems: "stretch", textAlign: "left" }}
               onClick={() => setDetailCode(f.code)}
               aria-label={`${f.name} 상세 보기`}
@@ -445,6 +452,14 @@ export default function Result() {
                 </div>
                 <span className="percent">{f.percent.toFixed(1)}%</span>
               </div>
+              {!accessible && (
+                <span
+                  className="access-label access-label--no top-card__access"
+                  title={accessibilityData.not_accessible_notice}
+                >
+                  {accessibilityData.labels.NOT_ACCESSIBLE}
+                </span>
+              )}
               <p style={{ margin: "10px 0 0", fontSize: "0.92rem", color: "var(--c-text-soft)" }}>
                 {reasonFor(f.code)}
               </p>
@@ -465,29 +480,37 @@ export default function Result() {
           <p className="muted small" style={{ margin: "0 0 10px" }}>
             TOP 5에 가까운 적합도. 진로 탐색의 폭을 넓히는 데 참고하세요.
           </p>
-          {next3.map((f) => (
-            <button
-              key={f.code}
-              className="top-card top-card--clickable top-card--compare"
-              style={{ flexDirection: "column", alignItems: "stretch", textAlign: "left" }}
-              onClick={() => setDetailCode(f.code)}
-              aria-label={`${f.name} 상세 보기`}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <span className="rank" style={{ color: "var(--c-text-soft)" }}>{f.rank}</span>
-                <div className="info">
-                  <div className="school">{f.school}</div>
-                  <div className="name">{f.name}</div>
+          {next3.map((f) => {
+            const accessible = isFreeMajorAccessible(f.code, accessibilityData);
+            return (
+              <button
+                key={f.code}
+                className={`top-card top-card--clickable top-card--compare ${!accessible ? "top-card--no-access" : ""}`}
+                style={{ flexDirection: "column", alignItems: "stretch", textAlign: "left" }}
+                onClick={() => setDetailCode(f.code)}
+                aria-label={`${f.name} 상세 보기`}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <span className="rank" style={{ color: "var(--c-text-soft)" }}>{f.rank}</span>
+                  <div className="info">
+                    <div className="school">{f.school}</div>
+                    <div className="name">{f.name}</div>
+                  </div>
+                  <span className="percent" style={{ color: "var(--c-text-soft)" }}>
+                    {f.percent.toFixed(1)}%
+                  </span>
                 </div>
-                <span className="percent" style={{ color: "var(--c-text-soft)" }}>
-                  {f.percent.toFixed(1)}%
-                </span>
-              </div>
-              <p style={{ margin: "8px 0 0", fontSize: "0.88rem", color: "var(--c-text-soft)" }}>
-                {reasonFor(f.code)}
-              </p>
-            </button>
-          ))}
+                {!accessible && (
+                  <span className="access-label access-label--no top-card__access" title={accessibilityData.not_accessible_notice}>
+                    {accessibilityData.labels.NOT_ACCESSIBLE}
+                  </span>
+                )}
+                <p style={{ margin: "8px 0 0", fontSize: "0.88rem", color: "var(--c-text-soft)" }}>
+                  {reasonFor(f.code)}
+                </p>
+              </button>
+            );
+          })}
         </div>
       )}
 
