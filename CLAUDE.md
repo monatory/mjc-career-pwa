@@ -1071,7 +1071,17 @@ npm run build                  # tsc -b 통과 (courses.d.ts 동반)
 - **색 보존**: `.page *`에 `print-color-adjust: exact`(게이지·배지·1위 강조 색).
 - **페이지 나눔**: `.card / .top-card / 표`에 `break-inside: avoid`. `@page { margin: 14mm 12mm 18mm }`.
 
-### 21.3 남은 항목 (보류-5)
+### 21.3 앱 내 인쇄 미리보기 (body.print-preview, 2026-05-29)
+
+브라우저 인쇄 대화상자로 넘어가기 전에 **앱 화면에서 인쇄 문서 모양을 확인**하는 미리보기. 모바일에서 브라우저 기본 미리보기가 작고 답답한 점을 보완.
+
+- 결과지 버튼 행: `다시 진단 / 미리보기 / PDF·인쇄` 3개. "미리보기" → `previewOpen` 상태 토글.
+- 미리보기 진입 시 `document.body.classList.add("print-preview")` → `@media print`와 동일한 변환을 화면에서 재현(헤더·버튼 숨김, print-only 머리말/꼬리말 노출, 접힌 details 펼침).
+- 문서는 **A4 96dpi 폭(794px) 흰 카드**를 회색 배경 위에 띄우고, 상단에 고정 툴바(`인쇄·PDF 저장` / `✕ 닫기`). 모바일(≤840px)에선 좌우 여백 축소.
+- 닫기 또는 **ESC**로 종료 → body 클래스 제거 + 펼쳤던 details 원복.
+- 미리보기 상태에서 "인쇄·PDF 저장" 클릭 시 `@media print`가 `body.print-preview .page`의 카드 스타일(폭·여백·그림자)을 `!important`로 무력화해 정상 A4 출력.
+
+### 21.4 남은 항목 (보류-5)
 
 - **학교 로고**: 머리말은 현재 텍스트(센터명)만. CI 자산 입수(보류-3) 후 로고 이미지 추가.
 - **페이지 번호**: CSS `@page` 카운터는 브라우저 호환이 불안정하여 미적용. 현재는 브라우저 인쇄 다이얼로그의 머리말/꼬리말 옵션에 의존.

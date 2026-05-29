@@ -227,6 +227,7 @@ export default function Result() {
   const cache = loadResultCache();
   const [restartOpen, setRestartOpen] = useState(false);
   const [detailCode, setDetailCode] = useState<string | null>(null);
+  const [previewOpen, setPreviewOpen] = useState(false);
   const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -260,6 +261,36 @@ export default function Result() {
       window.removeEventListener("afterprint", after);
     };
   }, []);
+
+  // 인쇄 미리보기 — 화면을 인쇄 문서 모양으로 변환(body.print-preview).
+  // 접힌 details를 펼치고, ESC로 닫기. 닫으면 원래 화면 복원.
+  useEffect(() => {
+    if (!previewOpen) return;
+    document.body.classList.add("print-preview");
+    document
+      .querySelectorAll<HTMLDetailsElement>("main.page details")
+      .forEach((d) => {
+        if (!d.open) {
+          d.dataset.previewToggled = "1";
+          d.open = true;
+        }
+      });
+    window.scrollTo(0, 0);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPreviewOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.classList.remove("print-preview");
+      document
+        .querySelectorAll<HTMLDetailsElement>("main.page details[data-preview-toggled]")
+        .forEach((d) => {
+          d.open = false;
+          delete d.dataset.previewToggled;
+        });
+    };
+  }, [previewOpen]);
 
   // Firestore에 결과 자동 저장 (시범운영 백엔드)
   // 결과지에 처음 진입할 때 한 번만. 실패해도 UX에 영향 없음.
@@ -335,6 +366,17 @@ export default function Result() {
   return (
     <>
       <AppHeader />
+      {previewOpen && (
+        <div className="print-preview-bar" role="dialog" aria-label="인쇄 미리보기">
+          <span className="print-preview-bar__title">
+            <span aria-hidden>🔍</span> 인쇄 미리보기
+          </span>
+          <div className="print-preview-bar__actions">
+            <button onClick={() => window.print()}>인쇄 · PDF 저장</button>
+            <button className="ghost" onClick={() => setPreviewOpen(false)}>✕ 닫기</button>
+          </div>
+        </div>
+      )}
       <main className="page" ref={pageRef}>
         {/* 인쇄(PDF) 전용 문서 머리말 — 화면에서는 숨김 */}
         <div className="print-only print-doc-head" aria-hidden>
@@ -559,11 +601,12 @@ export default function Result() {
       </div>
 
       <div className="btn-row no-print">
-        <button className="ghost" onClick={() => setRestartOpen(true)}>다시 진단하기</button>
-        <button onClick={exportPdf}>PDF로 저장 / 인쇄</button>
+        <button className="ghost" onClick={() => setRestartOpen(true)}>다시 진단</button>
+        <button className="ghost" onClick={() => setPreviewOpen(true)}>미리보기</button>
+        <button onClick={exportPdf}>PDF·인쇄</button>
       </div>
       <p className="muted small no-print" style={{ margin: "8px 0 0", textAlign: "center" }}>
-        ※ "PDF로 저장"을 누르면 인쇄 창이 열립니다. 대상을 "PDF로 저장"으로 선택하시면 파일로 받을 수 있습니다.
+        ※ "미리보기"로 PDF 모양을 확인한 뒤, "PDF·인쇄"를 누르면 인쇄 창이 열립니다. 대상을 "PDF로 저장"으로 선택하면 파일로 받을 수 있습니다.
       </p>
 
       {/* 인쇄(PDF) 전용 법적 문구 — 계획서 Ⅸ⑧ (화면에선 하단 공통 푸터가 담당) */}
