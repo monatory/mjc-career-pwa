@@ -322,6 +322,13 @@ h2 {
 .top-card--compare .name { font-size: 0.96rem; }
 
 /* 희망학과 vs 시스템 추천 비교 카드 */
+/* 아주 좁은 화면(≤약 336px)에서 학과명이 길어 표가 페이지를 밀어내지 않도록
+   표만 가로 스크롤(관리자 테이블과 동일 패턴). body word-break:keep-all 때문에
+   긴 학과명이 줄바꿈되지 않는 점을 보완. */
+.pref-compare__table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 .pref-compare__table {
   width: 100%;
   border-collapse: collapse;
@@ -1451,6 +1458,8 @@ footer.legal {
 
   /* 카드·추천 항목이 페이지 경계에서 잘리지 않도록 */
   .card, .top-card, .pref-compare__table, .need-gauge-row { break-inside: avoid; }
+  /* 인쇄에서는 표 전체가 보이도록 가로 스크롤 해제 */
+  .pref-compare__table-wrap { overflow: visible; }
   .top-card { border: 1px solid #ccc !important; }
 
   /* 접기 토글 캐럿은 인쇄에서 숨김(beforeprint가 내용은 펼침) */

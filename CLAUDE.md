@@ -502,10 +502,11 @@ validateCreditRange(totalCredits)
 ```
 mjc_cat_consent          mjc_cat_responses_stage1   mjc_cat_active_branches
 mjc_cat_profile          mjc_cat_responses_stage2   mjc_cat_result
-                         mjc_cat_stage1_done
+mjc_cat_anonymous_id     mjc_cat_stage1_done        mjc_cat_plan
+mjc_cat_saved            (결과 Firestore 저장 완료 플래그 — 중복 쓰기 방지)
 ```
 
-sessionStorage는 탭 종료 시 자동 삭제. LocalStorage 사용 금지.
+sessionStorage는 탭 종료 시 자동 삭제. LocalStorage 사용 금지. 모든 키는 `clearAll()`에서 일괄 정리.
 
 ---
 

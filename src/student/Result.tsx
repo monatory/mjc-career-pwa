@@ -95,6 +95,7 @@ function PreferenceComparisonCard({ nick, fits }: { nick: string; fits: FitResul
         {nick}님이 입력하신 희망학과와 시스템 추천 결과를 비교한 내용입니다.
       </p>
 
+      <div className="pref-compare__table-wrap">
       <table className="pref-compare__table">
         <thead>
           <tr>
@@ -129,6 +130,7 @@ function PreferenceComparisonCard({ nick, fits }: { nick: string; fits: FitResul
           ))}
         </tbody>
       </table>
+      </div>
 
       <div className="pref-compare__summary">
         <strong>{summary.headline}</strong>
