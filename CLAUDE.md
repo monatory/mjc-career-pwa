@@ -470,7 +470,7 @@ validateCreditRange(totalCredits)
 - **7가지만** 수집 가능: 학번, 이름, 학부·학년, 진단 응답, 상담 이력, 만족도 (그 외 일체 불가)
 - 학번·이름은 **AES-256 암호화**, 응답 데이터는 익명ID로 연결
 - 외부 분석 도구(GA, Mixpanel 등) 절대 연결 금지
-- 결과지 PDF 저장은 클라이언트 사이드에서 처리(서버 업로드 금지, jspdf 권장)
+- 결과지 PDF 저장은 클라이언트 사이드에서 처리(서버 업로드 금지). 결과지·수강계획서 모두 `window.print()` + `@media print` 방식(한글 폰트 임베드 문제 회피). jsPDF·html2canvas 의존성은 2026-05-29 제거
 - 보관 기간: 졸업 후 3년
 
 ### 7.2 시범운영 단계 — 실제 PWA에서 수집하는 정보
@@ -847,9 +847,9 @@ STEP 3 진단 검사  (#/exam → #/stage2)
       1·2·3지망 시스템 순위·적합도, TOP5 강조, 4단계 톤 상담 권유
   · 진단축 8개 레이더 + 점수 표 펼치기 토글
   · 추천 TOP 5 — 1위 "최적합 학과" 크라운 + 그라데이션 + 큰 rank
-  · 비교탐색 학과 6~8위 (클릭 모달)
+  · 비교탐색 학과 6~8위 (details 접기 — 클릭 모달)
   · 진로·취업 상담 신청 CTA (70+ 시 빨강 강조)
-  · 다시 진단(ConfirmModal) / PDF 저장(html2canvas 한글 보존)
+  · 다시 진단(ConfirmModal) / PDF 저장·인쇄(window.print + @media print 전용 문서, §21)
   · 결과지 진입 시 Firestore 자동 저장 (익명ID, fire-and-forget)
 ```
 
@@ -960,7 +960,7 @@ node tests/test_analytics.js
 | 보류-2 | 학과별 홈페이지 URL — `department_cards.json`에 `homepage_url` 필드 | 학과별 회신 |
 | 보류-3 | PWA 아이콘 MJC CI 교체 | 공식 CI 자산 |
 | 보류-4 | 만족도 폼 본 구현 (결과지 PDF 저장 후 5점 척도 4문항) | 계획서 Ⅸ ⑩ |
-| 보류-5 | 결과지 PDF 헤더·푸터 보강 (학교 로고·발급일·페이지 번호) | — |
+| 보류-5 | 결과지 PDF 헤더·푸터 — 헤더(센터명·발급일)·푸터(법적 문구) 완료(2026-05-29, §21). 남은 항목: 학교 로고(보류-3 CI 자산 후)·페이지 번호(현재 브라우저 인쇄 옵션 의존) | CI 자산 |
 | 보류-6 | 본 운영 전환 — Anonymous Auth + custom claims + 학내 도메인 매핑 | 학내 SSO 일정 |
 | 보류-7 | 수강계획서 "상담 신청" 실연동 (현재 시범운영 alert) | 상담 접수 채널 결정 |
 | 보류-8 | `validateCreditRange` 권장 학점 범위 학사기준 확정 (현재 12~23 임시) | 학사일정·학칙 |
@@ -1042,3 +1042,35 @@ npm run build                  # tsc -b 통과 (courses.d.ts 동반)
 ```
 
 데이터 무결성: `department_courses.json`(27) = 진입 가능 27개, NOT_ACCESSIBLE 4개는 교과에서 제외, accessibility 31개 전체 등재 — 교차 검증 통과(2026-05-29).
+
+---
+
+## 21. 결과지 PDF·인쇄 (window.print 전용 문서, 2026-05-29)
+
+결과지 PDF를 기존 **html2canvas 이미지 캡처** 방식에서 **`window.print()` + `@media print` 전용 문서** 방식으로 전환했다. 수강계획서(/plan)와 동일한 방식으로 일원화.
+
+### 21.1 전환 배경
+
+| 항목 | 기존(html2canvas+jsPDF) | 현재(window.print) |
+|---|---|---|
+| 텍스트 | 이미지(선택·검색 불가) | 실제 텍스트(선택·검색 가능) |
+| 파일 크기 | 큼(고해상도 이미지) | 작음 |
+| 접힌 섹션 | 캡처 시 누락(비교탐색 등) | beforeprint가 모두 펼침 |
+| 버튼·UI | 화면째 찍혀 포함 | `.no-print`로 자동 제외 |
+| 한글 | 이미지라 보존되나 흐림 가능 | 폰트 그대로(임베드 문제 없음) |
+| 번들 | jsPDF+html2canvas ≈ +717KiB | **두 의존성 제거**(precache 17→14항목, 1846→1129KiB) |
+
+### 21.2 구현 (`src/student/Result.tsx` + `global.css`)
+
+- **트리거**: "PDF로 저장 / 인쇄" 버튼 → `window.print()` (별도 다운로드 라이브러리 없음).
+- **접힌 details 자동 펼침**: `beforeprint`에서 `main.page details`를 모두 `open`, `afterprint`에서 원복. 버튼 인쇄와 Ctrl+P 모두 적용.
+- **인쇄 전용 머리말**(`.print-only .print-doc-head`): 센터명 · "MJC-CAT 학과 적합도 진단 결과지" · 닉네임 · 발급일. 화면에선 `.print-only{display:none}`.
+- **인쇄 전용 꼬리말**(`.print-doc-foot`): 법적 문구(계획서 Ⅸ⑧)를 `position:fixed; bottom:0`으로 **매 페이지 하단** 반복.
+- **숨김(.no-print 외)**: `.cert-banner__cta`, `.top-card__more`(자세히 보기) 등 PDF에서 무의미한 인터랙션 요소.
+- **색 보존**: `.page *`에 `print-color-adjust: exact`(게이지·배지·1위 강조 색).
+- **페이지 나눔**: `.card / .top-card / 표`에 `break-inside: avoid`. `@page { margin: 14mm 12mm 18mm }`.
+
+### 21.3 남은 항목 (보류-5)
+
+- **학교 로고**: 머리말은 현재 텍스트(센터명)만. CI 자산 입수(보류-3) 후 로고 이미지 추가.
+- **페이지 번호**: CSS `@page` 카운터는 브라우저 호환이 불안정하여 미적용. 현재는 브라우저 인쇄 다이얼로그의 머리말/꼬리말 옵션에 의존.

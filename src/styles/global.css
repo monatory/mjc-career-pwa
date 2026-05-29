@@ -1372,7 +1372,12 @@ footer.legal {
   margin: 4px 0 0;
 }
 
+/* ── 인쇄(PDF) 전용 요소 — 화면에서는 숨김 ─────────────────── */
+.print-only { display: none; }
+
 /* ── 인쇄 스타일 ──────────────────────────────────────────── */
+@page { margin: 14mm 12mm 18mm; }
+
 @media print {
   body { background: #fff; }
   .app-shell > header,
@@ -1380,9 +1385,14 @@ footer.legal {
   .no-print,
   .plan-back-row,
   .plan-actions,
-  .plan-print-hint {
+  .plan-print-hint,
+  .cert-banner__cta,
+  .top-card__more {
     display: none !important;
   }
+  /* 모달 오버레이가 떠 있어도 인쇄에는 제외 */
+  .modal-overlay, [class*="overlay"], [class*="backdrop"] { display: none !important; }
+
   .plan-page { padding: 0; }
   .plan-dept,
   .plan-section { break-inside: avoid; }
@@ -1396,6 +1406,56 @@ footer.legal {
     border: 1px solid #888;
   }
   .cert-banner { break-inside: avoid; }
+
+  /* 색·배경이 인쇄에서도 그대로 나오도록 (게이지·배지·1위 강조 등) */
+  .page, .page * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .page { padding: 0; max-width: none; }
+
+  /* 결과지 인쇄 전용 머리말·꼬리말 노출 */
+  .print-only { display: block !important; }
+  .print-doc-head {
+    border-bottom: 2px solid var(--c-primary);
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+  }
+  .print-doc-head__org {
+    font-size: 0.82rem;
+    color: var(--c-text-soft);
+  }
+  .print-doc-head__title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--c-primary);
+    margin: 2px 0;
+  }
+  .print-doc-head__meta {
+    font-size: 0.88rem;
+    color: var(--c-text);
+  }
+  /* 법적 문구 — 매 페이지 하단 고정(계획서 Ⅸ⑧) */
+  .print-doc-foot {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 0.72rem;
+    line-height: 1.4;
+    color: #555;
+    text-align: center;
+    padding-top: 4px;
+    border-top: 1px solid #ccc;
+  }
+
+  /* 카드·추천 항목이 페이지 경계에서 잘리지 않도록 */
+  .card, .top-card, .pref-compare__table, .need-gauge-row { break-inside: avoid; }
+  .top-card { border: 1px solid #ccc !important; }
+
+  /* 접기 토글 캐럿은 인쇄에서 숨김(beforeprint가 내용은 펼침) */
+  .compare-details__icon, .axis-score-details__icon { display: none !important; }
+  .compare-details > summary, .axis-score-details > summary { cursor: default; }
 }
 
 /* ─────────────────────────────────────────────────────────────

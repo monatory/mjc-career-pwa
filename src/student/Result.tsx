@@ -31,7 +31,6 @@ import {
   type FitResult,
   type DiagnosticAxis,
 } from "@lib/recommendation_engine";
-import jsPDF from "jspdf";
 import AppHeader from "../components/AppHeader";
 import ConfirmModal from "../components/ConfirmModal";
 import DepartmentDetailModal from "../components/DepartmentDetailModal";
@@ -224,7 +223,6 @@ export default function Result() {
   const nav = useNavigate();
   const nick = getNickname() || "익명";
   const cache = loadResultCache();
-  const [downloading, setDownloading] = useState(false);
   const [restartOpen, setRestartOpen] = useState(false);
   const [detailCode, setDetailCode] = useState<string | null>(null);
   const pageRef = useRef<HTMLDivElement>(null);
@@ -232,6 +230,34 @@ export default function Result() {
   useEffect(() => {
     if (!cache) nav("/", { replace: true });
   }, [cache, nav]);
+
+  // 인쇄(=PDF 저장) 시 접혀 있는 details(비교탐색·점수표)를 모두 펼쳐
+  // PDF에 전체 내용이 담기도록 한다. 인쇄 후 원래 상태로 복원.
+  // 버튼 클릭 인쇄와 Ctrl+P 모두에 적용.
+  useEffect(() => {
+    const before = () => {
+      document.querySelectorAll<HTMLDetailsElement>("main.page details").forEach((d) => {
+        if (!d.open) {
+          d.dataset.printToggled = "1";
+          d.open = true;
+        }
+      });
+    };
+    const after = () => {
+      document
+        .querySelectorAll<HTMLDetailsElement>("main.page details[data-print-toggled]")
+        .forEach((d) => {
+          d.open = false;
+          delete d.dataset.printToggled;
+        });
+    };
+    window.addEventListener("beforeprint", before);
+    window.addEventListener("afterprint", after);
+    return () => {
+      window.removeEventListener("beforeprint", before);
+      window.removeEventListener("afterprint", after);
+    };
+  }, []);
 
   // Firestore에 결과 자동 저장 (시범운영 백엔드)
   // 결과지에 처음 진입할 때 한 번만. 실패해도 UX에 영향 없음.
@@ -290,65 +316,13 @@ export default function Result() {
   }
 
   /**
-   * PDF 저장 — 결과지 화면을 html2canvas로 캡처해 한글 그대로 PDF에 임베드.
-   * jsPDF의 텍스트 출력은 한글 폰트 임베드가 무거워 캡처 방식 채택.
+   * PDF 저장 — 브라우저 인쇄 다이얼로그(window.print)로 처리.
+   * @media print 스타일이 버튼·헤더를 숨기고 전용 문서 레이아웃으로 변환하며,
+   * beforeprint 핸들러가 접힌 details를 모두 펼친다. 한글 폰트 임베드 문제가
+   * 없고 텍스트가 선택 가능한 깔끔한 A4 문서가 생성된다(수강계획서와 동일 방식).
    */
-  async function exportPdf() {
-    if (!pageRef.current) return;
-    setDownloading(true);
-    try {
-      // 동적 import로 번들 분할 (PDF 저장 클릭 시에만 로드)
-      const html2canvas = (await import("html2canvas")).default;
-
-      // 결과지 main 영역 캡처 (모달은 portal 밖에 있어 자연스럽게 제외)
-      const canvas = await html2canvas(pageRef.current, {
-        scale: 2,           // 고해상도
-        backgroundColor: "#ffffff",
-        useCORS: true,
-        logging: false,
-        windowWidth: pageRef.current.scrollWidth,
-      });
-
-      const imgData = canvas.toDataURL("image/jpeg", 0.92);
-      const pdf = new jsPDF({ unit: "pt", format: "a4", orientation: "portrait" });
-      const pageW = pdf.internal.pageSize.getWidth();
-      const pageH = pdf.internal.pageSize.getHeight();
-
-      // 이미지 비율 유지하며 페이지 폭에 맞추고, 세로가 길면 페이지 분할
-      const imgW = pageW - 40; // 좌우 20pt 여백
-      const imgH = (canvas.height * imgW) / canvas.width;
-
-      if (imgH <= pageH - 40) {
-        pdf.addImage(imgData, "JPEG", 20, 20, imgW, imgH);
-      } else {
-        // 페이지 분할: 캔버스를 페이지 높이 단위로 잘라 추가
-        const pageContentH = pageH - 40;
-        const sliceH = (canvas.width * pageContentH) / imgW; // 한 페이지에 해당하는 캔버스 픽셀 높이
-        let yOffset = 0;
-        let firstPage = true;
-        while (yOffset < canvas.height) {
-          const slice = document.createElement("canvas");
-          slice.width = canvas.width;
-          slice.height = Math.min(sliceH, canvas.height - yOffset);
-          const ctx = slice.getContext("2d")!;
-          ctx.drawImage(
-            canvas,
-            0, yOffset, canvas.width, slice.height,
-            0, 0, canvas.width, slice.height,
-          );
-          const sliceData = slice.toDataURL("image/jpeg", 0.92);
-          const sliceImgH = (slice.height * imgW) / slice.width;
-          if (!firstPage) pdf.addPage();
-          pdf.addImage(sliceData, "JPEG", 20, 20, imgW, sliceImgH);
-          yOffset += sliceH;
-          firstPage = false;
-        }
-      }
-
-      pdf.save(`MJC-CAT_${nick}_${new Date().toISOString().slice(0, 10)}.pdf`);
-    } finally {
-      setDownloading(false);
-    }
+  function exportPdf() {
+    window.print();
   }
 
   function confirmRestart() {
@@ -360,13 +334,26 @@ export default function Result() {
     <>
       <AppHeader />
       <main className="page" ref={pageRef}>
-        <div className="step-indicator step-indicator--done">
+        {/* 인쇄(PDF) 전용 문서 머리말 — 화면에서는 숨김 */}
+        <div className="print-only print-doc-head" aria-hidden>
+          <div className="print-doc-head__org">
+            명지전문대학 · 학생지원처 AI융합진로지원센터
+          </div>
+          <div className="print-doc-head__title">
+            MJC-CAT 학과 적합도 진단 결과지
+          </div>
+          <div className="print-doc-head__meta">
+            {nick}님 · 발급일 {new Date(cache.computedAt).toLocaleDateString()}
+          </div>
+        </div>
+
+        <div className="step-indicator step-indicator--done no-print">
           <span className="step-indicator__num">검사 완료</span>
           <span className="step-indicator__sep">·</span>
           <span className="step-indicator__label">결과지</span>
         </div>
-        <h1>진단 결과</h1>
-        <p className="muted">
+        <h1 className="no-print">진단 결과</h1>
+        <p className="muted no-print">
           {nick}님 · {new Date(cache.computedAt).toLocaleString()}
         </p>
 
@@ -559,7 +546,7 @@ export default function Result() {
         </ul>
       </div>
 
-      <div className="btn-row btn-row--plan">
+      <div className="btn-row btn-row--plan no-print">
         <button
           className="btn-plan"
           onClick={() => nav("/plan")}
@@ -569,12 +556,21 @@ export default function Result() {
         </button>
       </div>
 
-      <div className="btn-row">
+      <div className="btn-row no-print">
         <button className="ghost" onClick={() => setRestartOpen(true)}>다시 진단하기</button>
-        <button onClick={exportPdf} disabled={downloading}>
-          {downloading ? "PDF 저장 중…" : "PDF로 저장"}
-        </button>
+        <button onClick={exportPdf}>PDF로 저장 / 인쇄</button>
       </div>
+      <p className="muted small no-print" style={{ margin: "8px 0 0", textAlign: "center" }}>
+        ※ "PDF로 저장"을 누르면 인쇄 창이 열립니다. 대상을 "PDF로 저장"으로 선택하시면 파일로 받을 수 있습니다.
+      </p>
+
+      {/* 인쇄(PDF) 전용 법적 문구 — 계획서 Ⅸ⑧ (화면에선 하단 공통 푸터가 담당) */}
+      <p className="print-only print-doc-foot" aria-hidden>
+        본 결과는 학과 선택을 위한 참고자료이며, 학과 배정과는 무관합니다. 최종 선택은 학생 본인의
+        권리이며, 진로·취업 컨설턴트가 추가 상담을 통해 충분히 지원합니다.
+        <br />
+        명지전문대학 학생지원처 AI융합진로지원센터 · MJC-CAT
+      </p>
       </main>
       <ConfirmModal
         open={restartOpen}
