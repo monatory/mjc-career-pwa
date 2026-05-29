@@ -39,6 +39,11 @@ import {
 
 const SCHEMA_VERSION = "1.0-pilot";
 
+// 결과지 재진입(새로고침·뒤로가기) 시 같은 익명ID로 중복 저장을 막는 플래그.
+// 한 번 저장 성공한 익명ID는 다시 쓰지 않는다(Firestore 규칙상 동일 문서 update는
+// 차단되어 permission-denied가 반복 발생하던 문제 방지). clearAll()에서 함께 정리.
+const SAVED_FLAG_KEY = "mjc_cat_saved";
+
 export interface SavedResponse {
   anonymousId: string;
   profile: StudentProfile;
@@ -62,9 +67,16 @@ export async function saveResponseToFirestore(args: {
   axisScores: AxisScores;
   fits: FitResult[];
   counselingNeed: CounselingNeed;
-}): Promise<{ ok: boolean; anonymousId?: string; error?: unknown }> {
+}): Promise<{ ok: boolean; anonymousId?: string; skipped?: boolean; error?: unknown }> {
   try {
     const anonymousId = getAnonymousId();
+
+    // 이미 이 익명ID로 저장에 성공했으면 재시도하지 않음.
+    // (결과지 새로고침/재진입마다 동일 문서에 쓰기를 시도해 update가 거부되던 문제 방지)
+    if (sessionStorage.getItem(SAVED_FLAG_KEY) === anonymousId) {
+      return { ok: true, anonymousId, skipped: true };
+    }
+
     const { profile, axisScores, fits, counselingNeed } = args;
 
     // 클라이언트 사이드 메타 분석 (lib/analytics.js)
@@ -92,6 +104,8 @@ export async function saveResponseToFirestore(args: {
       _serverCreatedAt: serverTimestamp(),
     });
 
+    // 저장 성공 표시 — 같은 익명ID 재진입 시 중복 쓰기 방지
+    sessionStorage.setItem(SAVED_FLAG_KEY, anonymousId);
     return { ok: true, anonymousId };
   } catch (error) {
     // 네트워크 끊김·권한 오류 등 — UX 차단 금지

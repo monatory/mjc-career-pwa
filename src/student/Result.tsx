@@ -273,7 +273,7 @@ export default function Result() {
         fits: cache.fits,
         counselingNeed: cache.counseling,
       });
-      if (!cancelled && r.ok) {
+      if (!cancelled && r.ok && !r.skipped) {
         console.info("[Firestore] saved:", r.anonymousId);
       }
     })();

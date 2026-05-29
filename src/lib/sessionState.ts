@@ -293,6 +293,7 @@ export function clearAll() {
   sessionStorage.removeItem(KEY_RESULT);
   sessionStorage.removeItem(KEY_ANON_ID);
   sessionStorage.removeItem(KEY_PLAN);
+  sessionStorage.removeItem("mjc_cat_saved"); // firestoreClient 저장 완료 플래그
   for (const k of LEGACY_KEYS) sessionStorage.removeItem(k);
 }
 
