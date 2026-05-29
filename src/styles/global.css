@@ -938,9 +938,13 @@ footer.legal {
   border: 1px solid #b5dec1;
 }
 .access-label--no {
-  background: #f1f3f5;
-  color: #6c757d;
-  border: 1px solid #d6d9dd;
+  background: #fff4e2;
+  color: #9a6312;
+  border: 1px solid #f0d49a;
+}
+.access-label--no::before {
+  content: "ⓘ ";
+  font-weight: 700;
 }
 .top-card__access {
   margin-top: 8px;
@@ -1458,6 +1462,33 @@ footer.legal {
   font-size: 0.9rem;
 }
 .axis-score-details[open] > summary > .axis-score-details__icon {
+  transform: rotate(180deg);
+}
+
+/* 비교탐색 학과(6~8위) 접기 — 결과지 길이 축소, 펼치기 활용 */
+.compare-details > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  user-select: none;
+  margin: -2px 0;
+}
+.compare-details > summary::-webkit-details-marker { display: none; }
+.compare-details__title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--c-text);
+}
+.compare-details__icon {
+  display: inline-block;
+  transition: transform 0.2s ease;
+  font-size: 1rem;
+  color: var(--c-primary);
+}
+.compare-details[open] > summary > .compare-details__icon {
   transform: rotate(180deg);
 }
 

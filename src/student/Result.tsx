@@ -407,7 +407,7 @@ export default function Result() {
         <h2>진단축 8개 프로파일</h2>
         <div style={{ width: "100%", height: 320 }}>
           <ResponsiveContainer>
-            <RadarChart data={radarData}>
+            <RadarChart data={radarData} margin={{ top: 8, right: 52, bottom: 8, left: 52 }}>
               <PolarGrid />
               <PolarAngleAxis dataKey="axis" tick={{ fontSize: 12 }} />
               <PolarRadiusAxis angle={90} domain={[0, 5]} tick={{ fontSize: 10 }} />
@@ -491,9 +491,15 @@ export default function Result() {
       </div>
 
       {next3.length > 0 && (
-        <div className="card">
-          <h2>비교탐색 학과 (6~8위)</h2>
-          <p className="muted small" style={{ margin: "0 0 10px" }}>
+        <details className="card compare-details">
+          <summary className="compare-details__summary">
+            <span className="compare-details__title">
+              비교탐색 학과
+              <span className="muted small"> 6~8위 · {next3.length}곳</span>
+            </span>
+            <span className="compare-details__icon" aria-hidden>▾</span>
+          </summary>
+          <p className="muted small" style={{ margin: "2px 0 10px" }}>
             TOP 5에 가까운 적합도. 진로 탐색의 폭을 넓히는 데 참고하세요.
           </p>
           {next3.map((f) => {
@@ -527,7 +533,7 @@ export default function Result() {
               </button>
             );
           })}
-        </div>
+        </details>
       )}
 
       {/* 진로 상담 신청 CTA — 70점 이상이면 강조 */}
