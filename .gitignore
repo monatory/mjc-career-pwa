@@ -37,3 +37,6 @@ data/exports/
 # PWA 캐시
 sw.js.map
 manifest-cache/
+
+# 로컬 개발 도구 artifact (Claude Preview 시드 — 가짜 학생 세션, 커밋 불필요)
+.preview_seed.json
