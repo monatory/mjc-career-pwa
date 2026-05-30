@@ -20,8 +20,12 @@ MJC-CAT 학과추천 진단 PWA의 **시연 영상·발표 자료**를 다루는
 docs/demo/
   README.md                  ← 매니페스트 (자료 목록·상태). 자료 추가 시 표에 한 줄 추가 필수
   notebooklm_demo_3min.md    ← NotebookLM Video Overview용 3분 소스 (7 SCENE)
-  (이하 예정) assets/ · cue_sheet.md · demo_1min.md · demo_5min.md
+  demo_1min.md               ← 1분 홍보판 (학생·학부모, 4 SCENE)
+  demo_5min.md               ← 5분 심화판 (학과장·운영위, 9 SCENE)
+  cue_sheet.md               ← 발표자 큐시트 (라이브 녹화용 7컷)
+  assets/                    ← 스크린샷 팩 6장(PNG) + 캡처법
 ```
+스크린샷 재생성: `node tests/capture_demo.mjs` (puppeteer-core + 시스템 Chrome headless).
 
 스킬 자신의 정의는 `.claude/skills/demo/SKILL.md`(이 파일).
 

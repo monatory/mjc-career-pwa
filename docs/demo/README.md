@@ -27,7 +27,8 @@
 | `notebooklm_demo_3min.md` | NotebookLM Video Overview용 3분 시연 소스 (7 SCENE) | ✅ |
 | `assets/` | 화면 스크린샷 팩 6장 (STEP1·2·3·결과지·수강계획서·관리자) + 캡처법 | ✅ |
 | `cue_sheet.md` | 발표자 큐시트 — 라이브 녹화용 7컷 클릭·키·내레이션·타임라인 | ✅ |
-| _(예정)_ `demo_1min.md` | 1분 축소판 / `demo_5min.md` 확장판 변형 대본 | ⏳ |
+| `demo_1min.md` | 1분 축소판 — 학생·학부모 대상 카톡/SNS 홍보 (4 SCENE) | ✅ |
+| `demo_5min.md` | 5분 확장판 — 학과장·교수진·운영위 심화 (공식·거버넌스, 9 SCENE) | ✅ |
 
 > 스크린샷 재생성: `npm run dev` 후 `npm i puppeteer-core --no-save && node tests/capture_demo.mjs` → `assets/*.png` 덮어쓰기. 자세히는 [`assets/README.md`](assets/README.md).
 
