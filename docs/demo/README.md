@@ -38,7 +38,8 @@
 > **두 종류를 구분하세요.**
 > - **개념 영상**(NotebookLM): 내레이션 슬라이드. 앱 구동 화면은 **안 나옴**. 소개·홍보용.
 > - **구동 영상**(워크스루 MP4): 실제 클릭·전환·응답이 보이는 화면 녹화. **시연용**.
->   → 이미 만들어 둠: [`assets/walkthrough_student.mp4`](assets/walkthrough_student.mp4) · [`assets/walkthrough_admin.mp4`](assets/walkthrough_admin.mp4)
+>   → 합본 1편: [`assets/walkthrough_full.mp4`](assets/walkthrough_full.mp4) (타이틀카드+학생+관리자, ~42초)
+>   → 개별: [`assets/walkthrough_student.mp4`](assets/walkthrough_student.mp4) · [`assets/walkthrough_admin.mp4`](assets/walkthrough_admin.mp4)
 > - **완성형**(권장): 구동 영상을 화면으로 깔고, 개념 영상의 대본을 음성·자막으로 얹기(영상편집기).
 
 ### 방법 0 — 구동 영상 그대로 쓰기 / 후가공
