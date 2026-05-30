@@ -1,7 +1,27 @@
-# 시연 스크린샷 팩 (assets)
+# 시연 스크린샷 팩 + 워크스루 영상 (assets)
 
-> MJC-CAT 핵심 화면의 실제 캡처 PNG. 발표 슬라이드·NotebookLM 시각 보조·카톡/메일 첨부용.
-> **재생성 가능** — UI가 바뀌면 `node tests/capture_demo.mjs`로 다시 찍어 덮어쓴다.
+> MJC-CAT 핵심 화면의 실제 캡처 PNG + **앱이 구동되는 화면 녹화 MP4**.
+> 발표 슬라이드·NotebookLM 시각 보조·카톡/메일 첨부용.
+> **재생성 가능** — UI가 바뀌면 `node tests/capture_demo.mjs`(PNG)·`node tests/record_demo.mjs`(MP4)로 다시 만든다.
+
+## 0. 워크스루 영상 (실제 구동 모습) ⭐
+
+NotebookLM 자동 영상은 **개념 설명**(내레이션 슬라이드)이라 앱 구동이 안 보인다.
+실제 클릭·전환·응답이 보이는 **화면 녹화 영상**은 이것:
+
+| 파일 | 내용 | 크기·길이 |
+|---|---|---|
+| `walkthrough_student.mp4` | STEP1 소개 → STEP2 정보입력 → STEP3 검사(키 1~5 실응답) → 결과지 → 수강계획서 | 412×892 세로, 약 23초 |
+| `walkthrough_admin.mp4` | 관리자 대시보드 — KPI·참여추이 → 사이드바 메뉴 전환(통계·희망명단·상담군) | 1440×900 가로, 약 15초 |
+
+- **무음(내레이션 없음)** — 자막·음성 해설은 후가공으로 입힌다.
+  대본은 [`../notebooklm_demo_3min.md`](../notebooklm_demo_3min.md)·[`../cue_sheet.md`](../cue_sheet.md).
+- **활용**: 곰믹스/Clipchamp(윈도우 기본 영상편집)에서 이 영상을 화면으로 깔고,
+  3분 대본을 음성·자막으로 얹으면 완성형 "내레이션 + 실제 구동" 시연 영상이 된다.
+- **재생성/페이스 조정**: `node tests/record_demo.mjs` (학생만 `--student`, 관리자만 `--admin`).
+  너무 빠르면 스크립트의 `hold(초)`·`scrollThrough(step, per)` 값을 키워 다시 녹화.
+
+---
 
 ## 1. 파일 목록
 
@@ -38,7 +58,15 @@ npm i puppeteer-core --no-save
 node tests/capture_demo.mjs
 #   포트/브라우저 지정:
 #   node tests/capture_demo.mjs --port 5174 --chrome "C:\Program Files\Google\Chrome\Application\chrome.exe"
+
+# 4) 워크스루 영상(MP4) 재생성 — ffmpeg-static도 함께 설치(한 줄로!)
+npm i puppeteer-core ffmpeg-static --no-save
+node tests/record_demo.mjs            # 두 영상
+#   node tests/record_demo.mjs --student   / --admin   (개별)
 ```
+
+> ⚠️ `puppeteer-core`·`ffmpeg-static`은 **한 명령에 함께** 설치한다.
+> `npm i ... --no-save`를 따로 두 번 하면 뒤 설치가 앞 패키지를 prune해 버린다.
 
 - 시스템 Chrome 또는 Edge를 headless로 구동해 PNG로 저장(스크립트가 경로 자동 탐색).
 - `puppeteer-core`는 크로미움을 내려받지 않는 경량 패키지. `--no-save`라 `package.json`·CI 빌드에 영향 없음.

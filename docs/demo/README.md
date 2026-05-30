@@ -26,7 +26,7 @@
 | `README.md` | 이 폴더 안내 + 시연 자료 목록 (지금 보는 파일) | ✅ |
 | `notebooklm_howto.md` | **NotebookLM 전송·영상 생성 단계별 진행 순서** + 문제해결 | ✅ |
 | `notebooklm_demo_3min.md` | NotebookLM Video Overview용 3분 시연 소스 (7 SCENE) | ✅ |
-| `assets/` | 화면 스크린샷 팩 6장 (STEP1·2·3·결과지·수강계획서·관리자) + 캡처법 | ✅ |
+| `assets/` | 화면 스크린샷 팩 6장 + **워크스루 영상 2편(실제 구동 MP4)** + 캡처/녹화법 | ✅ |
 | `cue_sheet.md` | 발표자 큐시트 — 라이브 녹화용 7컷 클릭·키·내레이션·타임라인 | ✅ |
 | `demo_1min.md` | 1분 축소판 — 학생·학부모 대상 카톡/SNS 홍보 (4 SCENE) | ✅ |
 | `demo_5min.md` | 5분 확장판 — 학과장·교수진·운영위 심화 (공식·거버넌스, 9 SCENE) | ✅ |
@@ -35,7 +35,17 @@
 
 ## 3. 시연 영상 만드는 법 (요약)
 
-### 방법 A — NotebookLM 자동 생성 (추천)
+> **두 종류를 구분하세요.**
+> - **개념 영상**(NotebookLM): 내레이션 슬라이드. 앱 구동 화면은 **안 나옴**. 소개·홍보용.
+> - **구동 영상**(워크스루 MP4): 실제 클릭·전환·응답이 보이는 화면 녹화. **시연용**.
+>   → 이미 만들어 둠: [`assets/walkthrough_student.mp4`](assets/walkthrough_student.mp4) · [`assets/walkthrough_admin.mp4`](assets/walkthrough_admin.mp4)
+> - **완성형**(권장): 구동 영상을 화면으로 깔고, 개념 영상의 대본을 음성·자막으로 얹기(영상편집기).
+
+### 방법 0 — 구동 영상 그대로 쓰기 / 후가공
+- `assets/*.mp4` 두 편을 그대로 카톡·발표에 쓰거나, 곰믹스·Clipchamp에서 자막·음성 추가.
+- 재생성·페이스 조정: `node tests/record_demo.mjs` (자세히 [`assets/README.md`](assets/README.md) §0).
+
+### 방법 A — NotebookLM 자동 생성 (개념 영상)
 1. https://notebooklm.google.com → 새 노트북
 2. `notebooklm_demo_3min.md` 업로드 (+ `CLAUDE.md` 같이 올리면 인용 풍부)
 3. Studio → **Video Overview** → 한국어·3분·SCENE 1~7 순서 프롬프트
