@@ -24,6 +24,7 @@
 | 파일 | 용도 | 상태 |
 |---|---|---|
 | `README.md` | 이 폴더 안내 + 시연 자료 목록 (지금 보는 파일) | ✅ |
+| `notebooklm_howto.md` | **NotebookLM 전송·영상 생성 단계별 진행 순서** + 문제해결 | ✅ |
 | `notebooklm_demo_3min.md` | NotebookLM Video Overview용 3분 시연 소스 (7 SCENE) | ✅ |
 | `assets/` | 화면 스크린샷 팩 6장 (STEP1·2·3·결과지·수강계획서·관리자) + 캡처법 | ✅ |
 | `cue_sheet.md` | 발표자 큐시트 — 라이브 녹화용 7컷 클릭·키·내레이션·타임라인 | ✅ |
@@ -39,6 +40,8 @@
 2. `notebooklm_demo_3min.md` 업로드 (+ `CLAUDE.md` 같이 올리면 인용 풍부)
 3. Studio → **Video Overview** → 한국어·3분·SCENE 1~7 순서 프롬프트
 4. MP4 다운로드
+
+> **단계별 자세한 진행 순서·문제해결**: [`notebooklm_howto.md`](notebooklm_howto.md)
 
 ### 방법 B — 직접 화면녹화 (OBS / Win+G)
 1. 시드 학생 등록: `node tests/seed_firestore.js`
